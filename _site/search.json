@@ -1,0 +1,221 @@
+[
+  {
+    "objectID": "04_preprocessing.html",
+    "href": "04_preprocessing.html",
+    "title": "Text Preprocessing",
+    "section": "",
+    "text": "Source:\n\n\nYou’ve probably heard the phrase “garbage in, garbage out”, right? It’s a core principle in computing: the quality of the output heavily depends on the quality of the input.\nThis concept holds especially true in sentiment analysis and other natural language processing (NLP) tasks because human language is naturally messy, inconsistent, and often ambiguous.\nTo perform accurate and reliable analysis, we need to “take out the garbage” first by preprocessing the text to clean, standardize, and structure the input data. This reduces noise and improves the model’s accuracy. Key text preprocessing steps include normalization, stop words removal, tokenization and lemmatization, which are depicted and explained in the handout below:\n&lt;iframe width=“50%” height=“700” src=“https://rcd.ucsb.edu/sites/default/files/2025-05/DLS-2025-05-TextPreprocessing_navy.pdf&gt;\n\nSource: https://perma.cc/L8U5-ZEXD\nIn the next episodes, we’ll dive deeper into this NLP pipeline to prepare the data for sentiment analysis by exploring each of these steps with more detailed explanations, some examples, and exercises.",
+    "crumbs": [
+      "Text Preprocessing",
+      "Understanding preprocessing"
+    ]
+  },
+  {
+    "objectID": "03_inspecting.html",
+    "href": "03_inspecting.html",
+    "title": "Inspecting the Data",
+    "section": "",
+    "text": "The data we pulled for this exercise comes from real social media posts , meaning they are inherently messy, and we know that even before going in. Because it is derived from natural language, this kind of data is unstructured, often filled with inconsistencies and irregularities.\nBefore we can apply any meaningful analysis or modeling, it’s crucial to visually inspect the data to get a sense of what we’re working with. Eyeballing the raw text helps us identify common patterns, potential noise, and areas that will require careful preprocessing to ensure the downstream tasks are effective and reliable.\nNow it is time to open RStudio and our example Quarto Project [FIXME: Add Zenodo Link to Quarto Project].\nFIXME: &lt;add image - open project&gt;\nThe folder contains a quarto document (.qmd) which will serve as our workshop workbook. In this document we will include the R code and comments related to the content we will explore. Let’s have that open in RStudio.\nNow, open the season2-raw.csv file and take a quick look at it!\n\n\n\n\n\n\n💬 Discussion\n\n\n\nWorking in pairs or trios, look briefly at the data and discuss the challenges that may arise when attempting to analyze this dataset on its current form. What could be potential areas of friction that could compromise the results?",
+    "crumbs": [
+      "Inspecting the Data"
+    ]
+  },
+  {
+    "objectID": "00_about.html",
+    "href": "00_about.html",
+    "title": "About RDS",
+    "section": "",
+    "text": "Research Data Services (RDS) helps UCSB researchers manage and preserve their research data in a more effective and reproducible way through:\n\nConsultations\nLong-term engagements\nInstructional workshops.\n\nOur team offers support across the research data lifecycle, from pre-project planning to post-project archival, connecting researchers with both locally- and externally-provided resources, data management systems and curation services. Our goal is to ensure that all research data is well-described, FAIR (Findable, Accessible, Interoperable, Reusable), as well as sustainable and preservable, and that researchers receive scholarly credit for sharing and publishing their data.\nWe recommend you explore the Research Computing and Data website (https://rcd.ucsb.edu ) maintained by our department for campus-wide tools, recommendations, events, communities and learning resources.\nContact us if you have any questions: rds@library.ucsb.edu"
+  },
+  {
+    "objectID": "00_about.html#ways-we-can-help-you",
+    "href": "00_about.html#ways-we-can-help-you",
+    "title": "About RDS",
+    "section": "",
+    "text": "Research Data Services (RDS) helps UCSB researchers manage and preserve their research data in a more effective and reproducible way through:\n\nConsultations\nLong-term engagements\nInstructional workshops.\n\nOur team offers support across the research data lifecycle, from pre-project planning to post-project archival, connecting researchers with both locally- and externally-provided resources, data management systems and curation services. Our goal is to ensure that all research data is well-described, FAIR (Findable, Accessible, Interoperable, Reusable), as well as sustainable and preservable, and that researchers receive scholarly credit for sharing and publishing their data.\nWe recommend you explore the Research Computing and Data website (https://rcd.ucsb.edu ) maintained by our department for campus-wide tools, recommendations, events, communities and learning resources.\nContact us if you have any questions: rds@library.ucsb.edu"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About RDS",
+    "section": "",
+    "text": "Research Data Services (RDS) helps UCSB researchers manage and preserve their research data in a more effective and reproducible way through:\n\nConsultations\nLong-term engagements\nInstructional workshops.\n\nOur team offers support across the research data lifecycle, from pre-project planning to post-project archival, connecting researchers with both locally- and externally-provided resources, data management systems and curation services. Our goal is to ensure that all research data is well-described, FAIR (Findable, Accessible, Interoperable, Reusable), as well as sustainable and preservable, and that researchers receive scholarly credit for sharing and publishing their data.\nWe recommend you explore the Research Computing and Data website (https://rcd.ucsb.edu ) maintained by our department for campus-wide tools, recommendations, events, communities and learning resources.\nContact us if you have any questions: rds@library.ucsb.edu"
+  },
+  {
+    "objectID": "about.html#ways-we-can-help-you",
+    "href": "about.html#ways-we-can-help-you",
+    "title": "About RDS",
+    "section": "",
+    "text": "Research Data Services (RDS) helps UCSB researchers manage and preserve their research data in a more effective and reproducible way through:\n\nConsultations\nLong-term engagements\nInstructional workshops.\n\nOur team offers support across the research data lifecycle, from pre-project planning to post-project archival, connecting researchers with both locally- and externally-provided resources, data management systems and curation services. Our goal is to ensure that all research data is well-described, FAIR (Findable, Accessible, Interoperable, Reusable), as well as sustainable and preservable, and that researchers receive scholarly credit for sharing and publishing their data.\nWe recommend you explore the Research Computing and Data website (https://rcd.ucsb.edu ) maintained by our department for campus-wide tools, recommendations, events, communities and learning resources.\nContact us if you have any questions: rds@library.ucsb.edu"
+  },
+  {
+    "objectID": "06_token.html",
+    "href": "06_token.html",
+    "title": "Tokenization",
+    "section": "",
+    "text": "Tokenization in NLP differs from applications in security and blockchain. It corresponds to the action of breaking down text into smaller pieces (aka tokens). It is a foundational process in the digital world, allowing machines to interpret and analyze large volumes of text data. By dividing text into smaller, more manageable units, it enhances both the efficiency and accuracy of data processing.\nText can be tokenized into sentences, word, subwords or even characters, depending on project goals and analysis plan. Here is a summary of these approaches:\nSome might recall, that along with the popularization and excitement around ChaGPT, there were also a few warnings about the LLMs failing in answering correctly how many “r” letters does the word strawberry have. Can you guess why?\nAlthough this issue has been resolved in later versions of the model, it was originally caused by subword tokenization. In this case, the tokenizer would split “strawberry” into “st,” “raw,” and “berry.” As a result, the model would incorrectly count the letter “r” only within the “berry” token. This illustrates how the tokenization approach directly affects how words are segmented and how their components are interpreted by the model.\nWhile this is beyond the scope of the workshop, it’s important to note that some advanced AI models use neural networks to dynamically determine token segmentation. Rather than relying on fixed rules, these models can adapt based on the contextual cues within the text. However, tokenization remains inherently limited by the irregular, organic, and often unpredictable nature of human language.",
+    "crumbs": [
+      "Text Preprocessing",
+      "Tokenizing Words"
+    ]
+  },
+  {
+    "objectID": "06_token.html#part-of-speech-pos-tagging-word-embeddings",
+    "href": "06_token.html#part-of-speech-pos-tagging-word-embeddings",
+    "title": "Tokenization",
+    "section": "Part of Speech (POS) Tagging & Word Embeddings",
+    "text": "Part of Speech (POS) Tagging & Word Embeddings\nIn English language there are eight categories that help structure the meaning of the sentences: nouns, pronouns, verbs, adjectives, adverbs, prepositions, conjunctions, and interjections.\nIn NLP, POS tagging is the process of labeling each word in a sentence with its corresponding one of these categories.This is a fundamental step in many NLP tasks because it adds syntactic structure to raw text, allowing machines to better understand language. It not only helps computers to correctly interpret sentence structure, but also is key to disambiguate words that might have multiple meanings. The word “book” for example, can be a noun (“I read this book a long time ago”) or a verb (“I still need to book my flight ticket”) depending on the context.\nBut how the POS tagging process can be reliable? How can the computer know not only the grammatical role of each word in a sentence, but most importantly its semantic meaning in that given contexts?\nWhile we humans don’t have much trouble making that distinction, computers still struggle to get it right without some help. Enters: word embeddings. Word Embeddings are numerical representations of words (or other textual units like sentences or documents) in a continuous vector space. These representations capture the meaning and relationships between words: words that are closer in the vector space are generally considered to be more similar in meaning. It lets computers understand similarities and learn meanings from usage, not definitions, even when they belong to the same part of speech. For example:\n“That was such a sweet gesture from her”\n“The cake was too sweet for my taste”\nBoth are adjectives, but in context with other words, POS tagging and embeddings lets models distinguish emotional sweet from flavor sweet. This because, embeddings connects emotional “sweet” with “kind” or “thoughtful,” not just sugar-related words.\nThe good news is that we don’t need to get into into the nitty-gritty about POS and word embeddings for now, because spacyR leverages these functionalities for us, helping sharpen sentiment predictions. You are also welcome to explore our Intro to Text Preprocessing [fixme: add link] lesson for more information.\nLet’s complete the quick quiz below and then move back to our worksheet.\n\n\n\n\n\n\n🏋️ Exercise\n\n\n\nWhich statement is true about its corresponding NLP technique?\na) Tokenization: Breaks text into smaller units like words or punctuation so they can be processed individually.\nb) Part-of-Speech (POS) Tagging: Assigns grammatical labels (e.g., noun, verb, adjective) to each token in a sentence.\nc) Word Embeddings: Represent words as dense numerical vectors that capture semantic relationships.\nd) All of the above\n\nCorrect: d",
+    "crumbs": [
+      "Text Preprocessing",
+      "Tokenizing Words"
+    ]
+  },
+  {
+    "objectID": "08_lemma.html",
+    "href": "08_lemma.html",
+    "title": "Lemmatization",
+    "section": "",
+    "text": "Source: Created by the author in Canvas\n\n\nAlso known as word reduction, lemmatization is the process of transforming words into their base or dictionary form (lemma) to identify similarities in meaning and usage across different contexts. Take the word “run” as an example. It can appear in various forms like “ran”, “runs”, “running”, and “runner”. But the variations don’t stop there, as it includes complex forms like “outrun”, “overrun”, or “underrun”. These variations make it challenging for computers to process natural language effectively unless they can recognize that these words are related. That’s where lemmatization comes in; it helps machines group related words together by reducing them to a common root present in the dictionary, enabling better understanding and analysis of text.\nYou might be asking yourself: Wait…but what about “stemming”? Stemming is considered a more straightforward but agressive process that removes prefixes and suffices, reducing the word to its roots. It is considered a less effective approach compared to lemmatization because it may can occasionally lead to meaningless words. For example, while “ran” and “runs” would be stemmed to “run”, for running would end up as “runn”. For this reason, we will stick with lemmatization and skip stemming in our data analysis. However, depending on your computing capability to process large volumes of textual data, you might consider using it, giving that stemming, since it is considered a more efficient approach.\nAn important thing to consider is that we look into words as separate units (tokens) as we saw in the previous episode. For example, think about the word “leaves”. That could both represent the plural of the noun “leaf” or the verb in third person for the word “leave”. That is a good reminder of always remember to apply part of speech (POS) because lemmatization algorithms utilize a lexicon with linguistic rules based on pre-determined tags to avoid misinterpretation.",
+    "crumbs": [
+      "Text Preprocessing",
+      "Lemmatization"
+    ]
+  },
+  {
+    "objectID": "09_tf-idf.html",
+    "href": "09_tf-idf.html",
+    "title": "Understanding Term & Document Frequency",
+    "section": "",
+    "text": "When performing NLP tasks, including sentiment analysis, we often use a text modeling technique called Bag of Words (BoW) to extract features from documents. In this approach, a document is represented as a “bag” of its words, focusing only on how many times each word appears. The order of the words and their grammatical structure are ignored; what matters is the frequency of each term in the document, as depicted in the figure below:\n\n\n\nPrakash, V. (2023, June 26). An introduction to Bag of Words (BoW). Medium. https://medium.com/@vamshiprakash001/an-introduction-to-bag-of-words-bow-c32a65293ccc\n\n\nThe Bag of Words model is a simple and useful way to turn text into numbers, but it has a limitation since it treats all words with the same frequency as equally important, even if some are far more informative than others. For example, in a collection of product reviews, words like “good” or “product” might appear frequently in almost every review, but they don’t help us distinguish one review from another.\nThis is where TF-IDF (Term Frequency–Inverse Document Frequency) comes in. It builds on Bag of Words by keeping track of term frequencies, but also scaling them down for words that are common across the whole dataset, while boosting words that are more unique and meaningful. In short, it captures word importance while also handling common words.\nThink of it like chatting with friends on campus. You might hear “Hey,” “What’s up,” and “See you later” dozens of times a day. These phrases are so common they don’t tell you who is talking or what the conversation is really about. But if someone says, “The capstone presentation has been postponed!”; that’s rare, specific, and meaningful.\nIn documents, very frequent words act like this everyday chatter which are part of the background noise, but not what makes the exchange noteworthy. If we gave them too much weight, we’d miss the truly important content.\nThus, the TF-IDF technique aids to noise reduction along with stop word removal, but by using continuous weighting instead of simply deleting words.\n\nTF measures how often a word appears in a given document (in this case, an individual X post).\nIDF measures how rare that word is across all documents (in this case, X posts).\n\nBy multiplying them, TF-IDF highlights words that are both frequent in a specific document and uncommon elsewhere, helping us spot unique patterns and cluster similar posts. For short messages such as X posts and tweets, the IDF component often does most of the work.\nIn short, TF-IDF filters out the constant buzz so the unique and important messages stand out. It tells us how important a word is in a document relative to the entire collection (the corpus).\nBack to our campus example: if you collected students’ feedback on summer programs, words like students, campus, event, and university might dominate your dataset. TF-IDF would lower their weight and boost rarer, more distinctive terms like hackathon, multicultural, or bootcamp.\nIf you want to dive deeper into the math that happens under the hood, this video explains the equations e algorithms behind TF-IDF.\n\nNow, let’s get back to our worksheet and see how implementing this final preprocessing technique will play out with our dataset.",
+    "crumbs": [
+      "Text Preprocessing",
+      "Understanding Term & Document Frequency"
+    ]
+  },
+  {
+    "objectID": "01_index.html",
+    "href": "01_index.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "Image from Canva",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "01_index.html#what-is-sentiment-analysis",
+    "href": "01_index.html#what-is-sentiment-analysis",
+    "title": "Introduction",
+    "section": "What is Sentiment Analysis?",
+    "text": "What is Sentiment Analysis?\nAs social beings, our beliefs, understanding of reality, and everyday decisions are deeply shaped by the opinions, perceptions and evaluations of others. This social conditioning is a well-documented phenomenon in fields such as psychology, sociology, and communication, where it is understood that individuals often rely on external cues, especially the attitudes and judgments of others when forming their own assessments.\nUnderstanding how public reaction and sentiment shapes and reflects collective perception has become central not only to corporate strategy, but also to scientific inquiry across many academic disciplines.\nWhile the analysis of public opinion predates the Internet, the modern field of sentiment analysis did not gain momentum until the mid-2000s. This surge was largely driven by the rise of Web 2.0, which leveraged the internet into a more participatory platform, enabling users to create, share, and comment on content across chats, blogs, forums, and other social media. These digital spaces dramatically expanded the circulation and accessibility of user-generated content, creating a fertile ground for computational approaches to analyze subjective expressions in large volumes of text. But what is sentiment analysis?\nSentiment analysis, also known as opinion mining, is now a well-established area of study within natural language processing (NLP) and computational linguistics. It focuses on identifying and extracting people’s opinions, evaluations, attitudes, and emotions from written language.\nWhether through product reviews, political commentary, or social media posts in virtually any possible topic of interest, sentiment analysis aims to quantify and interpret subjective information at scale, enabling applications in marketing, social science, finance, and beyond. In this course, we will explore ways of extracting insights from textual data, in particular how we can detect underlying emotions within messages shared by people on a popular streaming TV series.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "01_index.html#learning-goals",
+    "href": "01_index.html#learning-goals",
+    "title": "Introduction",
+    "section": "Learning Goals",
+    "text": "Learning Goals\nBy the end of this workshop, participants will be able to:\n\nExplain the fundamental principles and real-world applications of sentiment analysis.\nApply essential text pre-processing techniques (e.g, cleaning, stopwords removal, lemmatization, tokenization, tf-idf) to reduce noise and prepare textual data for sentiment analysis.\nPerform sentiment analysis in R using both polarity-based and more fine-grained emotion extraction methods.\nVisualize the data to extract insights.\n\nReady to dive in?",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "02_setup.html",
+    "href": "02_setup.html",
+    "title": "Setup & Dataset",
+    "section": "",
+    "text": "For this workshop we will be using R (4.4.1 or above) and RStudio (2024.04.2+764 or above).\n\n\n\n\n\n\n**Missing PART OF SPEECH package**\nspacyr provides a convenient R wrapper around the Python spaCy package. It offers easy access to the following functionality of spaCy:\n\nparsing texts into tokens or sentences;\nlemmatizing tokens;\nparsing dependencies (to identify the grammatical structure of the sentence); and\nidentifying, extracting, or consolidating token sequences that form named entities or noun phrases.\n\nThis workshop requires several packages to assist us with the tasks categorized below.\nData Import & Preparation\n\nreadr: Reads CSV and text files into R for processing.\ndplyr: Used to clean, filter, and manipulate textual datasets.\ntidyverse: A collection of core packages for data wrangling, including dplyr, ggplot2, readr, and more.\n\nText Cleaning & Preprocessing\n\ntextclean: Cleans and standardizes raw text (e.g., removes special characters, fixes typos).\ntm: A full framework for text mining, including preprocessing steps like stopword removal and document-term matrix creation. #check if indeed needed\nstopwords: Provides lists of stop words for various languages to remove uninformative words.\nstringr: Performs string operations such as pattern matching and substitution.\n\nTokenization & Lexical Processing\n\ntidytext: Converts text into tidy data frames for tokenization and sentiment scoring.\ntextdata: Supplies pre-built sentiment lexicons for use with tidytext or syuzhet.\n\nSentiment & Emotion Analysis\n\nsyuzhet: Performs sentiment and emotion classification using lexicons. \nemoji: Adds emoji symbols to datasets for use in sentiment/emotion analysis involving visual or symbolic content.\n\nVisualization\n\nggplot2: visualizes sentiment trends, word frequencies, and other metrics using customizable plots.\nemojifont: Adds emojis to plots for a visual representation of emotional tone.\nRColorBrewer: Provides color palettes for enhancing the clarity and appeal of sentiment visualizations.\n\nPackage Management & Development\n\ndevtools: Enables installation of development versions of packages (e.g., from GitHub) and simplifies package management.\n\n\n\n\n\n\n📦 Installing & Loading Packages\n\n\n\nThe code to install and load the required packages is included in the sentiment-analysis.qmd worksheet.",
+    "crumbs": [
+      "Setup & Dataset"
+    ]
+  },
+  {
+    "objectID": "02_setup.html#requirements",
+    "href": "02_setup.html#requirements",
+    "title": "Setup & Dataset",
+    "section": "",
+    "text": "For this workshop we will be using R (4.4.1 or above) and RStudio (2024.04.2+764 or above).\n\n\n\n\n\n\n**Missing PART OF SPEECH package**\nspacyr provides a convenient R wrapper around the Python spaCy package. It offers easy access to the following functionality of spaCy:\n\nparsing texts into tokens or sentences;\nlemmatizing tokens;\nparsing dependencies (to identify the grammatical structure of the sentence); and\nidentifying, extracting, or consolidating token sequences that form named entities or noun phrases.\n\nThis workshop requires several packages to assist us with the tasks categorized below.\nData Import & Preparation\n\nreadr: Reads CSV and text files into R for processing.\ndplyr: Used to clean, filter, and manipulate textual datasets.\ntidyverse: A collection of core packages for data wrangling, including dplyr, ggplot2, readr, and more.\n\nText Cleaning & Preprocessing\n\ntextclean: Cleans and standardizes raw text (e.g., removes special characters, fixes typos).\ntm: A full framework for text mining, including preprocessing steps like stopword removal and document-term matrix creation. #check if indeed needed\nstopwords: Provides lists of stop words for various languages to remove uninformative words.\nstringr: Performs string operations such as pattern matching and substitution.\n\nTokenization & Lexical Processing\n\ntidytext: Converts text into tidy data frames for tokenization and sentiment scoring.\ntextdata: Supplies pre-built sentiment lexicons for use with tidytext or syuzhet.\n\nSentiment & Emotion Analysis\n\nsyuzhet: Performs sentiment and emotion classification using lexicons. \nemoji: Adds emoji symbols to datasets for use in sentiment/emotion analysis involving visual or symbolic content.\n\nVisualization\n\nggplot2: visualizes sentiment trends, word frequencies, and other metrics using customizable plots.\nemojifont: Adds emojis to plots for a visual representation of emotional tone.\nRColorBrewer: Provides color palettes for enhancing the clarity and appeal of sentiment visualizations.\n\nPackage Management & Development\n\ndevtools: Enables installation of development versions of packages (e.g., from GitHub) and simplifies package management.\n\n\n\n\n\n\n📦 Installing & Loading Packages\n\n\n\nThe code to install and load the required packages is included in the sentiment-analysis.qmd worksheet.",
+    "crumbs": [
+      "Setup & Dataset"
+    ]
+  },
+  {
+    "objectID": "02_setup.html#project-file-sample-data",
+    "href": "02_setup.html#project-file-sample-data",
+    "title": "Setup & Dataset",
+    "section": "Project File & Sample Data",
+    "text": "Project File & Sample Data\nOur running example draws on publicly available data from profiles on X (formerly Twitter). Specifically, we collected all posts from the first and second days following the season finales of both Season 1 and Season 2 of the Apple TV series [Severance](https://en.wikipedia.org/wiki/Severance_(TV_series).\nThe data was obtained using Brandwatch, a social media analytics platform subscribed by the UCSB Library (learn more).\nOur search query was carefully constructed to capture relevant posts about the television series Severance, while filtering out unrelated content. We used a combination of keywords to include relevant mentions and exclusion strategies to eliminate noise.\nOur inclusion criteria included “severance” (in any capitalization), and at least one term related to the show, such as: “series”, “show”, “AppleTV”, “AppleTV+”, “Apple”, “season”. To avoid unrelated results—particularly those referring to employment severance—we excluded posts that mentioned: “package”, “benefits”, “layoff”, “Cigna” and, “executive”; terms are commonly associated with corporate severance packages.\n\n\n\nQuery Used for Retrieving Relevant Posts in Brandwatch\n\n\nWe compiled two datasets: one from April 8–10, 2022, capturing impressions from Season 1 finale, and another from March 20–22, 2025, following the Season 2 finale. In total, the dataset contains 1,786 posts for 2022 and 4,091 for 2025.\nTo ensure compliance with GDPR regulations, and to avoid the inadvertent release of sensitive information, we consolidated the raw data to include only two columns: a unique post ID and the content of the message. The final dataset is publicly available\nWhether you’re a longtime fan of the show or encountering it for the first time, this example offers a valuable case study in analyzing sentiment in unstructured public opinion data. Because data was pulled from social media it also serves as a guideline for examining more challenging text corpora, due to informal language, use of slang, emojis, hashtags, and abbreviations, as well as their variable length, inconsistent formatting, and inclusion of multimedia elements like images, videos, and links.\nThis lesson is supplemented by a Quarto project, containing: 1) sentiment-analysis.qmd that we will be using as the workshop worksheet, 2) two data files with the text we will analyze season1-comments.csv and season2-comments.csv.\n\n\n\n\n\n\n⤵️ Download & Save Project File\n\n\n\nAccess , ensure to download it, and save in an easy to locate place (e.g., Desktop).",
+    "crumbs": [
+      "Setup & Dataset"
+    ]
+  },
+  {
+    "objectID": "07_stopwords.html",
+    "href": "07_stopwords.html",
+    "title": "Removing Stop words",
+    "section": "",
+    "text": "Stop words are commonly occurring words that are usually filtered out during natural language processing, as they carry minimal semantic weight and are not as useful for feature extraction.\nExamples include articles (i.e., a, an, the), prepositions (e.g., in, on, at), conjunctions (and, but, or), and pronouns (they, she, he), but the list goes on. While they appear often in text, they usually don’t add significant meaning to a sentence or search query.\nBy ignoring stop words, search engines, databases, chatbots and virtual assistants can improve the speed of crawling and indexing and help deliver faster, more efficient results. Similar posistive effects applies to other NLP tasks and models performance, including sentiment analysis.\nFor this workshop, we will be using the package stopwords (more info) which is considered a “on-stop stopping” for R users. For English language, the package relies on the Snowball list. But, before we turn to our worksheet to see how that process looks like and how it will apply to our data, let’s have a little challenge!\n\n\n\n\n\n\n🏋️ Exercise\n\n\n\nHow many stop words can you spot in each of the following sentences:\n\nThe cat was sitting on the mat near the window.\nShe is going to the store because she needs some milk.\nI will be there in the morning if it doesn’t rain.\nThey have been working on the project for several days.\nAlthough he was tired, he continued to walk until he reached the house.\n\n\nAnswer Key:\n1. The cat was sitting on the mat near the window.\n2. She is going to the store because she needs some milk.\n3. I will be there in the morning, if it does not rain.\n4. They have been working on the project for several days.\n5. Although he was very tired, he continued to walk until he reached the house.\n\n\n\nYou might be wondering: Wait… why are words like “very” and “not” excluded? Aren’t they important for sentiment analysis? The answer is: YES, they are! While these words are included in many stop word lists provided by standard NLP packages, we can customize the list to retain specific words we consider crucial for our analysis.\nNow, let’s return to the worksheet and see how we can put that into practice.\n\n\n\n\n\n\n📑 Suggested Reading\n\n\n\nCheck out this blog post for a summary of the history of stop words, discussion on its applications and some perspectives on developments in the age of AI.\nGaviraj, K. (2025, April 24). The origins of stop words. BytePlus. https://www.byteplus.com/en/topic/400391?title=the-origins-of-stop-words",
+    "crumbs": [
+      "Text Preprocessing",
+      "Removing Stop words"
+    ]
+  },
+  {
+    "objectID": "12_considerations.html",
+    "href": "12_considerations.html",
+    "title": "Final Considerations",
+    "section": "",
+    "text": "Caveats\nChallenges\nThe biggest challenges of sentiment analysis come from the richness of human language — its ambiguity, cultural dynamics, and emotional complexity — combined with the technical hurdles of building robust, fair, and interpretable models.\nhttps://www.npr.org/2025/08/19/nx-s1-5506163/cambridge-dictionary-adds-more-than-6-000-words-including-skibidi-and-delulu\nhttps://www.sciencedirect.com/science/article/pii/S131915782400137X\nbut in practice it’s riddled with challenges. Here’s a structured articulation of the main difficulties researchers and practitioners face:\nCode-switching: People often mix languages in a single post. Compound sentences: “The movie had great acting, but the plot was dull.” Mixed sentiment is difficult to score. 2. Context Dependence\nDomain-specific usage: A word’s polarity can flip in different contexts. For example, “cheap” is positive when describing prices (cheap flights), but negative for products (cheap fabric).\nTemporal dynamics: Slang and cultural references evolve quickly (e.g., “bad” meaning “good” in some communities). 1. Ambiguity of Language\nPolysemy (multiple meanings): Words like “sick” can mean “ill” or “awesome,” depending on context.\nSarcasm & irony: “Oh great, another Monday morning traffic jam.” The surface words are positive, but the intent is negative.\nImplicit sentiment: Some statements don’t use explicitly emotional words but still carry strong sentiment, e.g., “The waiter ignored us for 40 minutes.”",
+    "crumbs": [
+      "Detecting Reactions & Emotions",
+      "Final Considerations"
+    ]
+  },
+  {
+    "objectID": "05_normalization.html",
+    "href": "05_normalization.html",
+    "title": "Normalization & Noise Reduction",
+    "section": "",
+    "text": "Now that we’re familiar with the dataset and have briefly discussed the essential preprocessing steps, let’s take a deeper dive into the normalization process.\nAs we’ve seen, the main goal of normalization is to remove irrelevant punctuation and content, and to standardize the data in order to reduce noise. Below are some key actions we’ll be performing during this workshop.\nA caveat when working with emojis is that they are figurative and highly contextual. Also, there may be important generational and cultural variability in how people interpret them. For example, some countries may use the Folded Hands Emoji (🙏) as a sign of thank you where others may seem as religious expression. Also, some may use it in a more positive way as gratitude, hope or respect, or in a negative context, where they might be demonstrating submission or begging.\nYou might have noticed based on the example above that emojis are converted to their equivalent CLDR (common, human-readable name) based on this emoji unicode list, which are not as nuanced and always helpful to detect sentiment. While not always perfect, that is a required step to normalize the data.\nLet’s go back to the worksheet to get our hands “dirty” with some cleaning and normalization. For this part of the lesson, we’ll use the tidyverse and stringr packages to clean and transform the data, helping us make it more normalized, consistent, and ready for analysis. We’ll be also using the emoji package.",
+    "crumbs": [
+      "Text Preprocessing",
+      "Normalization & Noise Reduction"
+    ]
+  },
+  {
+    "objectID": "05_normalization.html#excercise",
+    "href": "05_normalization.html#excercise",
+    "title": "Normalization & Noise Reduction",
+    "section": "🏋️Excercise",
+    "text": "🏋️Excercise\nIn pairs or groups of three, identify the techniques you would consider using to normalize and reduce noise in the following sentence.\n“OMG!! 😱 I can’t believe it… This is CRAZY!!! #unreal 🤯”\n\nHow many techniques could you identify?\n\nBingo if you got all five!\nHere is an example how the final text would look like:\nomg [face scream in fear] I can not believe it this is crazy unreal [exploding head]",
+    "crumbs": [
+      "Text Preprocessing",
+      "Normalization & Noise Reduction"
+    ]
+  },
+  {
+    "objectID": "10_polarity.html",
+    "href": "10_polarity.html",
+    "title": "Basic Polarity",
+    "section": "",
+    "text": "Now that we have completed all the key preprocessing steps and our example dataset is in much better shape, we can finally proceed with sentiment analysis.\nThis will be a two-step approach, where we will start with the basic polarity and then, advance to a more fine-grained analysis, exploring different emotional expressions within text.",
+    "crumbs": [
+      "Detecting Reactions & Emotions",
+      "Basic Polarity"
+    ]
+  },
+  {
+    "objectID": "10_polarity.html#basic-polarity",
+    "href": "10_polarity.html#basic-polarity",
+    "title": "Basic Polarity",
+    "section": "Basic Polarity",
+    "text": "Basic Polarity\nPolarity classification is a fundamental aspect of sentiment analysis to measure the overall emotional tone expressed in text data which can be categorized as positive, neutral or negative.\nMost models assign “sentiment scores” with values ranging from -1 to +1 to represent the intensity of the sentiment, being scores closer to -1 considered negative, those closer to 0 neutral and +1 positive.\n\nWe will be using the package sentimentr (more info) to compute polarity classification and attribute sentiment scores to the posts included in our dataset. We chose this package due to its capability of handling negation (when negators appear nearby) and adjust to adverbs’ magnitude also known as valence shifters, which are adverbs and words that modify the intensity or direction of sentiment. These include amplifiers (e.g., very, really, absolutely, totally), de-amplifiers or downtoners (e.g., barely, hardly, rarely, ), as well as adversative conjunctions (e.g., but, yet, however, although).\nFor example, this package is capable of",
+    "crumbs": [
+      "Detecting Reactions & Emotions",
+      "Basic Polarity"
+    ]
+  }
+]
