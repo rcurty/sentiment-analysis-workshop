@@ -28,4 +28,4 @@ By the end of this workshop, participants will be able to:
 
 -   Visualize the data to extract insights.
 
-Let's dive in?
+Ready to dive in?
