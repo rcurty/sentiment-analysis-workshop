@@ -41,7 +41,7 @@ website:
         - href: 06_token.qmd
           text: "Tokenizing Words"
         - href: 07_stopwords.qmd 
-          text: "Removing Stop words""
+          text: "Removing Stop words"
         - href: 08_lemma.qmd
           text: "Lemmatization"
         - href: 09_tf-idf.qmd
