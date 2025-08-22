@@ -1,0 +1,70 @@
+project:
+  type: website
+  title: "Introduction to Sentiment Analysis in R"
+
+website:
+  page-navigation: true
+  search: 
+    location: navbar
+  navbar:
+    tools:
+     - text: About RDS
+       href: 00_about.qmd
+     - icon: github
+       href: 
+       menu:
+       - text: Source Code
+         url: https://github.com/UCSB-Library-Research-Data-Services #replace after pub
+         target: _blank
+       - text: Report a Bug
+         url: https://github.com/UCSB-Library-Research-Data-Services #replace after pub
+         target: _blank
+    
+        
+  sidebar:
+    style: "docked"
+    border: true
+    collapse-level: 1
+    contents:
+    - href: 01_index.qmd
+      text: "Introduction"
+    - href: 02_setup.qmd
+      text: "Setup & Dataset"
+    - href: 03_inspecting.qmd
+      text: "Inspecting the Data"
+    - section: "Text Preprocessing"
+      contents: 
+        - href: 04_preprocessing.qmd
+          text: "Understanding preprocessing"
+        - href: 05_normalization.qmd
+          text: "Normalization & Noise Reduction"
+        - href: 06_token.qmd
+          text: "Tokenizing Words"
+        - href: 07_stopwords.qmd 
+          text: "Removing Stop words""
+        - href: 08_lemma.qmd
+          text: "Lemmatization"
+        - href: 09_tf-idf.qmd
+          text: "Understanding Term & Document Frequency"
+    - section: "Detecting Reactions & Emotions"
+      contents: 
+        - text: "Basic Polarity"
+          href: 10_polarity.qmd
+        - text: "Fine-grained Sentiment Analysis"
+          href: 11_fine-grained.qmd
+        - text: "Final Considerations"
+          href: 12_considerations.qmd
+          
+  page-footer:
+    background: blue
+    center: This website is built with [Quarto](https://quarto.org/), [RStudio/Posit](https://posit.co/),
+      and [webexercises R package](https://cran.r-project.org/web/packages/webexercises/index.html).
+      UCSB Library Research Data Services. [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en)
+    left: |
+      <img src="images/RDS-logo.png" alt="UCSB Library Research Data Services logo" width="250"/>
+format:
+  html:
+    theme: adapt-meds-website-styles.scss
+    toc: false
+    page-layout: full
+    code-line-numbers: true

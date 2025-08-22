@@ -1,0 +1,35 @@
+---
+title: "Understanding Term & Document Frequency"
+---
+
+![](images/tf-idf.png)
+
+When performing NLP tasks, including sentiment analysis, we often use a text modeling technique called **Bag of Words (BoW)** to extract features from documents. In this approach, a document is represented as a “bag” of its words, focusing only on **how many times each word appears**. The order of the words and their grammatical structure are ignored; what matters is the frequency of each term in the document, as depicted in the figure below:
+
+![Prakash, V. (2023, June 26). An introduction to Bag of Words (BoW). Medium. [https://medium.com/\@vamshiprakash001/an-introduction-to-bag-of-words-bow-c32a65293ccc](https://medium.com/@vamshiprakash001/an-introduction-to-bag-of-words-bow-c32a65293ccc "https://medium.com/@vamshiprakash001/an-introduction-to-bag-of-words-bow-c32a65293ccc")](images/clipboard-1331481523.png)
+
+The Bag of Words model is a simple and useful way to turn text into numbers, but it has a limitation since it treats all words with the same frequency as equally important, even if some are far more informative than others. For example, in a collection of product reviews, words like *“good”* or *“product”* might appear frequently in almost every review, but they don’t help us distinguish one review from another.
+
+This is where **TF-IDF (Term Frequency–Inverse Document Frequency)** comes in. It builds on Bag of Words by keeping track of term frequencies, but also scaling them down for words that are common across the whole dataset, while boosting words that are more unique and meaningful. In short, it captures word importance while also handling common words.
+
+Think of it like chatting with friends on campus. You might hear “Hey,” “What’s up,” and “See you later” dozens of times a day. These phrases are so common they don’t tell you *who* is talking or *what* the conversation is really about. But if someone says, *“The capstone presentation has been postponed!”*; that’s rare, specific, and meaningful.
+
+In documents, very frequent words act like this everyday chatter which are part of the background noise, but not what makes the exchange noteworthy. If we gave them too much weight, we’d miss the truly important content.
+
+Thus, the **TF-IDF** technique aids to noise reduction along with stop word removal, but by using **continuous weighting** instead of simply deleting words.
+
+-   **TF** measures how often a word appears in a given document (in this case, an individual X post).
+
+-   **IDF** measures how rare that word is across *all* documents (in this case, X posts).
+
+By multiplying them, TF-IDF highlights words that are **both frequent in a specific document and uncommon elsewhere**, helping us spot unique patterns and cluster similar posts. For short messages such as X posts and tweets, the IDF component often does most of the work.
+
+In short, TF-IDF filters out the constant buzz so the unique and important messages stand out. It tells us how important a word is in a document *relative to the entire collection* (the corpus).
+
+Back to our campus example: if you collected students’ feedback on summer programs, words like *students*, *campus*, *event*, and *university* might dominate your dataset. TF-IDF would lower their weight and boost rarer, more distinctive terms like *hackathon*, *multicultural*, or *bootcamp*.
+
+If you want to dive deeper into the math that happens under the hood, this video explains the equations e algorithms behind TF-IDF.
+
+{{< video https://www.youtube.com/watch?v=zLMEnNbdh4Q title="Term Frequency Inverse Document Frequency (TF-IDF) Explained?" aspect-ratio="21x9" >}}
+
+Now, let’s get back to our worksheet and see how implementing this final preprocessing technique will play out with our dataset.

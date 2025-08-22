@@ -1,0 +1,21 @@
+---
+title: "Text Preprocessing"
+format: html
+editor: visual
+---
+
+![Source:](images/gigo.jpg){width="351"}
+
+You've probably heard the phrase *"garbage in, garbage out"*, right? It's a core principle in computing: the quality of the output heavily depends on the quality of the input.
+
+This concept holds especially true in sentiment analysis and other natural language processing (NLP) tasks because human language is naturally messy, inconsistent, and often ambiguous.
+
+To perform accurate and reliable analysis, we need to "take out the garbage" first by preprocessing the text to clean, standardize, and structure the input data. This reduces noise and improves the model's accuracy. Key text preprocessing steps include normalization, stop words removal, tokenization and lemmatization, which are depicted and explained in the handout below:
+
+\<iframe width="50%" height="700" src="https://rcd.ucsb.edu/sites/default/files/2025-05/DLS-2025-05-TextPreprocessing_navy.pdf\>
+
+</iframe>
+
+Source: <https://perma.cc/L8U5-ZEXD>
+
+In the next episodes, we'll dive deeper into this NLP pipeline to prepare the data for sentiment analysis by exploring each of these steps with more detailed explanations, some examples, and exercises.

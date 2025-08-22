@@ -1,0 +1,56 @@
+---
+title: "Normalization & Noise Reduction"
+---
+
+Now that we’re familiar with the dataset and have briefly discussed the essential preprocessing steps, let’s take a deeper dive into the normalization process.
+
+As we've seen, the main goal of normalization is to remove irrelevant punctuation and content, and to standardize the data in order to reduce noise. Below are some key actions we’ll be performing during this workshop.
+
+| Action                      | Why it matters?                                                                                                                                                                                                                                                                                                                                                         |
+|-----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Remove URLs                 | URLs often contain irrelevant noise and don't contribute meaningful content for analysis.                                                                                                                                                                                                                                                                               |
+| Remove Punctuation& Symbols | Punctuation marks and other symbols including those extensively used in social media for mentioning (\@) or tagging (#) rarely adds value in most NLP tasks and can interfere with tokenization (as we further episodes) or word matching.                                                                                                                              |
+| Remove Numbers              | Numbers can be noise in most contexts unless specifically relevant (e.g., in financial or medical texts) don't contribute much to the analysis. However, in NLP tasks they are considered important, there might be considerations to replace them with dummy tokens (e.g. \<NUMBER\>), or even converting them into their written form (e.g, 100 becomes one hundred). |
+| Normalize Whitespaces       | Ensures consistent word boundaries and avoids issues during tokenization or frequency analysis.                                                                                                                                                                                                                                                                         |
+| Convert to Lowercase        | Prevents case sensitivity from splitting word counts due to case variations (e.g., “AppleTV” ≠ "APPLETV" ≠ “appleTV” ≠ “appletv”), improving model consistency.                                                                                                                                                                                                         |
+| Convert Emojis to text      | Emojis play a unique role in text analysis, as they often convey sentiment. Rather than removing them, we will convert them into their corresponding text descriptions.                                                                                                                                                                                                 |
+
+<div>
+
+## 🏋️Excercise
+
+In pairs or groups of three, identify the techniques you would consider using to normalize and reduce noise in the following sentence.
+
+"OMG!! 😱 I can't believe it... This is CRAZY!!! #unreal 🤯"
+
+<div>
+
+How many techniques could you identify?
+
+<div>
+
+Bingo if you got all five!
+
+Here is an example how the final text would look like:
+
+omg \[face scream in fear\] I can not believe it this is crazy unreal \[exploding head\]
+
+</div>
+
+</div>
+
+</div>
+
+A caveat when working with emojis is that they are figurative and highly contextual. Also, there may be important generational and cultural variability in how people interpret them. For example, some countries may use the Folded Hands Emoji (🙏) as a sign of thank you where others may seem as religious expression. Also, some may use it in a more positive way as gratitude, hope or respect, or in a negative context, where they might be demonstrating submission or begging.
+
+You might have noticed based on the example above that emojis are converted to their equivalent CLDR (common, human-readable name) based on this [emoji unicode list](https://www.unicode.org/emoji/charts/full-emoji-list.html), which are not as nuanced and always helpful to detect sentiment. While not always perfect, that is a required step to normalize the data.
+
+Let's go back to the worksheet to get our hands "dirty" with some cleaning and normalization. For this part of the lesson, we'll use the **`tidyverse`** and **`stringr`** packages to clean and transform the data, helping us make it more normalized, consistent, and ready for analysis. We'll be also using the `emoji` package.
+
+::: callout-note
+## 📑 Suggested Readings
+
+Bai, Q., Dan, Q., Mu, Z., & Yang, M. (2019). A systematic review of emoji: Current research and future perspectives. *Frontiers in psychology*, *10*, <https://doi.org/10.3389/fpsyg.2019.02221>
+
+Graham, P. V. (2024). Emojis: An Approach to Interpretation. *UC L. SF Commc'n and Ent. J.*, *46*, 123. <https://repository.uclawsf.edu/cgi/viewcontent.cgi?article=1850&context=hastings_comm_ent_law_journal>
+:::
