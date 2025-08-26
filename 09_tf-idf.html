@@ -266,6 +266,45 @@ ul.task-list li input[type="checkbox"] {
 <p>If you want to dive deeper into the math that happens under the hood, this video explains the equations e algorithms behind TF-IDF.</p>
 <div class="quarto-video ratio ratio-21x9"><iframe data-external="1" src="https://www.youtube.com/embed/zLMEnNbdh4Q" title="Term Frequency Inverse Document Frequency (TF-IDF) Explained?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <p>Now, let’s get back to our worksheet and see how implementing this final preprocessing technique will play out with our dataset.</p>
+<p>Interpreting the table output: <strong>(review and use examples from the dataset)</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 95%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>document</code></td>
+<td>The identifier of the document. In your case, it’s <code>1</code> for all rows, meaning all words are from the same “document” (probably your entire season 1 dataset).</td>
+</tr>
+<tr class="even">
+<td><code>word</code></td>
+<td>The token (word) in the document.</td>
+</tr>
+<tr class="odd">
+<td><code>n</code></td>
+<td>The <strong>raw count</strong> of how many times that word appears in the document. For example, <code>severance</code> appears 1802 times.</td>
+</tr>
+<tr class="even">
+<td><code>tf</code></td>
+<td><strong>Term frequency</strong>: the proportion of the word in the document. Calculated as <code>n / total words in the document</code>. For instance, <code>0.0876</code> for <code>severance</code> means ~8.76% of all words are “severance”.</td>
+</tr>
+<tr class="odd">
+<td><code>idf</code></td>
+<td><strong>Inverse document frequency</strong>: measures how unique the word is across all documents. Formula: <code>log(total_docs / docs_containing_word)</code>. Here it’s <code>0</code> because you only have <strong>one document</strong>, so all words appear in every document, making IDF zero.</td>
+</tr>
+<tr class="even">
+<td><code>tf_idf</code></td>
+<td><strong>TF-IDF score</strong>: <code>tf * idf</code>. It’s meant to highlight words that are frequent in a document but rare across documents. Here it’s 0 for all words because IDF is 0.</td>
+</tr>
+</tbody>
+</table>
 
 
 

@@ -244,11 +244,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>Now that we’re familiar with the dataset and have briefly discussed the essential preprocessing steps, let’s take a deeper dive into the normalization process.</p>
-<p>As we’ve seen, the main goal of normalization is to remove irrelevant punctuation and content, and to standardize the data in order to reduce noise. Below are some key actions we’ll be performing during this workshop.</p>
+<p>As we’ve seen, the main goal of normalization is to remove irrelevant punctuation and content, and to standardize the data in order to reduce noise. Below are some key actions we’ll be performing during this workshop:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 7%">
-<col style="width: 92%">
+<col style="width: 23%">
+<col style="width: 76%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -298,7 +298,56 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <p>A caveat when working with emojis is that they are figurative and highly contextual. Also, there may be important generational and cultural variability in how people interpret them. For example, some countries may use the Folded Hands Emoji (🙏) as a sign of thank you where others may seem as religious expression. Also, some may use it in a more positive way as gratitude, hope or respect, or in a negative context, where they might be demonstrating submission or begging.</p>
 <p>You might have noticed based on the example above that emojis are converted to their equivalent CLDR (common, human-readable name) based on this <a href="https://www.unicode.org/emoji/charts/full-emoji-list.html">emoji unicode list</a>, which are not as nuanced and always helpful to detect sentiment. While not always perfect, that is a required step to normalize the data.</p>
-<p>Let’s go back to the worksheet to get our hands “dirty” with some cleaning and normalization. For this part of the lesson, we’ll use the <strong><code>tidyverse</code></strong> and <strong><code>stringr</code></strong> packages to clean and transform the data, helping us make it more normalized, consistent, and ready for analysis. We’ll be also using the <code>emoji</code> package.</p>
+<p>Let’s go back to the worksheet to get our hands “dirty” with some cleaning and normalization. For this part of the lesson, we’ll use the (FIXME: <strong><code>tidyverse</code></strong> and <strong><code>stringr)</code></strong> packages to clean and transform the data, helping us make it more normalized, consistent, and ready for analysis. We’ll be also using the (FIXME: <code>emoji)</code> package.</p>
+<section id="expanding-contractions" class="level2">
+<h2 class="anchored" data-anchor-id="expanding-contractions">Expanding Contractions</h2>
+<p>Another important step is to properly handle contractions. In everyday language, we often shorten words: <em>can’t</em>, <em>don’t</em>, <em>it’s</em>. These make speech and writing flow more easily, but they can cause confusion for Natural Language Processing (NLP) models. Expanding contractions, such as changing <em>can’t</em> to <em>cannot</em> or <em>it’s</em> to <em>it is</em>, helps bring clarity and consistency to the text because NLP models treat <em>don’t</em> and <em>do not</em> as completely different words, even though they mean the same thing. Also, words like <em>cant</em>, <em>doesnt</em>, and <em>whats</em> lose their meaning. Expanding contractions reduces this inconsistency and ensures that both forms are recognized as the same concept. Expanding it to <em>is not happy</em> makes the negative sentiment explicit, which is especially important in tasks like sentiment analysis.</p>
+<p>So, while it may feel like a small step, it often leads to cleaner data, leaner models, and more accurate results. However, we first need to ensure that (Add info about apostrhophes — unicode</p>
+<section id="chatgpt-said" class="level6">
+<h6 class="anchored" data-anchor-id="chatgpt-said">ChatGPT said:</h6>
+<p>Yes — especially in social media or messy text, <strong>other characters can be used instead of the standard straight apostrophe (<code>'</code>)</strong>. This is very common and can break contraction expansion.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 11%">
+<col style="width: 74%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Character</th>
+<th>Unicode</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>'</code></td>
+<td>U+0027</td>
+<td>Standard straight apostrophe, used in most dictionaries</td>
+</tr>
+<tr class="even">
+<td><code>’</code></td>
+<td>U+2019</td>
+<td>Right single quotation mark (curly apostrophe)</td>
+</tr>
+<tr class="odd">
+<td><code>‘</code></td>
+<td>U+2018</td>
+<td>Left single quotation mark</td>
+</tr>
+<tr class="even">
+<td><code>ʼ</code></td>
+<td>U+02BC</td>
+<td>Modifier letter apostrophe</td>
+</tr>
+<tr class="odd">
+<td><code>`</code></td>
+<td>U+0060</td>
+<td>Grave accent (sometimes typed by mistake)</td>
+</tr>
+</tbody>
+</table>
+<p>Let’s go back to our Quarto document to perform some data cleaning and normalization.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -315,6 +364,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
