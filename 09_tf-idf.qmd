@@ -33,3 +33,14 @@ If you want to dive deeper into the math that happens under the hood, this video
 {{< video https://www.youtube.com/watch?v=zLMEnNbdh4Q title="Term Frequency Inverse Document Frequency (TF-IDF) Explained?" aspect-ratio="21x9" >}}
 
 Now, let’s get back to our worksheet and see how implementing this final preprocessing technique will play out with our dataset.
+
+Interpreting the table output: **(review and use examples from the dataset)**
+
+| Column     | Meaning                                                                                                                                                                                                                                                |
+|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `document` | The identifier of the document. In your case, it’s `1` for all rows, meaning all words are from the same “document” (probably your entire season 1 dataset).                                                                                           |
+| `word`     | The token (word) in the document.                                                                                                                                                                                                                      |
+| `n`        | The **raw count** of how many times that word appears in the document. For example, `severance` appears 1802 times.                                                                                                                                    |
+| `tf`       | **Term frequency**: the proportion of the word in the document. Calculated as `n / total words in the document`. For instance, `0.0876` for `severance` means \~8.76% of all words are “severance”.                                                    |
+| `idf`      | **Inverse document frequency**: measures how unique the word is across all documents. Formula: `log(total_docs / docs_containing_word)`. Here it’s `0` because you only have **one document**, so all words appear in every document, making IDF zero. |
+| `tf_idf`   | **TF-IDF score**: `tf * idf`. It’s meant to highlight words that are frequent in a document but rare across documents. Here it’s 0 for all words because IDF is 0.                                                                                     |
