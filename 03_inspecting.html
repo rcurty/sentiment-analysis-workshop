@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.7.34">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -73,10 +73,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-b427677ddefa5d93abdb57081dab58c5.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bcd2b1bedfb7e6841e09473cbef33a7a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-cb52da8bad8a14c3855bf8930318e331.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-12ef335da45b2d0a1c75e3422bd07d70.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -239,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11_fine-grained.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Fine-grained Sentiment Analysis</span></a>
+ <span class="menu-text">Fine-grained Emotion Analysis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -280,12 +280,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p><img src="images/mark-severance.png" class="img-fluid" width="436"></p>
 <p>After all, producers may also be watching the public’s reaction on social media to decide whether a second season is worth pursuing.</p>
-<p>The data we pulled for this exercise comes from real social media posts , meaning they are inherently messy, and we know that even before going in. Because it is derived from natural language, this kind of data is unstructured, often filled with inconsistencies and irregularities.</p>
+<p>The data we pulled for this exercise comes from real social media posts, meaning they are inherently messy, and we know that even before going in. Because it is derived from natural language, this kind of data is unstructured, often filled with inconsistencies and irregularities.</p>
 <p>Before we can apply any meaningful analysis or modeling, it’s crucial to visually inspect the data to get a sense of what we’re working with. Eyeballing the raw text helps us identify common patterns, potential noise, and areas that will require careful preprocessing to ensure the downstream tasks are effective and reliable.</p>
 <p>Now it is time to open RStudio and our example Quarto Project <code>[FIXME: Add Zenodo Link to Quarto Project]</code>.</p>
 <p><code>FIXME: &lt;add image - open project&gt;</code></p>
 <p>The folder contains a quarto document (.qmd) which will serve as our workshop workbook. In this document we will include the R code and comments related to the content we will explore. Let’s have that open in RStudio.</p>
-<p>Now, let’s load the <code>comments_s1.csv</code> file and take a quick look at it!</p>
+<p>Now, let’s load the <code>comments.csv</code> file and take a quick look at it!</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">

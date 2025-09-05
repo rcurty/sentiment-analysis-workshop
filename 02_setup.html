@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.7.34">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -38,10 +38,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-b427677ddefa5d93abdb57081dab58c5.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bcd2b1bedfb7e6841e09473cbef33a7a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-cb52da8bad8a14c3855bf8930318e331.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-12ef335da45b2d0a1c75e3422bd07d70.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -204,7 +204,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./11_fine-grained.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Fine-grained Sentiment Analysis</span></a>
+ <span class="menu-text">Fine-grained Emotion Analysis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -249,52 +249,24 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="environment">Environment</h3>
 <p>For this workshop we will be using R (4.4.1 or above) and RStudio (2024.04.2+764 or above).</p>
 </section>
-<section id="packages-check-all-against-the-new-version-of-the-worksheet" class="level3">
-<h3 class="anchored" data-anchor-id="packages-check-all-against-the-new-version-of-the-worksheet">Packages &lt;!–# #Check all against the new version of the worksheet</h3>
-</section>
-<section id="replace-many-with-spacyr" class="level3">
-<h3 class="anchored" data-anchor-id="replace-many-with-spacyr">replace many with <a href="https://cran.r-project.org/web/packages/spacyr/vignettes/using_spacyr.html">Spacyr</a>?–&gt;</h3>
-<p>**Missing PART OF SPEECH package**</p>
-<p><strong>spacyr</strong> provides a convenient R wrapper around the Python <a href="https://spacy.io/">spaCy</a> package. It offers easy access to the following functionality of spaCy:</p>
+<section id="packages" class="level3">
+<h3 class="anchored" data-anchor-id="packages">Packages</h3>
+<p>This workshop requires several packages to assist us with the tasks categorized below:</p>
 <ul>
-<li><p>parsing texts into tokens or sentences;</p></li>
-<li><p>lemmatizing tokens;</p></li>
-<li><p>parsing dependencies (to identify the grammatical structure of the sentence); and</p></li>
-<li><p>identifying, extracting, or consolidating token sequences that form named entities or noun phrases.</p></li>
+<li><p><a href="https://cran.r-project.org/package=emoji"><strong>emoji</strong></a>: Provides functions for converting text to emoji and vice versa, useful in text mining and social media analysis.</p></li>
+<li><p><a href="https://cran.r-project.org/package=ggplot2"><strong>ggplot2</strong></a>: A powerful data visualization package based on the Grammar of Graphics, part of the tidyverse.</p></li>
+<li><p><a href="https://cran.r-project.org/package=lexicon"><strong>lexicon</strong></a>: Offers sentiment lexicons, stopword lists, and other text data dictionaries for NLP and text mining tasks.</p></li>
+<li><p><a href="https://cran.r-project.org/package=sentimentr"><strong>sentimentr</strong></a>: Calculates sentiment scores by considering sentence structure, valence shifters, and negations.</p></li>
+<li><p><a href="https://cran.r-project.org/package=stopwords"><strong>stopwords</strong></a>: Provides multilingual stopword lists for text preprocessing in NLP pipelines.</p></li>
+<li><p><a href="https://cran.r-project.org/package=stringi"><strong>stringi</strong></a>: A comprehensive string processing package supporting Unicode and locale-aware operations.</p></li>
+<li><p><a href="https://cran.r-project.org/package=syuzhet"><strong>syuzhet</strong></a>: Extracts sentiment and emotion from text using lexicon-based methods, including NRC emotion lexicon for more fine-grained emotion analysis.</p></li>
+<li><p><a href="https://cran.r-project.org/package=textclean"><strong>textclean</strong></a>: Cleans and normalizes text data (e.g., expanding contractions, handling misspellings, and replacing characters).</p></li>
+<li><p><a href="https://cran.r-project.org/package=textstem"><strong>textstem</strong></a>: Performs text stemming and lemmatization for natural language processing.</p></li>
+<li><p><a href="https://cran.r-project.org/package=tidyr"><strong>tidyr</strong></a>: Provides tools for tidying data, including reshaping, pivoting, and separating columns.</p></li>
+<li><p><a href="https://cran.r-project.org/package=tidytext"><strong>tidytext</strong></a>: Enables text mining using tidy data principles, including tokenization and binding with tidyverse workflows.</p></li>
+<li><p><a href="https://cran.r-project.org/package=tidyverse"><strong>tidyverse</strong></a>: A collection of R packages (including dplyr, tidyr, ggplot2, readr, etc.) designed for data science workflows.<br>
+</p></li>
 </ul>
-<p>This workshop requires several packages to assist us with the tasks categorized below.</p>
-<p><em>Data Import &amp; Preparation</em></p>
-<ul>
-<li><p><strong><code>readr</code></strong>: Reads CSV and text files into R for processing.</p></li>
-<li><p><strong><code>dplyr</code></strong>: Used to clean, filter, and manipulate textual datasets.</p></li>
-<li><p><strong><code>tidyverse</code></strong>: A collection of core packages for data wrangling, including <code>dplyr</code>, <code>ggplot2</code>, <code>readr</code>, and more.</p></li>
-</ul>
-<p><em>Text Cleaning &amp; Preprocessing</em></p>
-<ul>
-<li><p><strong><code>textclean</code></strong>: Cleans and standardizes raw text (e.g., removes special characters, fixes typos).</p></li>
-<li><p><strong><code>tm</code></strong>: <strong>A full framework for text mining, including preprocessing steps like stopword removal and document-term matrix creation. #check if indeed needed</strong></p></li>
-<li><p><strong><code>stopwords</code></strong>: Provides lists of stop words for various languages to remove uninformative words.</p></li>
-<li><p><strong><code>stringr</code></strong>: Performs string operations such as pattern matching and substitution.</p></li>
-</ul>
-<p><em>Tokenization &amp; Lexical Processing</em></p>
-<ul>
-<li><p><strong><code>tidytext</code></strong>: Converts text into tidy data frames for tokenization and sentiment scoring.</p></li>
-<li><p><strong><code>textdata</code></strong>: Supplies pre-built sentiment lexicons for use with <code>tidytext</code> or <code>syuzhet</code>.</p></li>
-</ul>
-<p><em>Sentiment &amp; Emotion Analysis</em></p>
-<ul>
-<li><p><strong><code>syuzhet</code></strong>: Performs sentiment and emotion classification using lexicons. <!--# change to sentimentr instead - more robust --></p></li>
-<li><p><strong><code>emoji</code></strong>: Adds emoji symbols to datasets for use in sentiment/emotion analysis involving visual or symbolic content.</p></li>
-</ul>
-<p><em>Visualization</em></p>
-<ul>
-<li><p><strong><code>ggplot2</code></strong>: visualizes sentiment trends, word frequencies, and other metrics using customizable plots.</p></li>
-<li><p><strong><code>emojifont</code></strong>: Adds emojis to plots for a visual representation of emotional tone.</p></li>
-<li><p><strong><code>RColorBrewer</code></strong>: Provides color palettes for enhancing the clarity and appeal of sentiment visualizations.</p></li>
-</ul>
-<p><em>Package Management &amp; Development</em></p>
-<ul>
-<li><p><strong><code>devtools</code></strong>: Enables installation of development versions of packages (e.g., from GitHub) and simplifies package management.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -305,10 +277,9 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The code to install and load the required packages is included in the <code>sentiment-analysis.qmd</code> worksheet.</p>
+<p>The code to install and load the required packages is included in the <code>sentiment-analysis.qmd</code> worksheet. However, we will be installing them via the console for one-time setup.</p>
 </div>
-</div></li>
-</ul>
+</div>
 </section>
 </section>
 <section id="project-file-sample-data" class="level2">
@@ -326,7 +297,7 @@ ul.task-list li input[type="checkbox"] {
 <p>We compiled two datasets: one from April 8–10, 2022, capturing impressions from Season 1 finale, and another from March 20–22, 2025, following the Season 2 finale. In total, the dataset contains 1,786 posts for 2022 and 4,091 for 2025.</p>
 <p>To ensure compliance with <a href="https://gdpr-info.eu">GDPR regulations</a>, and to avoid the inadvertent release of sensitive information, we consolidated the raw data to include only two columns: a unique post ID and the content of the message. The final dataset is publicly available</p>
 <p>Whether you’re a longtime fan of the show or encountering it for the first time, this example offers a valuable case study in analyzing sentiment in unstructured public opinion data. Because data was pulled from social media it also serves as a guideline for examining more challenging text corpora, due to informal language, use of slang, emojis, hashtags, and abbreviations, as well as their variable length, inconsistent formatting, and inclusion of multimedia elements like images, videos, and links.</p>
-<p>This lesson is supplemented by a <a href="https://quarto.org/docs/projects/quarto-projects.html">Quarto project</a>, containing: 1) <code>sentiment-analysis.qmd</code> that we will be using as the workshop worksheet, 2) two data files with the text we will analyze <code>season1-comments.csv</code> and <code>season2-comments.csv</code>.</p>
+<p>This lesson is supplemented by a <a href="https://quarto.org/docs/projects/quarto-projects.html">Quarto project</a>, containing: 1) <code>worksheet.qmd</code> where we will be coding and visualizing the output of our tasks, and 2) a data file containing the posts we will analyze <code>comments.csv</code>.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -337,7 +308,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Access <add zenodo="" link="" when="" ready="">, ensure to download it, and save in an easy to locate place (e.g., Desktop).</add></p>
+<p>Access <add zenodo="" link="">, ensure to download it, and save in an easy to locate place (e.g., Desktop).</add></p>
 </div>
 </div>
 
