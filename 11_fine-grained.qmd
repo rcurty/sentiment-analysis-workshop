@@ -1,4 +1,5 @@
 ---
-title: "Fine-grained Sentiment Analysis"
+title: "Fine-grained Emotion Analysis"
 ---
 
+https://nrc-publications.canada.ca/eng/view/ft/?id=0b6a5b58-a656-49d3-ab3e-252050a7a88c

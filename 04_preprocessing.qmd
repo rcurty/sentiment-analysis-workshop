@@ -4,8 +4,6 @@ format: html
 editor: visual
 ---
 
-![Source:](images/gigo.jpg){width="351"}
-
 You've probably heard the phrase *"garbage in, garbage out"*, right? It's a core principle in computing: the quality of the output heavily depends on the quality of the input.
 
 This concept holds especially true in sentiment analysis and other natural language processing (NLP) tasks because human language is naturally messy, inconsistent, and often ambiguous.

@@ -16,14 +16,16 @@ Most models assign "sentiment scores" with values ranging from -1 to +1 to repre
 
 We will be using the package `sentimentr` ([more info](https://cran.r-project.org/web/packages/sentimentr/sentimentr.pdf)) to compute polarity classification and attribute sentiment scores to the posts included in our dataset. We chose this package due to its capability of handling negation (when negators appear nearby) and adjust to adverbs' magnitude also known as valence shifters, which are adverbs and words that modify the intensity or direction of sentiment. These include amplifiers (e.g., very, really, absolutely, totally), de-amplifiers or downtoners (e.g., barely, hardly, rarely, ), as well as adversative conjunctions (e.g., but, yet, however, although).
 
-In summary, this package, Each word in a sentence is checked against a dictionary of positive and negative words, like the Jockers dictionary in the lexicon package. Words that are positive get a +1, and words that are negative get a -1. We call these **polarized words**.
+In summary, each word in a sentence is checked against a dictionary of positive and negative words, like the Jockers dictionary in the lexicon package. Words that are positive get a +1, and words that are negative get a -1, which are called **polarized words**.
 
 Around each polarized word, we look at the nearby words (usually four before and two after) to see if they change the strength or direction of the sentiment. This group of words is called a **polarized context cluster**. Words in the cluster can be neutral, negators (like "not"), amplifiers (like "very"), or de-amplifiers (like "slightly"). Neutral words don’t affect the sentiment but still count toward the total word count.
 
-Punctuation like commas, colons, and semicolons is taken into account because it can separate ideas. The main polarized word’s sentiment is then adjusted by the surrounding words. Amplifiers make it stronger, de-amplifiers make it weaker, and negators can flip the sentiment. Multiple negators can cancel each other out, like “not unhappy” turning positive. <!--# consideration to bring back punctuation????-->
+The main polarized word’s sentiment is then adjusted by the surrounding words. Amplifiers make it stronger, de-amplifiers make it weaker, and negators can flip the sentiment. Multiple negators can cancel each other out, like “not unhappy” turning positive.
 
 Words like “but,” “however,” and “although” also influence the sentiment. Words before these are weighted less, and words after them are weighted more because they signal a shift in meaning. Finally, all the adjusted scores are combined and scaled by the sentence length to give a final sentiment score for the sentence.
 
-**Add info how to interpret it!**
+The example below shows the scores per sentence computed within their polarity range:
 
 ![](images/polarity-scores.png){width="195"}
+
+Let's explore whether the show's viewers felt positive, neutral, or negative about it.

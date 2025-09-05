@@ -3,6 +3,8 @@ title: "Final Considerations"
 editor: visual
 ---
 
+Demographics - slicing for analysis
+
 Caveats
 
 Challenges

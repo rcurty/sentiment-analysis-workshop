@@ -50,7 +50,7 @@ website:
       contents: 
         - text: "Basic Polarity"
           href: 10_polarity.qmd
-        - text: "Fine-grained Sentiment Analysis"
+        - text: "Fine-grained Emotion Analysis"
           href: 11_fine-grained.qmd
         - text: "Final Considerations"
           href: 12_considerations.qmd

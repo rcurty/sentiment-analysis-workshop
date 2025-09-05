@@ -8,71 +8,39 @@ title: "Setup & Dataset"
 
 For this workshop we will be using R (4.4.1 or above) and RStudio (2024.04.2+764 or above).
 
-### Packages \<!--# #Check all against the new version of the worksheet
+### Packages
 
-### replace many with [Spacyr](https://cran.r-project.org/web/packages/spacyr/vignettes/using_spacyr.html)?--\>
+This workshop requires several packages to assist us with the tasks categorized below:
 
-\*\*Missing PART OF SPEECH package\*\*
+-   [**emoji**](https://cran.r-project.org/package=emoji): Provides functions for converting text to emoji and vice versa, useful in text mining and social media analysis.
 
-**spacyr** provides a convenient R wrapper around the Python [spaCy](https://spacy.io/) package. It offers easy access to the following functionality of spaCy:
+-   [**ggplot2**](https://cran.r-project.org/package=ggplot2): A powerful data visualization package based on the Grammar of Graphics, part of the tidyverse.
 
--   parsing texts into tokens or sentences;
+-   [**lexicon**](https://cran.r-project.org/package=lexicon): Offers sentiment lexicons, stopword lists, and other text data dictionaries for NLP and text mining tasks.
 
--   lemmatizing tokens;
+-   [**sentimentr**](https://cran.r-project.org/package=sentimentr): Calculates sentiment scores by considering sentence structure, valence shifters, and negations.
 
--   parsing dependencies (to identify the grammatical structure of the sentence); and
+-   [**stopwords**](https://cran.r-project.org/package=stopwords): Provides multilingual stopword lists for text preprocessing in NLP pipelines.
 
--   identifying, extracting, or consolidating token sequences that form named entities or noun phrases.
+-   [**stringi**](https://cran.r-project.org/package=stringi): A comprehensive string processing package supporting Unicode and locale-aware operations.
 
-This workshop requires several packages to assist us with the tasks categorized below.
+-   [**syuzhet**](https://cran.r-project.org/package=syuzhet): Extracts sentiment and emotion from text using lexicon-based methods, including NRC emotion lexicon for more fine-grained emotion analysis.
 
-*Data Import & Preparation*
+-   [**textclean**](https://cran.r-project.org/package=textclean): Cleans and normalizes text data (e.g., expanding contractions, handling misspellings, and replacing characters).
 
--   **`readr`**: Reads CSV and text files into R for processing.
+-   [**textstem**](https://cran.r-project.org/package=textstem): Performs text stemming and lemmatization for natural language processing.
 
--   **`dplyr`**: Used to clean, filter, and manipulate textual datasets.
+-   [**tidyr**](https://cran.r-project.org/package=tidyr): Provides tools for tidying data, including reshaping, pivoting, and separating columns.
 
--   **`tidyverse`**: A collection of core packages for data wrangling, including `dplyr`, `ggplot2`, `readr`, and more.
+-   [**tidytext**](https://cran.r-project.org/package=tidytext): Enables text mining using tidy data principles, including tokenization and binding with tidyverse workflows.
 
-*Text Cleaning & Preprocessing*
+-   [**tidyverse**](https://cran.r-project.org/package=tidyverse): A collection of R packages (including dplyr, tidyr, ggplot2, readr, etc.) designed for data science workflows.\
 
--   **`textclean`**: Cleans and standardizes raw text (e.g., removes special characters, fixes typos).
+::: callout-important
+## 📦 Installing & Loading Packages
 
--   **`tm`**: **A full framework for text mining, including preprocessing steps like stopword removal and document-term matrix creation. #check if indeed needed**
-
--   **`stopwords`**: Provides lists of stop words for various languages to remove uninformative words.
-
--   **`stringr`**: Performs string operations such as pattern matching and substitution.
-
-*Tokenization & Lexical Processing*
-
--   **`tidytext`**: Converts text into tidy data frames for tokenization and sentiment scoring.
-
--   **`textdata`**: Supplies pre-built sentiment lexicons for use with `tidytext` or `syuzhet`.
-
-*Sentiment & Emotion Analysis*
-
--   **`syuzhet`**: Performs sentiment and emotion classification using lexicons. <!--# change to sentimentr instead - more robust -->
-
--   **`emoji`**: Adds emoji symbols to datasets for use in sentiment/emotion analysis involving visual or symbolic content.
-
-*Visualization*
-
--   **`ggplot2`**: visualizes sentiment trends, word frequencies, and other metrics using customizable plots.
-
--   **`emojifont`**: Adds emojis to plots for a visual representation of emotional tone.
-
--   **`RColorBrewer`**: Provides color palettes for enhancing the clarity and appeal of sentiment visualizations.
-
-*Package Management & Development*
-
--   **`devtools`**: Enables installation of development versions of packages (e.g., from GitHub) and simplifies package management.
-
-    ::: callout-important
-    ## 📦 Installing & Loading Packages
-
-    The code to install and load the required packages is included in the `sentiment-analysis.qmd` worksheet.
-    :::
+The code to install and load the required packages is included in the `sentiment-analysis.qmd` worksheet. However, we will be installing them via the console for one-time setup.
+:::
 
 ## Project File & Sample Data
 
@@ -92,10 +60,10 @@ To ensure compliance with [GDPR regulations](https://gdpr-info.eu), and to avoid
 
 Whether you're a longtime fan of the show or encountering it for the first time, this example offers a valuable case study in analyzing sentiment in unstructured public opinion data. Because data was pulled from social media it also serves as a guideline for examining more challenging text corpora, due to informal language, use of slang, emojis, hashtags, and abbreviations, as well as their variable length, inconsistent formatting, and inclusion of multimedia elements like images, videos, and links.
 
-This lesson is supplemented by a [Quarto project](https://quarto.org/docs/projects/quarto-projects.html), containing: 1) `sentiment-analysis.qmd` that we will be using as the workshop worksheet, 2) two data files with the text we will analyze `season1-comments.csv` and `season2-comments.csv`.
+This lesson is supplemented by a [Quarto project](https://quarto.org/docs/projects/quarto-projects.html), containing: 1) `worksheet.qmd` where we will be coding and visualizing the output of our tasks, and 2) a data file containing the posts we will analyze `comments.csv`.
 
 ::: callout-important
 # ⤵️ Download & Save Project File
 
-Access <add Zenodo Link when ready>, ensure to download it, and save in an easy to locate place (e.g., Desktop).
+Access <add Zenodo Link>, ensure to download it, and save in an easy to locate place (e.g., Desktop).
 :::

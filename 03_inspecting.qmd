@@ -6,7 +6,7 @@ title: "Inspecting the Data"
 
 After all, producers may also be watching the public’s reaction on social media to decide whether a second season is worth pursuing.
 
-The data we pulled for this exercise comes from real social media posts , meaning they are inherently messy, and we know that even before going in. Because it is derived from natural language, this kind of data is unstructured, often filled with inconsistencies and irregularities.
+The data we pulled for this exercise comes from real social media posts, meaning they are inherently messy, and we know that even before going in. Because it is derived from natural language, this kind of data is unstructured, often filled with inconsistencies and irregularities.
 
 Before we can apply any meaningful analysis or modeling, it’s crucial to visually inspect the data to get a sense of what we’re working with. Eyeballing the raw text helps us identify common patterns, potential noise, and areas that will require careful preprocessing to ensure the downstream tasks are effective and reliable.
 
@@ -16,9 +16,9 @@ Now it is time to open RStudio and our example Quarto Project `[FIXME: Add Zenod
 
 The folder contains a quarto document (.qmd) which will serve as our workshop workbook. In this document we will include the R code and comments related to the content we will explore. Let's have that open in RStudio.
 
-Now, let's load the `comments_s1.csv` file and take a quick look at it!
+Now, let's load the `comments.csv` file and take a quick look at it!
 
-``` R
+``` r
 ```
 
 ::: callout-note
