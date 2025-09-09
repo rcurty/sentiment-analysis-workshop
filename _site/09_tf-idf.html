@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -40,7 +74,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-ed20e031201a2f52d49632ac7658f477.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-fab3be873c4fe31c000d5c3ee27364e9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-848e77c8b95dff669cc57e6796f92e62.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -140,19 +174,13 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a href="./04_preprocessing.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Text Preprocessing</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04_preprocessing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Understanding preprocessing</span></a>
-  </div>
-</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05_normalization.html" class="sidebar-item-text sidebar-link">
@@ -188,7 +216,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
- <span class="menu-text">Detecting Reactions &amp; Emotions</span></a>
+ <span class="menu-text">Sentiment Analysis</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -197,13 +225,13 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10_polarity.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Basic Polarity</span></a>
+ <span class="menu-text">Polarity Analysis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11_fine-grained.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Fine-grained Sentiment Analysis</span></a>
+  <a href="./11_emotion-detection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Emotion Detection</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -219,13 +247,15 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
 <!-- main -->
 <main class="content column-page-right" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_preprocessing.html">Text Preprocessing</a></li><li class="breadcrumb-item"><a href="./09_tf-idf.html">Understanding Term &amp; Document Frequency</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Understanding Term &amp; Document Frequency</h1>
+<div class="quarto-title-block"><div><h1 class="title">Understanding Term &amp; Document Frequency</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -242,7 +272,6 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><img src="images/tf-idf.png" class="img-fluid"></p>
 <p>When performing NLP tasks, including sentiment analysis, we often use a text modeling technique called <strong>Bag of Words (BoW)</strong> to extract features from documents. In this approach, a document is represented as a “bag” of its words, focusing only on <strong>how many times each word appears</strong>. The order of the words and their grammatical structure are ignored; what matters is the frequency of each term in the document, as depicted in the figure below:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -263,9 +292,51 @@ ul.task-list li input[type="checkbox"] {
 <p>In short, TF-IDF filters out the constant buzz so the unique and important messages stand out. It tells us how important a word is in a document <em>relative to the entire collection</em> (the corpus).</p>
 <p>Back to our campus example: if you collected students’ feedback on summer programs, words like <em>students</em>, <em>campus</em>, <em>event</em>, and <em>university</em> might dominate your dataset. TF-IDF would lower their weight and boost rarer, more distinctive terms like <em>hackathon</em>, <em>multicultural</em>, or <em>bootcamp</em>.</p>
 <p>If you want to dive deeper into the math that happens under the hood, this video explains the equations e algorithms behind TF-IDF.</p>
-<div class="quarto-video ratio ratio-21x9"><iframe data-external="1" src="https://www.youtube.com/embed/zLMEnNbdh4Q" title="Term Frequency Inverse Document Frequency (TF-IDF) Explained?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/zLMEnNbdh4Q" title="Term Frequency Inverse Document Frequency (TF-IDF) Explained?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <p>Now, let’s get back to our worksheet and see how implementing this final preprocessing technique will play out with our dataset.</p>
+<p>Interpreting the table output: <strong>(review and use examples from the dataset)</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>document</code></td>
+<td>The identifier of the document. In your case, it’s <code>1</code> for all rows, meaning all words are from the same “document” (probably your entire season 1 dataset).</td>
+</tr>
+<tr class="even">
+<td><code>word</code></td>
+<td>The token (word) in the document.</td>
+</tr>
+<tr class="odd">
+<td><code>n</code></td>
+<td>The <strong>raw count</strong> of how many times that word appears in the document. For example, <code>severance</code> appears 1802 times.</td>
+</tr>
+<tr class="even">
+<td><code>tf</code></td>
+<td><strong>Term frequency</strong>: the proportion of the word in the document. Calculated as <code>n / total words in the document</code>. For instance, <code>0.0876</code> for <code>severance</code> means ~8.76% of all words are “severance”.</td>
+</tr>
+<tr class="odd">
+<td><code>idf</code></td>
+<td><strong>Inverse document frequency</strong>: measures how unique the word is across all documents. Formula: <code>log(total_docs / docs_containing_word)</code>. Here it’s <code>0</code> because you only have <strong>one document</strong>, so all words appear in every document, making IDF zero.</td>
+</tr>
+<tr class="even">
+<td><code>tf_idf</code></td>
+<td><strong>TF-IDF score</strong>: <code>tf * idf</code>. It’s meant to highlight words that are frequent in a document but rare across documents. Here it’s 0 for all words because IDF is 0.</td>
+</tr>
+</tbody>
+</table>
+<p>While TF-IDF plays a key role in text analysis, it is often less effective for sentiment analysis at the sentence level because it primarily captures term importance rather than the nuanced emotional or contextual meaning of words. TF-IDF is more suitable for tasks such as document classification, keyword extraction, or generating word clouds. For this reason, we will not be using TF-IDF in this workshop.”</p>
 
+
+<!-- -->
 
 
 </main> <!-- /main -->
@@ -356,6 +427,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       container: window.document.getElementById('quarto-embedded-source-code-modal')
     });
     clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
@@ -693,11 +815,58 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./10_polarity.html" class="pagination-link" aria-label="Basic Polarity">
-        <span class="nav-page-text">Basic Polarity</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./10_polarity.html" class="pagination-link" aria-label="Polarity Analysis">
+        <span class="nav-page-text">Polarity Analysis</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Understanding Term &amp; Document Frequency"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>When performing NLP tasks, including sentiment analysis, we often use a text modeling technique called **Bag of Words (BoW)** to extract features from documents. In this approach, a document is represented as a “bag” of its words, focusing only on **how many times each word appears**. The order of the words and their grammatical structure are ignored; what matters is the frequency of each term in the document, as depicted in the figure below:</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="ot">Prakash, V. (2023, June 26). An introduction to Bag of Words (BoW). Medium. [https://medium.com/\@vamshiprakash001/an-introduction-to-bag-of-words-bow-c32a65293ccc](https://medium.com/@vamshiprakash001/an-introduction-to-bag-of-words-bow-c32a65293ccc "https://medium.com/@vamshiprakash001/an-introduction-to-bag-of-words-bow-c32a65293ccc")</span><span class="co">](images/clipboard-1331481523.png)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>The Bag of Words model is a simple and useful way to turn text into numbers, but it has a limitation since it treats all words with the same frequency as equally important, even if some are far more informative than others. For example, in a collection of product reviews, words like *“good”* or *“product”* might appear frequently in almost every review, but they don’t help us distinguish one review from another.</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>This is where **TF-IDF (Term Frequency–Inverse Document Frequency)** comes in. It builds on Bag of Words by keeping track of term frequencies, but also scaling them down for words that are common across the whole dataset, while boosting words that are more unique and meaningful. In short, it captures word importance while also handling common words.</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>Think of it like chatting with friends on campus. You might hear “Hey,” “What’s up,” and “See you later” dozens of times a day. These phrases are so common they don’t tell you *who* is talking or *what* the conversation is really about. But if someone says, *“The capstone presentation has been postponed!”*; that’s rare, specific, and meaningful.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>In documents, very frequent words act like this everyday chatter which are part of the background noise, but not what makes the exchange noteworthy. If we gave them too much weight, we’d miss the truly important content.</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>Thus, the **TF-IDF** technique aids to noise reduction along with stop word removal, but by using **continuous weighting** instead of simply deleting words.</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**TF** measures how often a word appears in a given document (in this case, an individual X post).</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**IDF** measures how rare that word is across *all* documents (in this case, X posts).</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>By multiplying them, TF-IDF highlights words that are **both frequent in a specific document and uncommon elsewhere**, helping us spot unique patterns and cluster similar posts. For short messages such as X posts and tweets, the IDF component often does most of the work.</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>In short, TF-IDF filters out the constant buzz so the unique and important messages stand out. It tells us how important a word is in a document *relative to the entire collection* (the corpus).</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>Back to our campus example: if you collected students’ feedback on summer programs, words like *students*, *campus*, *event*, and *university* might dominate your dataset. TF-IDF would lower their weight and boost rarer, more distinctive terms like *hackathon*, *multicultural*, or *bootcamp*.</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>If you want to dive deeper into the math that happens under the hood, this video explains the equations e algorithms behind TF-IDF.</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>{{&lt; video https://www.youtube.com/watch?v=zLMEnNbdh4Q title="Term Frequency Inverse Document Frequency (TF-IDF) Explained?" aspect-ratio="10x5" &gt;}}</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>Now, let’s get back to our worksheet and see how implementing this final preprocessing technique will play out with our dataset.</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>Interpreting the table output: **(review and use examples from the dataset)**</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>| Column     | Meaning                                                                                                                                                                                                                                                |</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>|------------------|------------------------------------------------------|</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>| <span class="in">`document`</span> | The identifier of the document. In your case, it’s <span class="in">`1`</span> for all rows, meaning all words are from the same “document” (probably your entire season 1 dataset).                                                                                           |</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>| <span class="in">`word`</span>     | The token (word) in the document.                                                                                                                                                                                                                      |</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>| <span class="in">`n`</span>        | The **raw count** of how many times that word appears in the document. For example, <span class="in">`severance`</span> appears 1802 times.                                                                                                                                    |</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>| <span class="in">`tf`</span>       | **Term frequency**: the proportion of the word in the document. Calculated as <span class="in">`n / total words in the document`</span>. For instance, <span class="in">`0.0876`</span> for <span class="in">`severance`</span> means \~8.76% of all words are “severance”.                                                    |</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>| <span class="in">`idf`</span>      | **Inverse document frequency**: measures how unique the word is across all documents. Formula: `log(total_docs / docs_containing_word)`. Here it’s `0` because you only have **one document**, so all words appear in every document, making IDF zero. |</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>| <span class="in">`tf_idf`</span>   | **TF-IDF score**: <span class="in">`tf * idf`</span>. It’s meant to highlight words that are frequent in a document but rare across documents. Here it’s 0 for all words because IDF is 0.                                                                                     |</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>While TF-IDF plays a key role in text analysis, it is often less effective for sentiment analysis at the sentence level because it primarily captures term importance rather than the nuanced emotional or contextual meaning of words. TF-IDF is more suitable for tasks such as document classification, keyword extraction, or generating word clouds. For this reason, we will not be using TF-IDF in this workshop."</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
