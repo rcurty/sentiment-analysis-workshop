@@ -1,5 +1,13 @@
 ---
 title: "Introduction"
+author:
+  - name: Renata Curty
+    url: https://www.library.ucsb.edu/staff/renata-curty
+    orcid: 0000-0002-4615-6030
+date: last-modified
+citation: 
+  url: https://rcurty.github.io/sentiment-analysis-workshop
+categories: [data analysis, emotion detection, polarity analysis, sentiment analysis, text data analysis, text preprocessing]
 ---
 
 ![Image from Canva](images/sentiment.png){width="750"}
