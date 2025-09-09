@@ -4,14 +4,16 @@ format: html
 editor: visual
 ---
 
-![](images/tokenization.png){width="420"}
+![](images/tokenization.png){width="750"}
+
+Image from: [Muhammad Arslan Shahzad](https://muhammadarslanshahzad.medium.com/?source=post_page---byline--991983431bdc---------------------------------------) (2025)
 
 Tokenization in NLP differs from applications in security and blockchain. It corresponds to the action of breaking down text into smaller pieces (aka tokens). It is a foundational process in the digital world, allowing machines to interpret and analyze large volumes of text data. By dividing text into smaller, more manageable units, it enhances both the efficiency and accuracy of data processing.
 
 Text can be tokenized into sentences, word, subwords or even characters, depending on project goals and analysis plan. Here is a summary of these approaches:
 
 | **Type**                   | **Description**                                                                                                                 | **Example**                                                                | **Common Use Cases**                                                                                  |
-|----------------------------|---------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
+|-----------------|----------------------|-----------------|-----------------|
 | **Sentence Tokenization**  | Splits text into individual sentences                                                                                           | `"I love NLP. It's fascinating!"` → `["I love NLP.", "It's fascinating!"]` | Ideal for tasks like summarization, machine translation, and sentiment analysis at the sentence level |
 | **Word Tokenization**      | Divides text into individual words                                                                                              | `"I love NLP"` → `["I", "love", "NLP"]`                                    | Works well for languages with clear word boundaries, such as English                                  |
 | **Character Tokenization** | Breaks text down into individual characters                                                                                     | `"NLP"` → `["N", "L", "P"]`                                                | Useful for languages without explicit word boundaries or for very fine-grained text analysis          |
@@ -19,7 +21,7 @@ Text can be tokenized into sentences, word, subwords or even characters, dependi
 
 Some might recall, that along with the popularization and excitement around ChaGPT, there were also a few warnings about the LLMs failing in answering correctly how many "r" letters does the word strawberry have. Can you guess why?
 
-![Image from: OpenAI Coomunity Forum [\[829618\]](https://community.openai.com/t/incorrect-count-of-r-characters-in-the-word-strawberry/829618)](images/chat-strawberry.jpeg){width="397"}
+![Image from: OpenAI Coomunity Forum [\[829618\]](https://community.openai.com/t/incorrect-count-of-r-characters-in-the-word-strawberry/829618)](images/chat-strawberry.jpeg){width="300"}
 
 Although this issue has been resolved in later versions of the model, it was originally caused by *subword tokenization*. In this case, the tokenizer would split “strawberry” into “st,” “raw,” and “berry.” As a result, the model would incorrectly count the letter “r” only within the “berry” token. This illustrates how the tokenization approach directly affects how words are segmented and how their components are interpreted by the model.
 
@@ -41,12 +43,10 @@ While we humans don’t have much trouble making that distinction, computers sti
 
 Both are adjectives, but in context with other words, POS tagging and embeddings lets models distinguish *emotional sweet* from *flavor sweet*. This because, embeddings connects emotional “sweet” with “kind” or “thoughtful,” not just sugar-related words.
 
-The good news is that we don't need to get into into the nitty-gritty about POS and word embeddings for now, because [`spacyR`](https://spacyr.quanteda.io/articles/using_spacyr.html) leverages these functionalities for us, helping sharpen sentiment predictions. You are also welcome to explore our Intro to Text Preprocessing **\[fixme: add link\]** lesson for more information.
+Let's complete the quick quiz below and then move back to our worksheet to remove stop words.
 
-Let's complete the quick quiz below and then move back to our worksheet.
-
-::: callout-note
-## 🏋️ Exercise
+::: {.callout-note icon="false"}
+## 🧠 Knowledge check
 
 Which statement is **true** about its corresponding NLP technique?
 
@@ -58,9 +58,11 @@ c\) *Word Embeddings*: Represent words as dense numerical vectors that capture s
 
 d\) All of the above
 
-<div>
+::: {.callout-note icon="false" collapse="true"}
+## Solution
 
 Correct: d
-
-</div>
 :::
+:::
+
+Let's go back and apply tokenization to our dataset:

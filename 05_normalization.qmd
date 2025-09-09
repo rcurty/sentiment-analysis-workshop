@@ -7,45 +7,35 @@ Now that we’re familiar with the dataset and have briefly discussed the essent
 As we've seen, the main goal of normalization is to remove irrelevant punctuation and content, and to standardize the data in order to reduce noise. Below are some key actions we’ll be performing during this workshop:
 
 | Action                       | Why it matters?                                                                                                                                                                                                                                                                                                                                                         |
-|----------------|-----------------------------------------------------------|
+|------------------|------------------------------------------------------|
 | Remove URLs                  | URLs often contain irrelevant noise and don't contribute meaningful content for analysis.                                                                                                                                                                                                                                                                               |
-| Remove Punctuation & Symbols | Punctuation marks and other symbols including those extensively used in social media for mentioning (\@) or tagging (#) rarely adds value in most NLP tasks and can interfere with tokenization (as we further episodes) or word matching.                                                                                                                              |
+| Remove Punctuation & Symbols | Punctuation marks and other symbols including those extensively used in social media for mentioning (\@) or tagging (#) rarely adds value in most NLP tasks and can interfere with tokenization (as we will cover in a bit) or word matching.                                                                                                                           |
 | Remove Numbers               | Numbers can be noise in most contexts unless specifically relevant (e.g., in financial or medical texts) don't contribute much to the analysis. However, in NLP tasks they are considered important, there might be considerations to replace them with dummy tokens (e.g. \<NUMBER\>), or even converting them into their written form (e.g, 100 becomes one hundred). |
 | Normalize Whitespaces        | Ensures consistent word boundaries and avoids issues during tokenization or frequency analysis.                                                                                                                                                                                                                                                                         |
 | Convert to Lowercase         | Prevents case sensitivity from splitting word counts due to case variations (e.g., “AppleTV” ≠ "APPLETV" ≠ “appleTV” ≠ “appletv”), improving model consistency.                                                                                                                                                                                                         |
 | Convert Emojis to Text       | Emojis play a unique role in text analysis, as they often convey sentiment. Rather than removing them, we will convert them into their corresponding text descriptions.                                                                                                                                                                                                 |
 
-<div>
+::: {.callout-note icon="false"}
+## 🧠 Knowledge Check
 
-## 🏋️Excercise
+In pairs or groups of three, identify the techniques you would consider using to normalize and reduce noise in the following sentence:
 
-In pairs or groups of three, identify the techniques you would consider using to normalize and reduce noise in the following sentence.
+*"OMG!! 😱 I can't believe it... This is CRAZY!!! #unreal 🤯"*
 
-"OMG!! 😱 I can't believe it... This is CRAZY!!! #unreal 🤯"
+::: {.callout-note icon="false" collapse="true"}
+## Solution
 
-<div>
+How many techniques could you identify? Bingo if you have spotted four!
 
-How many techniques could you identify?
+After applying them the sentence should look like:
 
-<div>
-
-Bingo if you got all five!
-
-Here is an example how the final text would look like:
-
-omg \[face scream in fear\] I can not believe it this is crazy unreal \[exploding head\]
-
-</div>
-
-</div>
-
-</div>
+*omg \[face scream in fear\] I can not believe it this is crazy unreal \[exploding head\]*
+:::
+:::
 
 A caveat when working with emojis is that they are figurative and highly contextual. Also, there may be important generational and cultural variability in how people interpret them. For example, some countries may use the Folded Hands Emoji (🙏) as a sign of thank you where others may seem as religious expression. Also, some may use it in a more positive way as gratitude, hope or respect, or in a negative context, where they might be demonstrating submission or begging.
 
 You might have noticed based on the example above that emojis are converted to their equivalent CLDR (common, human-readable name) based on this [emoji unicode list](https://www.unicode.org/emoji/charts/full-emoji-list.html), which are not as nuanced and always helpful to detect sentiment. While not always perfect, that is a required step to normalize the data.
-
-Let's go back to the worksheet to get our hands "dirty" with some cleaning and normalization. For this part of the lesson, we'll use the (FIXME: **`tidyverse`** and **`stringr)`** packages to clean and transform the data, helping us make it more normalized, consistent, and ready for analysis. We'll be also using the (FIXME: `emoji)` package.
 
 ## Expanding Contractions
 
@@ -54,16 +44,71 @@ Another important step is to properly handle contractions. In everyday language,
 So, while it may seem like a small step, it often leads to cleaner data, leaner models, and more accurate results. First, however, we need to ensure that apostrophes are handled correctly. It's not uncommon to encounter messy text where nonstandard characters are used in place of the straight apostrophe ('). Such inconsistencies are very common and can disrupt contraction expansion.
 
 | Character | Unicode | Notes                                                   |
-|-------------|-------------|----------------------------------------------|
+|-----------------|-----------------|--------------------------------------|
 | `'`       | U+0027  | Standard straight apostrophe, used in most dictionaries |
 | `’`       | U+2019  | Right single quotation mark (curly apostrophe)          |
 | `‘`       | U+2018  | Left single quotation mark                              |
 | `ʼ`       | U+02BC  | Modifier letter apostrophe                              |
 | `` ` ``   | U+0060  | Grave accent (sometimes typed by mistake)               |
 
-Let's go back to our Quarto document to perform some data cleaning and normalization.
+Alright, let's go back to our worksheet to get our hands "dirty" with some cleaning and normalization, helping us make it more normalized, consistent, and ready for analysis.
 
-::: callout-note
+``` r
+# Normalization
+
+# Normalize apostrophes
+comments$text <- gsub("[’‘ʼ`]", "'", comments$text)
+
+# Expand contractions
+comments <- comments %>%
+  mutate(text_expand = replace_contraction(text))
+
+# Convert to lowercase
+comments <- comments %>%
+  mutate(text_lower = tolower(text_expand))
+
+# Remove URLs
+comments <- comments %>%
+  mutate(text_nourl = str_replace_all(text_lower, "http[s]?://[^\\s,]+|www\\.[^\\s,]+", ""))
+
+# Remove mentions (@username)
+comments <- comments %>%
+  mutate(text_nomention = str_replace_all(text_nourl, "@[A-Za-z0-9_]+", ""),
+         text_nomention = str_squish(text_nomention))
+
+# Remove punctuation & numbers
+comments <- comments %>%
+  mutate(text_cleaned = text_nomention %>%
+           str_replace_all("[[:punct:]“”‘’–—…|]", "") %>%
+           #str_replace_all("[^\\w\\s.!?]", "") %>% #preserves sentence boundaries 
+           str_replace_all("[[:digit:]]", "") %>%
+           str_replace_all("(.)\\1{2,}", "\\1") %>%  # collapse rep. letters eg. "Amaaazing"
+           str_squish()
+  )
+
+# Convert emojis to text
+emoji_dict <- emo::jis[, c("emoji", "name")]
+emoji_dict$name <- paste0("[", emoji_dict$name, "]")
+
+replace_emojis <- function(text, emoji_dict) {
+  stri_replace_all_fixed(
+    str = text, 
+    pattern = emoji_dict$emoji, 
+    replacement = emoji_dict$name, 
+    vectorize_all = FALSE
+  )
+}
+
+comments <- comments %>%
+  mutate(text_noemoji = replace_emojis(text_cleaned, emoji_dict),
+         text = str_replace_all(text_noemoji, "[^[:alpha:][:space:]]", ""),
+         text = str_squish(text))
+
+# Save normalized data
+write_csv(comments %>% select(id, text), "normalized.csv")
+```
+
+::: {.callout-note icon="false"}
 ## 📑 Suggested Readings
 
 Bai, Q., Dan, Q., Mu, Z., & Yang, M. (2019). A systematic review of emoji: Current research and future perspectives. *Frontiers in psychology*, *10*, <https://doi.org/10.3389/fpsyg.2019.02221>

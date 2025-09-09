@@ -2,7 +2,7 @@
 title: "Introduction"
 ---
 
-![Image from Canva](images/sentiment.png){width="370"}
+![Image from Canva](images/sentiment.png){width="750"}
 
 ## What is Sentiment Analysis?
 
@@ -22,8 +22,8 @@ By the end of this workshop, participants will be able to:
 
 -   Explain the fundamental principles and real-world applications of sentiment analysis.
 
--   Apply essential text pre-processing techniques (e.g, cleaning, stopwords removal, lemmatization, tokenization, tf-idf) to reduce noise and prepare textual data for sentiment analysis.
+-   Apply essential text pre-processing techniques to reduce noise and prepare textual data for sentiment analysis.
 
--   Perform sentiment analysis in R using both polarity-based and more fine-grained emotion extraction methods.
+-   Perform sentiment analysis in R using lexicon-based approaches (polarity and emotion detection).
 
 Ready to dive in?

@@ -2,7 +2,7 @@
 title: "Inspecting the Data"
 ---
 
-![](images/mark-severance.png){width="436"}
+![](images/mark-severance.png){fig-align="center" width="750"}
 
 After all, producers may also be watching the public’s reaction on social media to decide whether a second season is worth pursuing.
 
@@ -10,18 +10,18 @@ The data we pulled for this exercise comes from real social media posts, meaning
 
 Before we can apply any meaningful analysis or modeling, it’s crucial to visually inspect the data to get a sense of what we’re working with. Eyeballing the raw text helps us identify common patterns, potential noise, and areas that will require careful preprocessing to ensure the downstream tasks are effective and reliable.
 
-Now it is time to open RStudio and our example Quarto Project `[FIXME: Add Zenodo Link to Quarto Project]`.
+It is time to open RStudio and our example! The folder you have saved contains a quarto document (.qmd) which will serve as our workshop workbook. In this document we will include the R code and comments related to the content we will explore. Let's have that open in RStudio.
 
-`FIXME: <add image - open project>`
-
-The folder contains a quarto document (.qmd) which will serve as our workshop workbook. In this document we will include the R code and comments related to the content we will explore. Let's have that open in RStudio.
-
-Now, let's load the `comments.csv` file and take a quick look at it!
+Let's install the required packages (via the console) and load them. Next, let's inspect the `comments.csv` file and take a quick look at it!
 
 ``` r
+# Inspecting the data
+
+comments <- read_csv("comments.csv")
+head(comments$text)
 ```
 
-::: callout-note
+::: {.callout-note icon="false"}
 # 💬 Discussion
 
 Working in pairs or trios, look briefly at the data and discuss the challenges that may arise when attempting to analyze this dataset on its current form. What could be potential areas of friction that could compromise the results?

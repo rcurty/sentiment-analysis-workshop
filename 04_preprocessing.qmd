@@ -1,5 +1,5 @@
 ---
-title: "Text Preprocessing"
+title: "Preprocessing Steps"
 format: html
 editor: visual
 ---
@@ -10,10 +10,10 @@ This concept holds especially true in sentiment analysis and other natural langu
 
 To perform accurate and reliable analysis, we need to "take out the garbage" first by preprocessing the text to clean, standardize, and structure the input data. This reduces noise and improves the model's accuracy. Key text preprocessing steps include normalization, stop words removal, tokenization and lemmatization, which are depicted and explained in the handout below:
 
-\<iframe width="50%" height="700" src="https://rcd.ucsb.edu/sites/default/files/2025-05/DLS-2025-05-TextPreprocessing_navy.pdf\>
+<iframe width="50%" height="600" src="https://rcd.ucsb.edu/sites/default/files/2025-05/DLS-2025-05-TextPreprocessing_navy.pdf">
 
 </iframe>
 
-Source: <https://perma.cc/L8U5-ZEXD>
+Source: Data Literacy Series <https://perma.cc/L8U5-ZEXD>
 
-In the next episodes, we'll dive deeper into this NLP pipeline to prepare the data for sentiment analysis by exploring each of these steps with more detailed explanations, some examples, and exercises.
+In the next episodes, we'll dive deeper into this NLP pipeline to prepare the data for sentiment analysis by exploring each of these steps with more detailed explanations.
