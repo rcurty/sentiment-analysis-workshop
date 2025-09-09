@@ -15,6 +15,8 @@ Another complication is to deal with *sarcasm* and irony which can completely in
 
 *Implicit sentiment* may be present even when emotional words are absent, as in “The waiter ignored us for 30 minutes before taking our order.” These factors collectively make sentiment analysis a useful but inherently imperfect tool for understanding human language and emotion.
 
+**FIXME: In fact, if we inspect scores and emotions attributed to some user posts, we might disagree with some of the results for these very limitations. add examples!**
+
 However, it is important to emphasize that as described before, we have only explored sentiment analysis through a lexicon-based approach, and that, as illustrated in Figure ? below, there are other methods, including machine learning, deep learning and their combination (hybrid), that can be employed to extract emotions from text, including user generated content, all with their own limitations and challenges.
 
 ![Figure ?. Overview of sentiment analysis methods, applications, and challenges from (Mao, Liu, & Zhang, 2024).](images/wheel_NLP.jpg){fig-align="center" width="500"}
