@@ -29,3 +29,30 @@ After applying lemmatization, the sentence should look like:
 *Note*: Adverbs and prepositions usually remain unchanged because they are already in their simplest dictionary form and do not have a more basic lemma.
 :::
 :::
+
+Alright, back to our pipeline, we will now convert words to their dictionary form, do some 
+
+```r
+# Lemmatize
+tokens_nostop <- tokens_nostop %>%
+  mutate(word_lemmatized = lemmatize_words(word))
+
+# Remove single-character words (NOT SURE IF NEEDED)
+tokens_nostop <- tokens_nostop %>%
+  filter(str_length(word_lemmatized) > 1)
+
+# Reconstruct cleaned text per ID 
+# (ensure all IDs are preserved, even if empty)
+preprocessed <- data %>%
+  select(id) %>%
+  left_join(
+    tokens_nostop %>%
+      group_by(id) %>%
+      summarise(text_ready = paste(word_lemmatized, collapse = " "), .groups = "drop"),
+    by = "id"
+  ) %>%
+  mutate(text_ready = replace_na(text_ready, ""))
+
+# Save to CSV
+write_csv(preprocessed, "preprocessed.csv")
+```

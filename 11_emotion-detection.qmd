@@ -21,4 +21,101 @@ You may explore NRC's lexicon Tableau dashboard to explore words associated with
 ```{=html}
 <iframe width="780" height="500" src="https://public.tableau.com/views/NRC-Emotion-Lexicon-viz1/NRCEmotionLexicon-viz1?:embed=y&:loadOrderID=0&:display_count=no&:showVizHome=no" title="NRC Lexicon Interactive Visualization"></iframe>
 ```
+
+Now that we have a better understandig of this package, let's get back to business and perform emotion detection to our data:
+
+```r
+sentences <- get_sentences(preprocessed$text_ready)
+# Compute NRC sentiment per sentence
+emotion_score <- get_nrc_sentiment(sentences)
+
+# Grouping so ID to match sentences to their original row
+preprocessed$sentence <- sentences
+emotion_data <- bind_cols(preprocessed, emotion_score)
+
+# Summarize overall emotions
+emotion_summary <- emotion_summary %>%
+  arrange(desc(count)) %>%             # sort data by count
+  mutate(emotion = fct_inorder(emotion))  # lock factor order
+
+# Plot overall emotion
+ggplot(emotion_summary, aes(x = emotion, y = count, fill = emotion)) +
+  geom_col(show.legend = FALSE) +
+  geom_text(aes(label = count), 
+            hjust = -0.2,   # position slightly outside the bar
+            size = 2) +     # font size
+  scale_fill_manual(values = brewer.pal(10, "Paired")) + # we need more than 8 colors
+  theme_minimal(base_size = 12) +
+  labs(title = "Overall Emotion Distribution",
+       x = "Emotion",
+       y = "Total Count") +
+  coord_flip()
+
+# Summary by season
+# Create season column
+emotion_seasons <- emotion_data %>%
+  mutate(season = ifelse(grepl("^s1_", id), "s1",
+                  ifelse(grepl("^s2_", id), "s2", NA)))
+
+# Summarize emotions per season
+emotion_by_season <- emotion_seasons %>%
+  group_by(season) %>%
+  summarise(across(anger:positive, sum, na.rm = TRUE))
+
+emotion_by_season
+
+# Convert to long format for plotting
+emotion_long <- emotion_by_season %>%
+  pivot_longer(
+    cols = anger:positive,
+    names_to = "emotion",
+    values_to = "count"
+  )
+
+# Plot horizontal bars to compare seasons
+ggplot(emotion_long, 
+       aes(x = reorder(emotion, -count), y = count, fill = season)) +
+  geom_col(position = "dodge") +
+  geom_text(aes(label = count), 
+            hjust = -0.2,   # position slightly outside the bar
+            size = 2) +     # font size
+  scale_fill_brewer(palette = "Set2") +
+  theme_minimal(base_size = 12) +
+  labs(
+    title = "Emotion Distribution by Season", 
+    x = "Emotion", 
+    y = "Total Count",
+    fill = "Season"
+  ) +
+  coord_flip()
+
+# Co-occurence Heatmap 
+emotion_matrix <- emotion_data %>%
+  select(anger:trust)  # keeping only emotion columns; removing positive and negative
+
+# Compute co-occurrence matrix
+co_occurrence <- cor(emotion_matrix, method = "pearson")  # values from -1 to 1
+
+# Remove diagonal color
+diag(co_occurrence) <- NA
+
+# Convert to long format for ggplot
+co_occurrence_long <- as.data.frame(as.table(co_occurrence))
+colnames(co_occurrence_long) <- c("emotion1", "emotion2", "correlation")
+
+# Plot heatmap
+ggplot(co_occurrence_long, aes(x = emotion1, y = emotion2, fill = correlation)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient2(mid = "white", high = "red", midpoint = 0,
+                       limits = c(0,1), na.value = "grey95", name = "Correlation") +
+  theme_minimal(base_size = 12) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = "Emotion Co-occurrence Heatmap",
+       x = "Emotion",
+       y = "Emotion")
+  
+# Save results
+write_csv(emotion_data, "sentiment_emotion_results.csv")
+```
+
 You might be wondering: if the **`syuzhet`** package also computes polarity, why did we choose **`sentimentr`** in our pipeline? The reason is that syuzhet does not inherently account for valence shifters. In the original syuzhet implementation, words are scored in isolation—so “good” = +1, “bad” = −1—regardless of nearby negations or intensifiers. For example, “not good” would still be counted as +1. Because **`sentimentr`** adjusts sentiment scores for negators and amplifiers, polarity results are more nuanced, robust, and reliable.

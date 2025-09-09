@@ -46,6 +46,12 @@ You might be wondering: *Wait... why are words like "very" and "not" excluded? A
 
 Now, let’s return to the worksheet and see how we can put that into practice.
 
+``` r
+# Remove stopwords
+tokens_nostop <- tokens %>%
+  filter(!word %in% stopwords("en"))
+```
+
 ::: {.callout-note icon="false"}
 # 📑 **Suggested Reading**
 

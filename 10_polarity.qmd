@@ -27,3 +27,51 @@ The main polarized word’s sentiment is then adjusted by the surrounding words.
 Words like “but,” “however,” and “although” also influence the sentiment. Words before these are weighted less, and words after them are weighted more because they signal a shift in meaning. Finally, all the adjusted scores are combined and scaled by the sentence length to give a final sentiment score for the sentence.
 
 With this approach, we can explore more confidently whether the show’s viewers felt positive, neutral, or negative about it.
+
+```r
+# Read data
+
+preprocessed <- read_csv("preprocessed.csv")
+
+head(preprocessed$text_ready)
+
+# Compute sentiment per row/case
+sentiment_scores <- sentiment_by(preprocessed$text_ready)
+
+# Add scores and labels to original dataset
+polarity <- preprocessed %>%
+  mutate(score = sentiment_scores$ave_sentiment,
+         sentiment_label = case_when(
+           score > 0.1  ~ "positive",
+           score < -0.1 ~ "negative",
+           TRUE         ~ "neutral"
+         ))
+
+head(polarity)
+
+# Visualize
+
+ggplot(polarity, aes(x = score)) +
+  geom_histogram(binwidth = 0.1, fill = "skyblue", color = "white") +
+  theme_minimal() +
+  labs(title = "Sentiment Score Distribution", x = "Average Sentiment", y = "Count")
+
+table(polarity$sentiment_label)
+
+# Check for extreme cases
+head(polarity[order(polarity$score), ], 10)   # Most negative
+head(polarity[order(-polarity$score), ], 10)  # Most positive
+
+# Extract season info (s1, s2) into a new column
+polarity_seasons <- polarity %>%
+  mutate(season = str_extract(id, "s\\d+"))
+
+# Histogram comparison by season
+ggplot(polarity_seasons, aes(x = score, fill = season)) +
+  geom_histogram(binwidth = 0.1, position = "dodge", color = "white") +
+  theme_minimal() +
+  labs(title = "Sentiment Score Distribution by Season", 
+       x = "Average Sentiment", y = "Count") +
+  scale_fill_brewer(palette = "Set1")
+```
+
