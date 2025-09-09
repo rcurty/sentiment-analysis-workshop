@@ -66,3 +66,21 @@ Correct: d
 :::
 
 Let's go back and apply tokenization to our dataset:
+
+```
+# Read and check normalized dataset
+normalized <- read_csv("normalized.csv")
+
+head(normalized$text)
+
+# Let's make sure we read normalized.csv with correct column types
+data <- read_csv("normalized.csv",
+                 col_types = cols(
+                   id = col_character(),
+                   text = col_character()
+                 ))
+
+# Tokenize text
+tokens <- data %>%
+  unnest_tokens(word, text)
+```
