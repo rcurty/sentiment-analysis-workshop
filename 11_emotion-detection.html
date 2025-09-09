@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Introduction – Introduction to Sentiment Analysis in R</title>
+<title>Emotion Detection – Introduction to Sentiment Analysis in R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./02_setup.html" rel="next">
+<link href="./12_considerations.html" rel="next">
+<link href="./10_polarity.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -143,7 +144,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_index.html">Introduction</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_polarity.html">Sentiment Analysis</a></li><li class="breadcrumb-item"><a href="./11_emotion-detection.html">Emotion Detection</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -157,7 +158,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01_index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./01_index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction</span></a>
   </div>
 </li>
@@ -216,13 +217,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Sentiment Analysis</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10_polarity.html" class="sidebar-item-text sidebar-link">
@@ -231,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11_emotion-detection.html" class="sidebar-item-text sidebar-link">
+  <a href="./11_emotion-detection.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Emotion Detection</span></a>
   </div>
 </li>
@@ -248,27 +249,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#what-is-sentiment-analysis" id="toc-what-is-sentiment-analysis" class="nav-link active" data-scroll-target="#what-is-sentiment-analysis">What is Sentiment Analysis?</a></li>
-  <li><a href="#learning-goals" id="toc-learning-goals" class="nav-link" data-scroll-target="#learning-goals">Learning Goals</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content">
+<main class="content column-page-right" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_polarity.html">Sentiment Analysis</a></li><li class="breadcrumb-item"><a href="./11_emotion-detection.html">Emotion Detection</a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title">Introduction</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title">Emotion Detection</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
 
-<div class="quarto-title-meta column-body">
+<div class="quarto-title-meta column-page-right">
 
     
   
@@ -280,36 +274,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p>Emotion detection is another NLP technique aimed at identifying and quantifying human emotions expressed in text, which builds directly on traditional sentiment polarity analysis focusing on capturing more nuanced emotional states. While polarity classification identifies whether a text expresses positive, negative, or neutral sentiment, it does not capture the specific type of emotion behind that sentiment. For example, two negative texts could express very different emotions—one might convey anger, while another reflects sadness. By extending polarity into multiple emotional dimensions, emotion detection provides more granular and more actionable insights into how people truly feel.</p>
+<p>We will use the <code>syuzhet</code> package (<a href="https://cran.r-project.org/web/packages/syuzhet/vignettes/syuzhet-vignette.html">more info</a>) to to help us classify emotions detected in our dataset. The name “syuzhet” is inspired by the work of Russian Formalists Victor Shklovsky and Vladimir Propp, who distinguished between two aspects of a narrative: the fabula and the syuzhet. The fabula represents the chronological sequence of events, while the syuzhet refers to the way these events are presented or structured; the narrative’s technique or “device.” In other words, syuzhet focuses on how the story (fabula) is organized and conveyed to the audience.</p>
+<p>The <code>syuzhet</code> package implements the <a href="https://nrc-publications.canada.ca/eng/view/ft/?id=0b6a5b58-a656-49d3-ab3e-252050a7a88c">National Research Council Canada (NRC) Emotion Lexicon</a> which maps words to basic emotions, in addition to polarity scores, allowing for fine-grained emotion scoring at the word, sentence, or document level.</p>
+<p>This framework uses eight categories of emotions based on Robert Plutchik’s theory of the emotional wheel, a foundational model that illustrates the relationships between human emotions from a psychological perspective. Plutchik’s wheel identifies eight primary emotions: anger, disgust, sadness, surprise, fear, trust, joy, and anticipation. As illustrated in Figure ? below, these emotions are organized into four pairs of opposites on the wheel. Emotions positioned diagonally across from each other represent opposites, while adjacent emotions share similarities, reflecting a positive correlation.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/sentiment.png" class="img-fluid figure-img" width="750"></p>
-<figcaption>Image from Canva</figcaption>
+<p><img src="images/emotion_wheel.jpg" class="img-fluid figure-img" width="376"></p>
+<figcaption>Figure?. Plutchik’s wheel of emotions. Image from: Zeng, X., Chen, Q., Chen, S., &amp; Zuo, J. (2021). Emotion label enhancement via emotion wheel and lexicon. <em>Mathematical Problems in Engineering</em>, <em>2021</em>(1), 6695913. <a href="https://doi.org/10.1155/2021/6695913" class="uri">https://doi.org/10.1155/2021/6695913</a></figcaption>
 </figure>
 </div>
-<section id="what-is-sentiment-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-sentiment-analysis">What is Sentiment Analysis?</h2>
-<p>As social beings, our beliefs, understanding of reality, and everyday decisions are deeply shaped by the opinions, perceptions and evaluations of others. This social conditioning is a well-documented phenomenon in fields such as psychology, sociology, and communication, where it is understood that individuals often rely on external cues, especially the attitudes and judgments of others when forming their own assessments.</p>
-<p>Understanding how public reaction and sentiment shapes and reflects collective perception has become central not only to corporate strategy, but also to scientific inquiry across many academic disciplines.</p>
-<p>While the analysis of public opinion predates the Internet, the modern field of sentiment analysis did not gain momentum until the mid-2000s. This surge was largely driven by the rise of Web 2.0, which leveraged the internet into a more participatory platform, enabling users to create, share, and comment on content across chats, blogs, forums, and other social media. These digital spaces dramatically expanded the circulation and accessibility of user-generated content, creating a fertile ground for computational approaches to analyze subjective expressions in large volumes of text. But what is sentiment analysis?</p>
-<blockquote class="blockquote">
-<p><em>Sentiment analysis, also known as opinion mining, is now a well-established area of study within natural language processing (NLP) and computational linguistics. It focuses on identifying and extracting people’s opinions, evaluations, attitudes, and emotions from written language.</em></p>
-</blockquote>
-<p>Whether through product reviews, political commentary, or social media posts in virtually any possible topic of interest, sentiment analysis aims to quantify and interpret subjective information at scale, enabling applications in marketing, social science, finance, and beyond. In this course, we will explore ways of extracting insights from textual data, in particular how we can detect underlying emotions within messages shared by people on a popular streaming TV series.</p>
-</section>
-<section id="learning-goals" class="level2">
-<h2 class="anchored" data-anchor-id="learning-goals">Learning Goals</h2>
-<p>By the end of this workshop, participants will be able to:</p>
-<ul>
-<li><p>Explain the fundamental principles and real-world applications of sentiment analysis.</p></li>
-<li><p>Apply essential text pre-processing techniques to reduce noise and prepare textual data for sentiment analysis.</p></li>
-<li><p>Perform sentiment analysis in R using lexicon-based approaches (polarity and emotion detection).</p></li>
-</ul>
-<p>Ready to dive in?</p>
+<p>The NRC Emotion Lexicon was developed as part of research into affective computing and sentiment analysis using a combination of manual annotation and crowdsourcing. Human annotators evaluated thousands of words, indicating which emotions were commonly associated with each word. This method ensured that the lexicon captured human-perceived emotional associations, rather than relying solely on statistical co-occurrences in text.</p>
+<p>Since its release, the NRC Emotion Lexicon has become a widely used resource in computational social science, marketing analytics, and text mining, because it allows researchers to move beyond simple positive/negative polarity to fine-grained emotion detection, making it possible to analyze the emotional content of text at scale.</p>
+<p>You may explore NRC’s lexicon Tableau dashboard to explore words associated with each emotion category:</p>
+<iframe width="780" height="500" src="https://public.tableau.com/views/NRC-Emotion-Lexicon-viz1/NRCEmotionLexicon-viz1?:embed=y&amp;:loadOrderID=0&amp;:display_count=no&amp;:showVizHome=no" title="NRC Lexicon Interactive Visualization"></iframe>
+<p>You might be wondering: if the <strong><code>syuzhet</code></strong> package also computes polarity, why did we choose <strong><code>sentimentr</code></strong> in our pipeline? The reason is that syuzhet does not inherently account for valence shifters. In the original syuzhet implementation, words are scored in isolation—so “good” = +1, “bad” = −1—regardless of nearby negations or intensifiers. For example, “not good” would still be counted as +1. Because <strong><code>sentimentr</code></strong> adjusts sentiment scores for negators and amplifiers, polarity results are more nuanced, robust, and reliable.</p>
 
 
 <!-- -->
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -762,44 +745,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script>
-<nav class="page-navigation column-body">
+<nav class="page-navigation column-page-right">
   <div class="nav-page nav-page-previous">
+      <a href="./10_polarity.html" class="pagination-link" aria-label="Polarity Analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Polarity Analysis</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02_setup.html" class="pagination-link" aria-label="Setup &amp; Dataset">
-        <span class="nav-page-text">Setup &amp; Dataset</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./12_considerations.html" class="pagination-link" aria-label="Some Considerations &amp; Caveats">
+        <span class="nav-page-text">Some Considerations &amp; Caveats</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Introduction"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Emotion Detection"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="al">![Image from Canva](images/sentiment.png)</span>{width="750"}</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Emotion detection is another NLP technique aimed at identifying and quantifying human emotions expressed in text, which builds directly on traditional sentiment polarity analysis focusing on capturing more nuanced emotional states. While polarity classification identifies whether a text expresses positive, negative, or neutral sentiment, it does not capture the specific type of emotion behind that sentiment. For example, two negative texts could express very different emotions—one might convey anger, while another reflects sadness. By extending polarity into multiple emotional dimensions, emotion detection provides more granular and more actionable insights into how people truly feel.</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## What is Sentiment Analysis?</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>We will use the <span class="in">`syuzhet`</span> package (<span class="co">[</span><span class="ot">more info</span><span class="co">](https://cran.r-project.org/web/packages/syuzhet/vignettes/syuzhet-vignette.html)</span>) to to help us classify emotions detected in our dataset. The name “syuzhet” is inspired by the work of Russian Formalists Victor Shklovsky and Vladimir Propp, who distinguished between two aspects of a narrative: the fabula and the syuzhet. The fabula represents the chronological sequence of events, while the syuzhet refers to the way these events are presented or structured; the narrative’s technique or “device.” In other words, syuzhet focuses on how the story (fabula) is organized and conveyed to the audience.</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>As social beings, our beliefs, understanding of reality, and everyday decisions are deeply shaped by the opinions, perceptions and evaluations of others. This social conditioning is a well-documented phenomenon in fields such as psychology, sociology, and communication, where it is understood that individuals often rely on external cues, especially the attitudes and judgments of others when forming their own assessments.</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>The <span class="in">`syuzhet`</span> package implements the <span class="co">[</span><span class="ot">National Research Council Canada (NRC) Emotion Lexicon</span><span class="co">](https://nrc-publications.canada.ca/eng/view/ft/?id=0b6a5b58-a656-49d3-ab3e-252050a7a88c)</span> which maps words to basic emotions, in addition to polarity scores, allowing for fine-grained emotion scoring at the word, sentence, or document level.</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>Understanding how public reaction and sentiment shapes and reflects collective perception has become central not only to corporate strategy, but also to scientific inquiry across many academic disciplines.</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>This framework uses eight categories of emotions based on Robert Plutchik's theory of the emotional wheel, a foundational model that illustrates the relationships between human emotions from a psychological perspective. Plutchik’s wheel identifies eight primary emotions: anger, disgust, sadness, surprise, fear, trust, joy, and anticipation. As illustrated in Figure ? below, these emotions are organized into four pairs of opposites on the wheel. Emotions positioned diagonally across from each other represent opposites, while adjacent emotions share similarities, reflecting a positive correlation.</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>While the analysis of public opinion predates the Internet, the modern field of sentiment analysis did not gain momentum until the mid-2000s. This surge was largely driven by the rise of Web 2.0, which leveraged the internet into a more participatory platform, enabling users to create, share, and comment on content across chats, blogs, forums, and other social media. These digital spaces dramatically expanded the circulation and accessibility of user-generated content, creating a fertile ground for computational approaches to analyze subjective expressions in large volumes of text. But what is sentiment analysis?</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="al">![Figure?. Plutchik’s wheel of emotions. Image from: Zeng, X., Chen, Q., Chen, S., &amp; Zuo, J. (2021). Emotion label enhancement via emotion wheel and lexicon. *Mathematical Problems in Engineering*, *2021*(1), 6695913. &lt;https://doi.org/10.1155/2021/6695913&gt;](images/emotion_wheel.jpg)</span>{fig-align="center" width="376"}</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; *Sentiment analysis, also known as opinion mining, is now a well-established area of study within natural language processing (NLP) and computational linguistics. It focuses on identifying and extracting people’s opinions, evaluations, attitudes, and emotions from written language.*</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>The NRC Emotion Lexicon was developed as part of research into affective computing and sentiment analysis using a combination of manual annotation and crowdsourcing. Human annotators evaluated thousands of words, indicating which emotions were commonly associated with each word. This method ensured that the lexicon captured human-perceived emotional associations, rather than relying solely on statistical co-occurrences in text.</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>Whether through product reviews, political commentary, or social media posts in virtually any possible topic of interest, sentiment analysis aims to quantify and interpret subjective information at scale, enabling applications in marketing, social science, finance, and beyond. In this course, we will explore ways of extracting insights from textual data, in particular how we can detect underlying emotions within messages shared by people on a popular streaming TV series.</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>Since its release, the NRC Emotion Lexicon has become a widely used resource in computational social science, marketing analytics, and text mining, because it allows researchers to move beyond simple positive/negative polarity to fine-grained emotion detection, making it possible to analyze the emotional content of text at scale.</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## Learning Goals</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>You may explore NRC's lexicon Tableau dashboard to explore words associated with each emotion category:</span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>By the end of this workshop, participants will be able to:</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Explain the fundamental principles and real-world applications of sentiment analysis.</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Apply essential text pre-processing techniques to reduce noise and prepare textual data for sentiment analysis.</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Perform sentiment analysis in R using lexicon-based approaches (polarity and emotion detection).</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>Ready to dive in?</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="in">```{=html}</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="in">&lt;iframe width="780" height="500" src="https://public.tableau.com/views/NRC-Emotion-Lexicon-viz1/NRCEmotionLexicon-viz1?:embed=y&amp;:loadOrderID=0&amp;:display_count=no&amp;:showVizHome=no" title="NRC Lexicon Interactive Visualization"&gt;&lt;/iframe&gt;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>You might be wondering: if the **`syuzhet`** package also computes polarity, why did we choose **`sentimentr`** in our pipeline? The reason is that syuzhet does not inherently account for valence shifters. In the original syuzhet implementation, words are scored in isolation—so “good” = +1, “bad” = −1—regardless of nearby negations or intensifiers. For example, “not good” would still be counted as +1. Because **`sentimentr`** adjusts sentiment scores for negators and amplifiers, polarity results are more nuanced, robust, and reliable.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

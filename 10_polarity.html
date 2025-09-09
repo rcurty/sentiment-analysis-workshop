@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Basic Polarity – Introduction to Sentiment Analysis in R</title>
+<title>Polarity Analysis – Introduction to Sentiment Analysis in R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -30,7 +65,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./11_fine-grained.html" rel="next">
+<link href="./11_emotion-detection.html" rel="next">
 <link href="./09_tf-idf.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -41,7 +76,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-bcd2b1bedfb7e6841e09473cbef33a7a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-12ef335da45b2d0a1c75e3422bd07d70.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-36b0e61c460cfcdb896adc8933f486f0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -109,7 +144,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_polarity.html">Detecting Reactions &amp; Emotions</a></li><li class="breadcrumb-item"><a href="./10_polarity.html">Basic Polarity</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_polarity.html">Sentiment Analysis</a></li><li class="breadcrumb-item"><a href="./10_polarity.html">Polarity Analysis</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -141,19 +176,13 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false">
+            <a href="./04_preprocessing.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Text Preprocessing</span></a>
           <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="false" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./04_preprocessing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Understanding preprocessing</span></a>
-  </div>
-</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./05_normalization.html" class="sidebar-item-text sidebar-link">
@@ -169,7 +198,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07_stopwords.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Removing Stop words</span></a>
+ <span class="menu-text">Removing Stop Words</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -189,7 +218,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Detecting Reactions &amp; Emotions</span></a>
+ <span class="menu-text">Sentiment Analysis</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -198,19 +227,19 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10_polarity.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Basic Polarity</span></a>
+ <span class="menu-text">Polarity Analysis</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11_fine-grained.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Fine-grained Emotion Analysis</span></a>
+  <a href="./11_emotion-detection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Emotion Detection</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./12_considerations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Final Considerations</span></a>
+ <span class="menu-text">Some Considerations &amp; Caveats</span></a>
   </div>
 </li>
       </ul>
@@ -220,18 +249,26 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#polarity-classification" id="toc-polarity-classification" class="nav-link active" data-scroll-target="#polarity-classification">Polarity Classification</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page-right" id="quarto-document-content">
+<main class="content column-body" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_polarity.html">Detecting Reactions &amp; Emotions</a></li><li class="breadcrumb-item"><a href="./10_polarity.html">Basic Polarity</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_polarity.html">Sentiment Analysis</a></li><li class="breadcrumb-item"><a href="./10_polarity.html">Polarity Analysis</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Basic Polarity</h1>
+<div class="quarto-title-block"><div><h1 class="title">Polarity Analysis</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
 
-<div class="quarto-title-meta column-page-right">
+<div class="quarto-title-meta column-body">
 
     
   
@@ -245,20 +282,21 @@ ul.task-list li input[type="checkbox"] {
 
 <p>Now that we have completed all the key preprocessing steps and our example dataset is in much better shape, we can finally proceed with sentiment analysis.</p>
 <p>This will be a two-step approach, where we will start with the basic polarity and then, advance to a more fine-grained analysis, exploring different emotional expressions within text.</p>
-<section id="basic-polarity" class="level2">
-<h2 class="anchored" data-anchor-id="basic-polarity">Basic Polarity</h2>
+<section id="polarity-classification" class="level2">
+<h2 class="anchored" data-anchor-id="polarity-classification">Polarity Classification</h2>
 <p>Polarity classification is a fundamental aspect of sentiment analysis to measure the overall emotional tone expressed in text data which can be categorized as positive, neutral or negative.</p>
 <p>Most models assign “sentiment scores” with values ranging from -1 to +1 to represent the intensity of the sentiment, being scores closer to -1 considered negative, those closer to 0 neutral and +1 positive.</p>
-<p><img src="images/polarity.jpg" class="img-fluid" width="180"></p>
-<p>We will be using the package <code>sentimentr</code> (<a href="https://cran.r-project.org/web/packages/sentimentr/sentimentr.pdf">more info</a>) to compute polarity classification and attribute sentiment scores to the posts included in our dataset. We chose this package due to its capability of handling negation (when negators appear nearby) and adjust to adverbs’ magnitude also known as valence shifters, which are adverbs and words that modify the intensity or direction of sentiment. These include amplifiers (e.g., very, really, absolutely, totally), de-amplifiers or downtoners (e.g., barely, hardly, rarely, ), as well as adversative conjunctions (e.g., but, yet, however, although).</p>
-<p>In summary, each word in a sentence is checked against a dictionary of positive and negative words, like the Jockers dictionary in the lexicon package. Words that are positive get a +1, and words that are negative get a -1, which are called <strong>polarized words</strong>.</p>
-<p>Around each polarized word, we look at the nearby words (usually four before and two after) to see if they change the strength or direction of the sentiment. This group of words is called a <strong>polarized context cluster</strong>. Words in the cluster can be neutral, negators (like “not”), amplifiers (like “very”), or de-amplifiers (like “slightly”). Neutral words don’t affect the sentiment but still count toward the total word count.</p>
+<p><img src="images/polarity.jpg" class="img-fluid" width="424"></p>
+<p>We will be using the package <code>sentimentr</code> (<a href="https://cran.r-project.org/web/packages/sentimentr/sentimentr.pdf">more info</a>) to compute polarity classification and attribute sentiment scores to the posts included in our dataset.</p>
+<p>Traditional sentiment analysis techniques assign polarity by matching words against dictionaries labeled as “positive,” “negative,” or “neutral.” While straightforward, this approach is overly simplistic: it ignores context and flattens the richness of our syntactically complex, lexically nuanced language, that transcends individual words. The <code>sentimentr</code> package extends lexicon-based methods by accounting for <em>valence shifters</em>; words that subtly alter sentiment.</p>
+<p>The package includes 130 valence shifters that can reverse or modulate the sentiment indicated by standard dictionaries. These fall into four main categories: negators (e.g., not, can’t), amplifiers (e.g., very, really, absolutely, totally, certainly), de-amplifiers or down-toners (e.g., barely, hardly, rarely, almost), and adversative conjunctions (e.g., although, however, but, yet, that being said). This refinement is important because simple dictionary lookups miss the nuanced meaning.</p>
+<p>In summary, each word in a sentence is checked against a dictionary of positive and negative words, like the Jockers dictionary in the lexicon package. Words that are positive get a +1, and words that are negative get a -1, which are called polarized words. Around each polarized word, we look at the nearby words (usually four before and two after) to see if they change the strength or direction of the sentiment. This group of words is called a polarized context cluster. Words in the cluster can be neutral, negators (like “not”), amplifiers (like “very”), or de-amplifiers (like “slightly”). Neutral words don’t affect the sentiment but still count toward the total word count.</p>
 <p>The main polarized word’s sentiment is then adjusted by the surrounding words. Amplifiers make it stronger, de-amplifiers make it weaker, and negators can flip the sentiment. Multiple negators can cancel each other out, like “not unhappy” turning positive.</p>
 <p>Words like “but,” “however,” and “although” also influence the sentiment. Words before these are weighted less, and words after them are weighted more because they signal a shift in meaning. Finally, all the adjusted scores are combined and scaled by the sentence length to give a final sentiment score for the sentence.</p>
-<p>The example below shows the scores per sentence computed within their polarity range:</p>
-<p><img src="images/polarity-scores.png" class="img-fluid" width="195"></p>
-<p>Let’s explore whether the show’s viewers felt positive, neutral, or negative about it.</p>
+<p>With this approach, we can explore more confidently whether the show’s viewers felt positive, neutral, or negative about it.</p>
 
+
+<!-- -->
 
 </section>
 
@@ -332,6 +370,57 @@ ul.task-list li input[type="checkbox"] {
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -662,18 +751,48 @@ ul.task-list li input[type="checkbox"] {
     }
   });
   </script>
-<nav class="page-navigation column-page-right">
+<nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
       <a href="./09_tf-idf.html" class="pagination-link" aria-label="Understanding Term &amp; Document Frequency">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Understanding Term &amp; Document Frequency</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./11_fine-grained.html" class="pagination-link" aria-label="Fine-grained Emotion Analysis">
-        <span class="nav-page-text">Fine-grained Emotion Analysis</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./11_emotion-detection.html" class="pagination-link" aria-label="Emotion Detection">
+        <span class="nav-page-text">Emotion Detection</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Polarity Analysis"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>Now that we have completed all the key preprocessing steps and our example dataset is in much better shape, we can finally proceed with sentiment analysis.</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>This will be a two-step approach, where we will start with the basic polarity and then, advance to a more fine-grained analysis, exploring different emotional expressions within text.</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">## Polarity Classification</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>Polarity classification is a fundamental aspect of sentiment analysis to measure the overall emotional tone expressed in text data which can be categorized as positive, neutral or negative.</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>Most models assign "sentiment scores" with values ranging from -1 to +1 to represent the intensity of the sentiment, being scores closer to -1 considered negative, those closer to 0 neutral and +1 positive.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/polarity.jpg)</span>{width="424"}</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>We will be using the package <span class="in">`sentimentr`</span> (<span class="co">[</span><span class="ot">more info</span><span class="co">](https://cran.r-project.org/web/packages/sentimentr/sentimentr.pdf)</span>) to compute polarity classification and attribute sentiment scores to the posts included in our dataset.</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>Traditional sentiment analysis techniques assign polarity by matching words against dictionaries labeled as “positive,” “negative,” or “neutral.” While straightforward, this approach is overly simplistic: it ignores context and flattens the richness of our syntactically complex, lexically nuanced language, that transcends individual words. The <span class="in">`sentimentr`</span> package extends lexicon-based methods by accounting for *valence shifters*; words that subtly alter sentiment.</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>The package includes 130 valence shifters that can reverse or modulate the sentiment indicated by standard dictionaries. These fall into four main categories: negators (e.g., not, can’t), amplifiers (e.g., very, really, absolutely, totally, certainly), de-amplifiers or down-toners (e.g., barely, hardly, rarely, almost), and adversative conjunctions (e.g., although, however, but, yet, that being said). This refinement is important because simple dictionary lookups miss the nuanced meaning.</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>In summary, each word in a sentence is checked against a dictionary of positive and negative words, like the Jockers dictionary in the lexicon package. Words that are positive get a +1, and words that are negative get a -1, which are called polarized words. Around each polarized word, we look at the nearby words (usually four before and two after) to see if they change the strength or direction of the sentiment. This group of words is called a polarized context cluster. Words in the cluster can be neutral, negators (like "not"), amplifiers (like "very"), or de-amplifiers (like "slightly"). Neutral words don’t affect the sentiment but still count toward the total word count.</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>The main polarized word’s sentiment is then adjusted by the surrounding words. Amplifiers make it stronger, de-amplifiers make it weaker, and negators can flip the sentiment. Multiple negators can cancel each other out, like “not unhappy” turning positive.</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>Words like “but,” “however,” and “although” also influence the sentiment. Words before these are weighted less, and words after them are weighted more because they signal a shift in meaning. Finally, all the adjusted scores are combined and scaled by the sentence length to give a final sentiment score for the sentence.</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>With this approach, we can explore more confidently whether the show’s viewers felt positive, neutral, or negative about it.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
