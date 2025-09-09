@@ -274,13 +274,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/mark-severance.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="750"></p>
-</figure>
-</div>
-<p>After all, producers may also be watching the public’s reaction on social media to decide whether a second season is worth pursuing.</p>
-<p>The data we pulled for this exercise comes from real social media posts, meaning they are inherently messy, and we know that even before going in. Because it is derived from natural language, this kind of data is unstructured, often filled with inconsistencies and irregularities.</p>
+<p><img src="images/mark-severance.png" class="img-fluid quarto-figure quarto-figure-center" width="750"> The data we pulled for this exercise comes from real social media posts, meaning they are inherently messy, and we know that even before going in. Because it is derived from natural language, this kind of data is unstructured, often filled with inconsistencies and irregularities.</p>
 <p>Before we can apply any meaningful analysis or modeling, it’s crucial to visually inspect the data to get a sense of what we’re working with. Eyeballing the raw text helps us identify common patterns, potential noise, and areas that will require careful preprocessing to ensure the downstream tasks are effective and reliable.</p>
 <p>It is time to open RStudio and our example! The folder you have saved contains a quarto document (.qmd) which will serve as our workshop workbook. In this document we will include the R code and comments related to the content we will explore. Let’s have that open in RStudio.</p>
 <p>Let’s install the required packages (via the console) and load them. Next, let’s inspect the <code>comments.csv</code> file and take a quick look at it!</p>
@@ -774,29 +768,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/mark-severance.png)</span>{fig-align="center" width="750"}</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>After all, producers may also be watching the public’s reaction on social media to decide whether a second season is worth pursuing.</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>The data we pulled for this exercise comes from real social media posts, meaning they are inherently messy, and we know that even before going in. Because it is derived from natural language, this kind of data is unstructured, often filled with inconsistencies and irregularities.</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>Before we can apply any meaningful analysis or modeling, it’s crucial to visually inspect the data to get a sense of what we’re working with. Eyeballing the raw text helps us identify common patterns, potential noise, and areas that will require careful preprocessing to ensure the downstream tasks are effective and reliable.</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>It is time to open RStudio and our example! The folder you have saved contains a quarto document (.qmd) which will serve as our workshop workbook. In this document we will include the R code and comments related to the content we will explore. Let's have that open in RStudio.</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>Let's install the required packages (via the console) and load them. Next, let's inspect the <span class="in">`comments.csv`</span> file and take a quick look at it!</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>The data we pulled for this exercise comes from real social media posts, meaning they are inherently messy, and we know that even before going in. Because it is derived from natural language, this kind of data is unstructured, often filled with inconsistencies and irregularities.</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>Before we can apply any meaningful analysis or modeling, it’s crucial to visually inspect the data to get a sense of what we’re working with. Eyeballing the raw text helps us identify common patterns, potential noise, and areas that will require careful preprocessing to ensure the downstream tasks are effective and reliable.</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>It is time to open RStudio and our example! The folder you have saved contains a quarto document (.qmd) which will serve as our workshop workbook. In this document we will include the R code and comments related to the content we will explore. Let's have that open in RStudio.</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>Let's install the required packages (via the console) and load them. Next, let's inspect the <span class="in">`comments.csv`</span> file and take a quick look at it!</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspecting the data</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspecting the data</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"comments.csv"</span>)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(comments<span class="sc">$</span>text)</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"comments.csv"</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(comments<span class="sc">$</span>text)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>::: {.callout-note icon="false"}</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu"># 💬 Discussion</span></span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>::: {.callout-note icon="false"}</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="fu"># 💬 Discussion</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>Working in pairs or trios, look briefly at the data and discuss the challenges that may arise when attempting to analyze this dataset on its current form. What could be potential areas of friction that could compromise the results?</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>Working in pairs or trios, look briefly at the data and discuss the challenges that may arise when attempting to analyze this dataset on its current form. What could be potential areas of friction that could compromise the results?</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
