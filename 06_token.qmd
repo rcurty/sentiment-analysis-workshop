@@ -67,7 +67,7 @@ Correct: d
 
 Let's go back and apply tokenization to our dataset:
 
-```
+``` r
 # Read and check normalized dataset
 normalized <- read_csv("normalized.csv")
 
