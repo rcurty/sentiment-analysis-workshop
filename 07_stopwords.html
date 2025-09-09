@@ -321,6 +321,9 @@ Solution
 </div>
 <p>You might be wondering: <em>Wait… why are words like “very” and “not” excluded? Aren’t they important for sentiment analysis?</em> The answer is: YES, they are! While these words are included in many stop word lists provided by standard NLP packages, we can customize the list to retain specific words we consider crucial for our analysis.</p>
 <p>Now, let’s return to the worksheet and see how we can put that into practice.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove stopwords</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>tokens_nostop <span class="ot">&lt;-</span> tokens <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word <span class="sc">%in%</span> <span class="fu">stopwords</span>(<span class="st">"en"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -803,61 +806,67 @@ Solution
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Removing Stop words"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/stopwords-01.png)</span>{width="750"}</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>Stop words are commonly occurring words that are usually filtered out during natural language processing, as they carry minimal semantic weight and are not as useful for feature <span class="co">[</span><span class="ot">extraction</span><span class="co">](https://www.byteplus.com/en/what-is/feature-extraction?utm_source=website_topic&amp;utm_medium=website&amp;utm_campaign=BytePlus+ModelArk&amp;utm_content=Stop+Words&amp;utm_term=The+origins+of+stop+words&amp;product=BytePlus+ModelArk)</span>.</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>Examples include articles (i.e., a, an, the), prepositions (e.g., in, on, at), conjunctions (and, but, or), and pronouns (they, she, he), but the list goes on. While they appear often in text, they usually don't add significant meaning to a sentence or search query.</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>By ignoring stop words, search engines, databases, chatbots and virtual assistants can improve the speed of crawling and indexing and help deliver faster, more efficient results. Similar posistive effects applies to other NLP tasks and models performance, including sentiment analysis.</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>For this workshop, we will be using the package <span class="in">`stopwords`</span> (<span class="co">[</span><span class="ot">more info</span><span class="co">](https://cran.r-project.org/web/packages/stopwords/readme/README.html)</span>) which is considered a "on-stop stopping" for R users. For English language, the package relies on the <span class="co">[</span><span class="ot">Snowball</span><span class="co">](http://snowball.tartarus.org/algorithms/english/stop.txt)</span> list. But, before we turn to our worksheet to see how that process looks like and how it will apply to our data, let's have a little challenge!</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>::: {.callout-note icon="false"}</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu"># 🧠 Knowledge Check </span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>How many stop words can you spot in each of the following sentences:</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>The cat was sitting on the mat near the window.</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>She is going to the store because she needs some milk.</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>I will be there in the morning if it doesn’t rain.</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>They have been working on the project for several days.</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>Although he was tired, he continued to walk until he reached the house.</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>::: {.callout-note icon="false" collapse="true"}</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>1<span class="sc">\.</span> <span class="in">`The`</span> cat <span class="in">`was`</span> sitting <span class="in">`on`</span> <span class="in">`the`</span> mat <span class="in">`near`</span> <span class="in">`the`</span> window.</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>2<span class="sc">\.</span> <span class="in">`She`</span> <span class="in">`is`</span> <span class="in">`going`</span> <span class="in">`to`</span> <span class="in">`the`</span> store <span class="in">`because`</span> <span class="in">`she`</span> <span class="in">`needs`</span> <span class="in">`some`</span> milk.</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>3<span class="sc">\.</span> <span class="in">`I`</span> <span class="in">`will`</span> <span class="in">`be`</span> <span class="in">`there`</span> <span class="in">`in`</span> <span class="in">`the`</span> morning, if it <span class="in">`does`</span> <span class="in">`not`</span> rain.</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>4<span class="sc">\.</span> <span class="in">`They`</span> <span class="in">`have`</span> <span class="in">`been`</span> working <span class="in">`on`</span> <span class="in">`the`</span> project <span class="in">`for`</span> several days.</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>5<span class="sc">\.</span> <span class="in">`Although`</span> <span class="in">`he`</span> <span class="in">`was`</span> <span class="in">`very`</span> tired, <span class="in">`he`</span> continued <span class="in">`to`</span> walk <span class="in">`until`</span> <span class="in">`he`</span> reached <span class="in">`the`</span> house.</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>You might be wondering: *Wait... why are words like "very" and "not" excluded? Aren’t they important for sentiment analysis?* The answer is: YES, they are! While these words are included in many stop word lists provided by standard NLP packages, we can customize the list to retain specific words we consider crucial for our analysis.</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>Now, let’s return to the worksheet and see how we can put that into practice.</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>::: {.callout-note icon="false"}</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="fu"># 📑 **Suggested Reading**</span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>Check out this blog post for a summary of the history of stop words, discussion on its applications and some perspectives on developments in the age of AI.</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>Gaviraj, K. (2025, April 24). *The origins of stop words*. BytePlus. <span class="ot">&lt;https://www.byteplus.com/en/topic/400391?title=the-origins-of-stop-words&gt;</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Removing Stop words"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/stopwords-01.png)</span>{width="750"}</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>Stop words are commonly occurring words that are usually filtered out during natural language processing, as they carry minimal semantic weight and are not as useful for feature <span class="co">[</span><span class="ot">extraction</span><span class="co">](https://www.byteplus.com/en/what-is/feature-extraction?utm_source=website_topic&amp;utm_medium=website&amp;utm_campaign=BytePlus+ModelArk&amp;utm_content=Stop+Words&amp;utm_term=The+origins+of+stop+words&amp;product=BytePlus+ModelArk)</span>.</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>Examples include articles (i.e., a, an, the), prepositions (e.g., in, on, at), conjunctions (and, but, or), and pronouns (they, she, he), but the list goes on. While they appear often in text, they usually don't add significant meaning to a sentence or search query.</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>By ignoring stop words, search engines, databases, chatbots and virtual assistants can improve the speed of crawling and indexing and help deliver faster, more efficient results. Similar posistive effects applies to other NLP tasks and models performance, including sentiment analysis.</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>For this workshop, we will be using the package <span class="in">`stopwords`</span> (<span class="co">[</span><span class="ot">more info</span><span class="co">](https://cran.r-project.org/web/packages/stopwords/readme/README.html)</span>) which is considered a "on-stop stopping" for R users. For English language, the package relies on the <span class="co">[</span><span class="ot">Snowball</span><span class="co">](http://snowball.tartarus.org/algorithms/english/stop.txt)</span> list. But, before we turn to our worksheet to see how that process looks like and how it will apply to our data, let's have a little challenge!</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>::: {.callout-note icon="false"}</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu"># 🧠 Knowledge Check </span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>How many stop words can you spot in each of the following sentences:</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>The cat was sitting on the mat near the window.</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>She is going to the store because she needs some milk.</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>I will be there in the morning if it doesn’t rain.</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>They have been working on the project for several days.</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>Although he was tired, he continued to walk until he reached the house.</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>::: {.callout-note icon="false" collapse="true"}</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Solution</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>1<span class="sc">\.</span> <span class="in">`The`</span> cat <span class="in">`was`</span> sitting <span class="in">`on`</span> <span class="in">`the`</span> mat <span class="in">`near`</span> <span class="in">`the`</span> window.</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>2<span class="sc">\.</span> <span class="in">`She`</span> <span class="in">`is`</span> <span class="in">`going`</span> <span class="in">`to`</span> <span class="in">`the`</span> store <span class="in">`because`</span> <span class="in">`she`</span> <span class="in">`needs`</span> <span class="in">`some`</span> milk.</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>3<span class="sc">\.</span> <span class="in">`I`</span> <span class="in">`will`</span> <span class="in">`be`</span> <span class="in">`there`</span> <span class="in">`in`</span> <span class="in">`the`</span> morning, if it <span class="in">`does`</span> <span class="in">`not`</span> rain.</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>4<span class="sc">\.</span> <span class="in">`They`</span> <span class="in">`have`</span> <span class="in">`been`</span> working <span class="in">`on`</span> <span class="in">`the`</span> project <span class="in">`for`</span> several days.</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>5<span class="sc">\.</span> <span class="in">`Although`</span> <span class="in">`he`</span> <span class="in">`was`</span> <span class="in">`very`</span> tired, <span class="in">`he`</span> continued <span class="in">`to`</span> walk <span class="in">`until`</span> <span class="in">`he`</span> reached <span class="in">`the`</span> house.</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>You might be wondering: *Wait... why are words like "very" and "not" excluded? Aren’t they important for sentiment analysis?* The answer is: YES, they are! While these words are included in many stop word lists provided by standard NLP packages, we can customize the list to retain specific words we consider crucial for our analysis.</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>Now, let’s return to the worksheet and see how we can put that into practice.</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove stopwords</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>tokens_nostop <span class="ot">&lt;-</span> tokens <span class="sc">%&gt;%</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word <span class="sc">%in%</span> <span class="fu">stopwords</span>(<span class="st">"en"</span>))</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>::: {.callout-note icon="false"}</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="fu"># 📑 **Suggested Reading**</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>Check out this blog post for a summary of the history of stop words, discussion on its applications and some perspectives on developments in the age of AI.</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>Gaviraj, K. (2025, April 24). *The origins of stop words*. BytePlus. <span class="ot">&lt;https://www.byteplus.com/en/topic/400391?title=the-origins-of-stop-words&gt;</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>:::</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
