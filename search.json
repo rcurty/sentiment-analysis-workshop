@@ -162,11 +162,11 @@
     ]
   },
   {
-    "objectID": "01_index.html#learning-goals",
-    "href": "01_index.html#learning-goals",
+    "objectID": "01_index.html#learning-objectives",
+    "href": "01_index.html#learning-objectives",
     "title": "Home",
-    "section": "Learning Goals",
-    "text": "Learning Goals\nBy the end of this workshop, participants will be able to:\n\nExplain the fundamental principles and real-world applications of sentiment analysis.\nApply essential text pre-processing techniques to reduce noise and prepare textual data for sentiment analysis.\nPerform sentiment analysis in R using lexicon-based approaches (polarity and emotion detection).\n\nReady to dive in?",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\nBy the end of this workshop, participants will be able to:\n\nExplain the fundamental principles and real-world applications of sentiment analysis.\nApply essential text pre-processing techniques to reduce noise and prepare textual data for sentiment analysis.\nPerform sentiment analysis in R using lexicon-based approaches (polarity and emotion detection).\n\nReady to dive in?",
     "crumbs": [
       "Home"
     ]
