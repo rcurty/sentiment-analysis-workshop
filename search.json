@@ -33,28 +33,43 @@
     ]
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About RDS",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Introduction to Sentiment Analysis in R",
     "section": "",
-    "text": "Research Data Services (RDS) helps UCSB researchers manage and preserve their research data in a more effective and reproducible way through:\n\nConsultations\nLong-term engagements\nInstructional workshops.\n\nOur team offers support across the research data lifecycle, from pre-project planning to post-project archival, connecting researchers with both locally- and externally-provided resources, data management systems and curation services. Our goal is to ensure that all research data is well-described, FAIR (Findable, Accessible, Interoperable, Reusable), as well as sustainable and preservable, and that researchers receive scholarly credit for sharing and publishing their data.\nWe recommend you explore the Research Computing and Data website (https://rcd.ucsb.edu ) maintained by our department for campus-wide tools, recommendations, events, communities and learning resources.\nContact us if you have any questions: rds@library.ucsb.edu"
-  },
-  {
-    "objectID": "about.html#ways-we-can-help-you",
-    "href": "about.html#ways-we-can-help-you",
-    "title": "About RDS",
-    "section": "",
-    "text": "Research Data Services (RDS) helps UCSB researchers manage and preserve their research data in a more effective and reproducible way through:\n\nConsultations\nLong-term engagements\nInstructional workshops.\n\nOur team offers support across the research data lifecycle, from pre-project planning to post-project archival, connecting researchers with both locally- and externally-provided resources, data management systems and curation services. Our goal is to ensure that all research data is well-described, FAIR (Findable, Accessible, Interoperable, Reusable), as well as sustainable and preservable, and that researchers receive scholarly credit for sharing and publishing their data.\nWe recommend you explore the Research Computing and Data website (https://rcd.ucsb.edu ) maintained by our department for campus-wide tools, recommendations, events, communities and learning resources.\nContact us if you have any questions: rds@library.ucsb.edu"
-  },
-  {
-    "objectID": "08_lemma.html",
-    "href": "08_lemma.html",
-    "title": "Lemmatization",
-    "section": "",
-    "text": "Also known as word reduction, lemmatization is the process of transforming words into their base or dictionary form (lemma) to identify similarities in meaning and usage across different contexts. Take the word “run” as an example. It can appear in various forms like “ran”, “runs”, “running”, and “runner”. But the variations don’t stop there, as it includes complex forms like “outrun”, “overrun”, or “underrun”. These variations make it challenging for computers to process natural language effectively unless they can recognize that these words are related. That’s where lemmatization comes in; it helps machines group related words together by reducing them to a common root present in the dictionary, enabling better understanding and analysis of text.\nYou might be asking yourself: Wait…but what about “stemming”? Stemming is considered a more straightforward but agressive process that removes prefixes and suffices, reducing the word to its roots. It is considered a less effective approach compared to lemmatization because it may can occasionally lead to meaningless words. For example, while “ran” and “runs” would be stemmed to “run”, for running would end up as “runn”. For this reason, we will stick with lemmatization and skip stemming in our data analysis. However, depending on your computing capability to process large volumes of textual data, you might consider using it, giving that stemming, since it is considered a more efficient approach.\nAn important thing to consider is that we look into words as separate units (tokens) as we saw in the previous episode. For example, think about the word “leaves”. That could both represent the plural of the noun “leaf” or the verb in third person for the word “leave”. That is a good reminder of always remember to apply part of speech (POS) because lemmatization algorithms utilize a lexicon with linguistic rules based on pre-determined tags to avoid misinterpretation.\n\n\n\n\n\n\n🧠 Knowledge Check\n\n\n\nIn pairs or groups of three, apply lemmatization to the following sentence. Identify the base forms (lemmas) of each word:\nCats chasing mice running quickly across gardens.\n\n\n\n\n\n\nSolution\n\n\n\n\n\nHow many words did you successfully lemmatize? Bingo if you have identified all key lemmas!\nAfter applying lemmatization, the sentence should look like:\ncat chase mouse run quickly across garden\nNote: Adverbs and prepositions usually remain unchanged because they are already in their simplest dictionary form and do not have a more basic lemma.\n\n\n\n\n\nAlright, back to our pipeline, we will now convert words to their dictionary form, do some\n# Lemmatize\ntokens_nostop &lt;- tokens_nostop %&gt;%\n  mutate(word_lemmatized = lemmatize_words(word))\n\n# Remove single-character words\ntokens_nostop &lt;- tokens_nostop %&gt;%\n  filter(str_length(word_lemmatized) &gt; 1)\n\n# Reconstruct cleaned text per ID \n# (ensure all IDs are preserved, even if empty)\npreprocessed &lt;- data %&gt;%\n  select(id) %&gt;%\n  left_join(\n    tokens_nostop %&gt;%\n      group_by(id) %&gt;%\n      summarise(text_ready = paste(word_lemmatized, collapse = \" \"), .groups = \"drop\"),\n    by = \"id\"\n  ) %&gt;%\n  mutate(text_ready = replace_na(text_ready, \"\"))\n\n# Save to CSV\nwrite_csv(preprocessed, \"preprocessed.csv\")\nDid you notice the new column added to the tokens_nostop data frame? If not, take a quick look; it shows how some words have been converted to their dictionary (base) forms.",
+    "text": "Image from Canva",
     "crumbs": [
-      "Text Preprocessing",
-      "Lemmatization"
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#what-is-sentiment-analysis",
+    "href": "index.html#what-is-sentiment-analysis",
+    "title": "Introduction to Sentiment Analysis in R",
+    "section": "What is Sentiment Analysis?",
+    "text": "What is Sentiment Analysis?\nAs social beings, our beliefs, understanding of reality, and everyday decisions are deeply shaped by the opinions, perceptions and evaluations of others. This social conditioning is a well-documented phenomenon in fields such as psychology, sociology, and communication, where it is understood that individuals often rely on external cues, especially the attitudes and judgments of others when forming their own assessments.\nUnderstanding how public reaction and sentiment shapes and reflects collective perception has become central not only to corporate strategy, but also to scientific inquiry across many academic disciplines.\nWhile the analysis of public opinion predates the Internet, the modern field of sentiment analysis did not gain momentum until the mid-2000s. This surge was largely driven by the rise of Web 2.0, which leveraged the internet into a more participatory platform, enabling users to create, share, and comment on content across chats, blogs, forums, and other social media. These digital spaces dramatically expanded the circulation and accessibility of user-generated content, creating a fertile ground for computational approaches to analyze subjective expressions in large volumes of text. But what is sentiment analysis?\n\nSentiment analysis, also known as opinion mining, is now a well-established area of study within natural language processing (NLP) and computational linguistics. It focuses on identifying and extracting people’s opinions, evaluations, attitudes, and emotions from written language.\n\nWhether through product reviews, political commentary, or social media posts in virtually any possible topic of interest, sentiment analysis aims to quantify and interpret subjective information at scale, enabling applications in marketing, social science, finance, and beyond. In this course, we will explore ways of extracting insights from textual data, in particular how we can detect underlying emotions within messages shared by people on a popular streaming TV series.",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "index.html#learning-objectives",
+    "href": "index.html#learning-objectives",
+    "title": "Introduction to Sentiment Analysis in R",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\nBy the end of this workshop, participants will be able to:\n\nExplain the fundamental principles and real-world applications of sentiment analysis.\nApply essential text pre-processing techniques to reduce noise and prepare textual data for sentiment analysis.\nPerform sentiment analysis in R using lexicon-based approaches (polarity and emotion detection).\n\nReady to dive in?",
+    "crumbs": [
+      "Home"
+    ]
+  },
+  {
+    "objectID": "04_preprocessing.html",
+    "href": "04_preprocessing.html",
+    "title": "Preprocessing Steps",
+    "section": "",
+    "text": "You’ve probably heard the phrase “garbage in, garbage out”, right? It’s a core principle in computing: the quality of the output heavily depends on the quality of the input.\nThis concept holds especially true in sentiment analysis and other natural language processing (NLP) tasks because human language is naturally messy, inconsistent, and often ambiguous.\nTo perform accurate and reliable analysis, we need to “take out the garbage” first by preprocessing the text to clean, standardize, and structure the input data. This reduces noise and improves the model’s accuracy. Key text preprocessing steps include normalization, stop words removal, tokenization and lemmatization, which are depicted and explained in the handout below:\n\n\nSource: Data Literacy Series https://perma.cc/L8U5-ZEXD\nIn the next episodes, we’ll dive deeper into this NLP pipeline to prepare the data for sentiment analysis by exploring each of these steps with more detailed explanations.",
+    "crumbs": [
+      "Text Preprocessing"
     ]
   },
   {
@@ -142,35 +157,29 @@
     ]
   },
   {
-    "objectID": "01_index.html",
-    "href": "01_index.html",
-    "title": "Home",
+    "objectID": "08_lemma.html",
+    "href": "08_lemma.html",
+    "title": "Lemmatization",
     "section": "",
-    "text": "Image from Canva"
-  },
-  {
-    "objectID": "01_index.html#what-is-sentiment-analysis",
-    "href": "01_index.html#what-is-sentiment-analysis",
-    "title": "Home",
-    "section": "What is Sentiment Analysis?",
-    "text": "What is Sentiment Analysis?\nAs social beings, our beliefs, understanding of reality, and everyday decisions are deeply shaped by the opinions, perceptions and evaluations of others. This social conditioning is a well-documented phenomenon in fields such as psychology, sociology, and communication, where it is understood that individuals often rely on external cues, especially the attitudes and judgments of others when forming their own assessments.\nUnderstanding how public reaction and sentiment shapes and reflects collective perception has become central not only to corporate strategy, but also to scientific inquiry across many academic disciplines.\nWhile the analysis of public opinion predates the Internet, the modern field of sentiment analysis did not gain momentum until the mid-2000s. This surge was largely driven by the rise of Web 2.0, which leveraged the internet into a more participatory platform, enabling users to create, share, and comment on content across chats, blogs, forums, and other social media. These digital spaces dramatically expanded the circulation and accessibility of user-generated content, creating a fertile ground for computational approaches to analyze subjective expressions in large volumes of text. But what is sentiment analysis?\n\nSentiment analysis, also known as opinion mining, is now a well-established area of study within natural language processing (NLP) and computational linguistics. It focuses on identifying and extracting people’s opinions, evaluations, attitudes, and emotions from written language.\n\nWhether through product reviews, political commentary, or social media posts in virtually any possible topic of interest, sentiment analysis aims to quantify and interpret subjective information at scale, enabling applications in marketing, social science, finance, and beyond. In this course, we will explore ways of extracting insights from textual data, in particular how we can detect underlying emotions within messages shared by people on a popular streaming TV series."
-  },
-  {
-    "objectID": "01_index.html#learning-objectives",
-    "href": "01_index.html#learning-objectives",
-    "title": "Home",
-    "section": "Learning Objectives",
-    "text": "Learning Objectives\nBy the end of this workshop, participants will be able to:\n\nExplain the fundamental principles and real-world applications of sentiment analysis.\nApply essential text pre-processing techniques to reduce noise and prepare textual data for sentiment analysis.\nPerform sentiment analysis in R using lexicon-based approaches (polarity and emotion detection).\n\nReady to dive in?"
-  },
-  {
-    "objectID": "04_preprocessing.html",
-    "href": "04_preprocessing.html",
-    "title": "Preprocessing Steps",
-    "section": "",
-    "text": "You’ve probably heard the phrase “garbage in, garbage out”, right? It’s a core principle in computing: the quality of the output heavily depends on the quality of the input.\nThis concept holds especially true in sentiment analysis and other natural language processing (NLP) tasks because human language is naturally messy, inconsistent, and often ambiguous.\nTo perform accurate and reliable analysis, we need to “take out the garbage” first by preprocessing the text to clean, standardize, and structure the input data. This reduces noise and improves the model’s accuracy. Key text preprocessing steps include normalization, stop words removal, tokenization and lemmatization, which are depicted and explained in the handout below:\n\n\nSource: Data Literacy Series https://perma.cc/L8U5-ZEXD\nIn the next episodes, we’ll dive deeper into this NLP pipeline to prepare the data for sentiment analysis by exploring each of these steps with more detailed explanations.",
+    "text": "Also known as word reduction, lemmatization is the process of transforming words into their base or dictionary form (lemma) to identify similarities in meaning and usage across different contexts. Take the word “run” as an example. It can appear in various forms like “ran”, “runs”, “running”, and “runner”. But the variations don’t stop there, as it includes complex forms like “outrun”, “overrun”, or “underrun”. These variations make it challenging for computers to process natural language effectively unless they can recognize that these words are related. That’s where lemmatization comes in; it helps machines group related words together by reducing them to a common root present in the dictionary, enabling better understanding and analysis of text.\nYou might be asking yourself: Wait…but what about “stemming”? Stemming is considered a more straightforward but agressive process that removes prefixes and suffices, reducing the word to its roots. It is considered a less effective approach compared to lemmatization because it may can occasionally lead to meaningless words. For example, while “ran” and “runs” would be stemmed to “run”, for running would end up as “runn”. For this reason, we will stick with lemmatization and skip stemming in our data analysis. However, depending on your computing capability to process large volumes of textual data, you might consider using it, giving that stemming, since it is considered a more efficient approach.\nAn important thing to consider is that we look into words as separate units (tokens) as we saw in the previous episode. For example, think about the word “leaves”. That could both represent the plural of the noun “leaf” or the verb in third person for the word “leave”. That is a good reminder of always remember to apply part of speech (POS) because lemmatization algorithms utilize a lexicon with linguistic rules based on pre-determined tags to avoid misinterpretation.\n\n\n\n\n\n\n🧠 Knowledge Check\n\n\n\nIn pairs or groups of three, apply lemmatization to the following sentence. Identify the base forms (lemmas) of each word:\nCats chasing mice running quickly across gardens.\n\n\n\n\n\n\nSolution\n\n\n\n\n\nHow many words did you successfully lemmatize? Bingo if you have identified all key lemmas!\nAfter applying lemmatization, the sentence should look like:\ncat chase mouse run quickly across garden\nNote: Adverbs and prepositions usually remain unchanged because they are already in their simplest dictionary form and do not have a more basic lemma.\n\n\n\n\n\nAlright, back to our pipeline, we will now convert words to their dictionary form, do some\n# Lemmatize\ntokens_nostop &lt;- tokens_nostop %&gt;%\n  mutate(word_lemmatized = lemmatize_words(word))\n\n# Remove single-character words\ntokens_nostop &lt;- tokens_nostop %&gt;%\n  filter(str_length(word_lemmatized) &gt; 1)\n\n# Reconstruct cleaned text per ID \n# (ensure all IDs are preserved, even if empty)\npreprocessed &lt;- data %&gt;%\n  select(id) %&gt;%\n  left_join(\n    tokens_nostop %&gt;%\n      group_by(id) %&gt;%\n      summarise(text_ready = paste(word_lemmatized, collapse = \" \"), .groups = \"drop\"),\n    by = \"id\"\n  ) %&gt;%\n  mutate(text_ready = replace_na(text_ready, \"\"))\n\n# Save to CSV\nwrite_csv(preprocessed, \"preprocessed.csv\")\nDid you notice the new column added to the tokens_nostop data frame? If not, take a quick look; it shows how some words have been converted to their dictionary (base) forms.",
     "crumbs": [
-      "Text Preprocessing"
+      "Text Preprocessing",
+      "Lemmatization"
     ]
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About RDS",
+    "section": "",
+    "text": "Research Data Services (RDS) helps UCSB researchers manage and preserve their research data in a more effective and reproducible way through:\n\nConsultations\nLong-term engagements\nInstructional workshops.\n\nOur team offers support across the research data lifecycle, from pre-project planning to post-project archival, connecting researchers with both locally- and externally-provided resources, data management systems and curation services. Our goal is to ensure that all research data is well-described, FAIR (Findable, Accessible, Interoperable, Reusable), as well as sustainable and preservable, and that researchers receive scholarly credit for sharing and publishing their data.\nWe recommend you explore the Research Computing and Data website (https://rcd.ucsb.edu ) maintained by our department for campus-wide tools, recommendations, events, communities and learning resources.\nContact us if you have any questions: rds@library.ucsb.edu"
+  },
+  {
+    "objectID": "about.html#ways-we-can-help-you",
+    "href": "about.html#ways-we-can-help-you",
+    "title": "About RDS",
+    "section": "",
+    "text": "Research Data Services (RDS) helps UCSB researchers manage and preserve their research data in a more effective and reproducible way through:\n\nConsultations\nLong-term engagements\nInstructional workshops.\n\nOur team offers support across the research data lifecycle, from pre-project planning to post-project archival, connecting researchers with both locally- and externally-provided resources, data management systems and curation services. Our goal is to ensure that all research data is well-described, FAIR (Findable, Accessible, Interoperable, Reusable), as well as sustainable and preservable, and that researchers receive scholarly credit for sharing and publishing their data.\nWe recommend you explore the Research Computing and Data website (https://rcd.ucsb.edu ) maintained by our department for campus-wide tools, recommendations, events, communities and learning resources.\nContact us if you have any questions: rds@library.ucsb.edu"
   },
   {
     "objectID": "12_considerations.html",
