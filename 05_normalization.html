@@ -535,7 +535,8 @@ The order matters
 <span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(comments <span class="sc">%&gt;%</span> <span class="fu">select</span>(id, text), <span class="st">"normalized.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>Now we are finally ready to move to the preprocessing phase, let’s see what that steps that entails.</p>
+<p>Have you checked out the emoji dictionary we loaded into our RStudio environment? You might be surprised by how many emojis are included—and the meaning of some of them!</p>
+<p>Now that we’ve handled emojis, we’re ready to move on to the next preprocessing step: tokenization.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1309,20 +1310,24 @@ The order matters
 <span id="cb9-290"><a href="#cb9-290" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(comments <span class="sc">%&gt;%</span> <span class="fu">select</span>(id, text), <span class="st">"normalized.csv"</span>)</span>
 <span id="cb9-291"><a href="#cb9-291" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
 <span id="cb9-292"><a href="#cb9-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-293"><a href="#cb9-293" aria-hidden="true" tabindex="-1"></a><span class="at">Now we are finally ready to move to the preprocessing phase, let's see</span></span>
-<span id="cb9-294"><a href="#cb9-294" aria-hidden="true" tabindex="-1"></a><span class="at">what that steps that entails.</span></span>
-<span id="cb9-295"><a href="#cb9-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-296"><a href="#cb9-296" aria-hidden="true" tabindex="-1"></a><span class="at">::: {.callout-note icon="false"}</span></span>
-<span id="cb9-297"><a href="#cb9-297" aria-hidden="true" tabindex="-1"></a><span class="at">## 📑 Suggested Readings</span></span>
-<span id="cb9-298"><a href="#cb9-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-299"><a href="#cb9-299" aria-hidden="true" tabindex="-1"></a><span class="at">Bai, Q., Dan, Q., Mu, Z., &amp; Yang, M. (2019). A systematic review of</span></span>
-<span id="cb9-300"><a href="#cb9-300" aria-hidden="true" tabindex="-1"></a><span class="at">emoji: Current research and future perspectives. *Frontiers in</span></span>
-<span id="cb9-301"><a href="#cb9-301" aria-hidden="true" tabindex="-1"></a><span class="at">psychology*, *10*, &lt;https://doi.org/10.3389/fpsyg.2019.02221&gt;</span></span>
+<span id="cb9-293"><a href="#cb9-293" aria-hidden="true" tabindex="-1"></a><span class="at">Have you checked out the emoji dictionary we loaded into our RStudio</span></span>
+<span id="cb9-294"><a href="#cb9-294" aria-hidden="true" tabindex="-1"></a><span class="at">environment? You might be surprised by how many emojis are included—and</span></span>
+<span id="cb9-295"><a href="#cb9-295" aria-hidden="true" tabindex="-1"></a><span class="at">the meaning of some of them!</span></span>
+<span id="cb9-296"><a href="#cb9-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-297"><a href="#cb9-297" aria-hidden="true" tabindex="-1"></a><span class="at">Now that we’ve handled emojis, we’re ready to move on to the next</span></span>
+<span id="cb9-298"><a href="#cb9-298" aria-hidden="true" tabindex="-1"></a><span class="at">preprocessing step: tokenization.</span></span>
+<span id="cb9-299"><a href="#cb9-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-300"><a href="#cb9-300" aria-hidden="true" tabindex="-1"></a><span class="at">::: {.callout-note icon="false"}</span></span>
+<span id="cb9-301"><a href="#cb9-301" aria-hidden="true" tabindex="-1"></a><span class="at">## 📑 Suggested Readings</span></span>
 <span id="cb9-302"><a href="#cb9-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-303"><a href="#cb9-303" aria-hidden="true" tabindex="-1"></a><span class="at">Graham, P. V. (2024). Emojis: An Approach to Interpretation. *UC L. SF</span></span>
-<span id="cb9-304"><a href="#cb9-304" aria-hidden="true" tabindex="-1"></a><span class="at">Commc'n and Ent. J.*, *46*, 123.</span></span>
-<span id="cb9-305"><a href="#cb9-305" aria-hidden="true" tabindex="-1"></a><span class="at">&lt;https://repository.uclawsf.edu/cgi/viewcontent.cgi?article=1850&amp;context=hastings_comm_ent_law_journal&gt;</span></span>
-<span id="cb9-306"><a href="#cb9-306" aria-hidden="true" tabindex="-1"></a><span class="at">:::</span></span>
+<span id="cb9-303"><a href="#cb9-303" aria-hidden="true" tabindex="-1"></a><span class="at">Bai, Q., Dan, Q., Mu, Z., &amp; Yang, M. (2019). A systematic review of</span></span>
+<span id="cb9-304"><a href="#cb9-304" aria-hidden="true" tabindex="-1"></a><span class="at">emoji: Current research and future perspectives. *Frontiers in</span></span>
+<span id="cb9-305"><a href="#cb9-305" aria-hidden="true" tabindex="-1"></a><span class="at">psychology*, *10*, &lt;https://doi.org/10.3389/fpsyg.2019.02221&gt;</span></span>
+<span id="cb9-306"><a href="#cb9-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-307"><a href="#cb9-307" aria-hidden="true" tabindex="-1"></a><span class="at">Graham, P. V. (2024). Emojis: An Approach to Interpretation. *UC L. SF</span></span>
+<span id="cb9-308"><a href="#cb9-308" aria-hidden="true" tabindex="-1"></a><span class="at">Commc'n and Ent. J.*, *46*, 123.</span></span>
+<span id="cb9-309"><a href="#cb9-309" aria-hidden="true" tabindex="-1"></a><span class="at">&lt;https://repository.uclawsf.edu/cgi/viewcontent.cgi?article=1850&amp;context=hastings_comm_ent_law_journal&gt;</span></span>
+<span id="cb9-310"><a href="#cb9-310" aria-hidden="true" tabindex="-1"></a><span class="at">:::</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
