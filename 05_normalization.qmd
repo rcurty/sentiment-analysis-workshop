@@ -127,15 +127,12 @@ comments$text <- gsub("[’‘ʼ`]", "'", comments$text)
 
 Let's first make sure that words like "don't" become "do not". We will
 also create a new column inside the comments dataset called
-`text_expand` using the package `textclean`.
+`text_expand`:
 
 ```r
 comments <- comments %>%
   mutate(text_expand = replace_contraction(text))
 ```
-
-For steps 3-6 we will be using use the packages `dplyr` and `stringr`
-from `tidyverse`.
 
 ## 3. Convert to lowercase
 
