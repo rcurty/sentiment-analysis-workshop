@@ -26,7 +26,7 @@ website:
     collapse-level: 1
     contents:
       - href: 01_index.qmd
-        text: "Introduction"
+        text: "Home"
       - href: 02_setup.qmd
         text: "Setup & Dataset"
       - href: 03_inspecting.qmd

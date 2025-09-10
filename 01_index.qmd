@@ -1,5 +1,5 @@
 ---
-title: "Introduction"
+title: "Home"
 author:
   - name: Renata Curty
     url: https://www.library.ucsb.edu/staff/renata-curty
