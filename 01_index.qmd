@@ -24,7 +24,7 @@ While the analysis of public opinion predates the Internet, the modern field of 
 
 Whether through product reviews, political commentary, or social media posts in virtually any possible topic of interest, sentiment analysis aims to quantify and interpret subjective information at scale, enabling applications in marketing, social science, finance, and beyond. In this course, we will explore ways of extracting insights from textual data, in particular how we can detect underlying emotions within messages shared by people on a popular streaming TV series.
 
-## Learning Goals
+## Learning Objectives
 
 By the end of this workshop, participants will be able to:
 
