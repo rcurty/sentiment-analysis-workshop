@@ -10,7 +10,7 @@ For this workshop we will be using R (4.4.1 or above) and RStudio (2024.04.2+764
 
 ### Packages
 
-This workshop requires several packages to assist us with the tasks categorized below:
+This workshop requires several packages (listed in alphabetical order) to assist us with the tasks categorized below:
 
 -   [`emoji`](https://cran.r-project.org/package=emoji): Provides functions for converting text to emoji and vice versa, useful in text mining and social media analysis.
 
@@ -34,7 +34,7 @@ This workshop requires several packages to assist us with the tasks categorized 
 
 -   [`tidytext`](https://cran.r-project.org/package=tidytext): Enables text mining using tidy data principles, including tokenization and binding with tidyverse workflows.
 
--   [tidyverse](https://cran.r-project.org/package=tidyverse): A collection of R packages (including dplyr, tidyr, ggplot2, readr, etc.) designed for data science workflows.
+-   [`tidyverse`](https://cran.r-project.org/package=tidyverse): A collection of R packages (including dplyr, tidyr, ggplot2, readr, etc.) designed for data science workflows.
 
 ::: {.callout-important appearance="minimal" icon="false"}
 ## 📦 Installing & Loading Packages
@@ -44,7 +44,7 @@ The code to install and load the required packages is included in the `sentiment
 
 ## Project File & Sample Data
 
-Our running example draws on publicly available data from profiles on X (formerly Twitter). Specifically, we collected all posts from the first and second days following the season finales of both Season 1 and Season 2 of the Apple TV series \[*Severance*\](https://en.wikipedia.org/wiki/Severance\_(TV_series).
+The running example draws on publicly available data from profiles on X (formerly Twitter). Specifically, we collected all posts from the first and second days following the season finales of both Season 1 and Season 2 of the Apple TV series \[*Severance*\](https://en.wikipedia.org/wiki/Severance\_(TV_series).
 
 The data was obtained using Brandwatch, a social media analytics platform subscribed by the UCSB Library [(learn more)](https://www.library.ucsb.edu/dreamlab/brandwatch).
 
