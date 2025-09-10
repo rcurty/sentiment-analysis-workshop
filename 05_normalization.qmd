@@ -226,10 +226,10 @@ The punctuation regular expression:
 -   `{2,}`: matches 2 or more consecutive occurrences of that character.
 
 Together, `(.)\\1{2,}` matches any character repeated three or more
-times in a row and str_replace_all replaces the repeated sequence with
+times in a row and `str_replace_all` replaces the repeated sequence with
 just one occurrence of the character.
 
-We have created multiple intermediated columns to facilitate the
+We have created multiple intermediate columns to facilitate the
 inspection of each step, but we could have streamlined the pipeline with
 a more slim approach, like the one below:
 
