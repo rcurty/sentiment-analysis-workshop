@@ -288,8 +288,12 @@ comments <- comments %>%
 write_csv(comments %>% select(id, text), "normalized.csv")
 ```
 
-Now we are finally ready to move to the preprocessing phase, let's see
-what that steps that entails.
+Have you checked out the emoji dictionary we loaded into our RStudio
+environment? You might be surprised by how many emojis are included—and
+the meaning of some of them!
+
+Now that we’ve handled emojis, we’re ready to move on to the next
+preprocessing step: tokenization.
 
 ::: {.callout-note icon="false"}
 ## 📑 Suggested Readings

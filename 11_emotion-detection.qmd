@@ -21,23 +21,40 @@ You may explore NRC's lexicon Tableau dashboard to explore words associated with
 ```{=html}
 <iframe width="780" height="500" src="https://public.tableau.com/views/NRC-Emotion-Lexicon-viz1/NRCEmotionLexicon-viz1?:embed=y&:loadOrderID=0&:display_count=no&:showVizHome=no" title="NRC Lexicon Interactive Visualization"></iframe>
 ```
+Now that we have a better understandig of this package, let's get back to business and perform emotion detection to our data. First, let's compute the sentiment score by sentence:
 
-Now that we have a better understandig of this package, let's get back to business and perform emotion detection to our data:
-
-```r
+``` r
 sentences <- get_sentences(preprocessed$text_ready)
 # Compute NRC sentiment per sentence
 emotion_score <- get_nrc_sentiment(sentences)
+```
 
+Open the `emotion_score` data frame. Notice that we have counts, per emotion, it is not only binary, that is because it computes the number of words associated with a particular emotion within the same string of text.
+
+![](images/emotion-scores-01.png)
+
+Let's now bind the two dataframes column-wise, so each row in preprocessed now has the corresponding emotion metrics appended as new columns and linked to the corresponding id:
+
+``` r
 # Grouping so ID to match sentences to their original row
 preprocessed$sentence <- sentences
 emotion_data <- bind_cols(preprocessed, emotion_score)
+```
 
-# Summarize overall emotions
-emotion_summary <- emotion_summary %>%
-  arrange(desc(count)) %>%             # sort data by count
-  mutate(emotion = fct_inorder(emotion))  # lock factor order
+And then, let's sort emotions by frequency and ensures that the factor levels of emotion match this order, which is especially handy for creating plots that reflect the sorted counts.
 
+``` r
+# Summarize counts for each emotion
+emotion_summary <- emotion_data %>%
+  select(anger:trust) %>%       # only emotion columns
+  summarise(across(everything(), sum)) %>% 
+  pivot_longer(cols = everything(), names_to = "emotion", values_to = "count") %>%
+  arrange(desc(count))    # sort by count
+```
+
+Great! We are ready to plot.
+
+``` r
 # Plot overall emotion
 ggplot(emotion_summary, aes(x = emotion, y = count, fill = emotion)) +
   geom_col(show.legend = FALSE) +
@@ -50,7 +67,11 @@ ggplot(emotion_summary, aes(x = emotion, y = count, fill = emotion)) +
        x = "Emotion",
        y = "Total Count") +
   coord_flip()
+```
 
+What about plotting it by season?
+
+``` r
 # Summary by season
 # Create season column
 emotion_seasons <- emotion_data %>%
@@ -88,7 +109,11 @@ ggplot(emotion_long,
     fill = "Season"
   ) +
   coord_flip()
+```
 
+In case you are curious, we can also check which emotions frequently occur together in our dataset:
+
+``` r
 # Co-occurence Heatmap 
 emotion_matrix <- emotion_data %>%
   select(anger:trust)  # keeping only emotion columns; removing positive and negative
@@ -113,9 +138,21 @@ ggplot(co_occurrence_long, aes(x = emotion1, y = emotion2, fill = correlation)) 
   labs(title = "Emotion Co-occurrence Heatmap",
        x = "Emotion",
        y = "Emotion")
-  
+```
+
+We could continue exploring the data a in multiple ways, specially if we had the demographics associated with each comment, but that should be good enough to call it the day.
+
+Wait, don't forget to save the emotion results.
+
+``` r
 # Save results
 write_csv(emotion_data, "sentiment_emotion_results.csv")
 ```
 
+Next, we will wrap it up with some final considerations.
+
+::: callout-note
+## Why using `sentimentr` then?
+
 You might be wondering: if the **`syuzhet`** package also computes polarity, why did we choose **`sentimentr`** in our pipeline? The reason is that syuzhet does not inherently account for valence shifters. In the original syuzhet implementation, words are scored in isolation—so “good” = +1, “bad” = −1—regardless of nearby negations or intensifiers. For example, “not good” would still be counted as +1. Because **`sentimentr`** adjusts sentiment scores for negators and amplifiers, polarity results are more nuanced, robust, and reliable.
+:::

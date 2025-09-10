@@ -2,9 +2,7 @@
 title: "Lemmatization"
 ---
 
-![Source: Created by the author in Canvas](images/lemmatization.png){width="750"}
-
-Also known as word reduction, lemmatization is the process of transforming words into their base or dictionary form (*lemma*) to identify similarities in meaning and usage across different contexts. Take the word "run" as an example. It can appear in various forms like "ran", "runs", "running", and "runner". But the variations don’t stop there, as it includes complex forms like "outrun", "overrun", or "underrun". These variations make it challenging for computers to process natural language effectively unless they can recognize that these words are related. That’s where lemmatization comes in; it helps machines group related words together by reducing them to a common root present in the dictionary, enabling better understanding and analysis of text.
+![Source: Created by the author in Canvas](images/lemmatization.png){width="750"} Also known as word reduction, lemmatization is the process of transforming words into their base or dictionary form (*lemma*) to identify similarities in meaning and usage across different contexts. Take the word "run" as an example. It can appear in various forms like "ran", "runs", "running", and "runner". But the variations don’t stop there, as it includes complex forms like "outrun", "overrun", or "underrun". These variations make it challenging for computers to process natural language effectively unless they can recognize that these words are related. That’s where lemmatization comes in; it helps machines group related words together by reducing them to a common root present in the dictionary, enabling better understanding and analysis of text.
 
 You might be asking yourself: Wait...but what about "stemming"? Stemming is considered a more straightforward but agressive process that removes prefixes and suffices, reducing the word to its roots. It is considered a less effective approach compared to lemmatization because it may can occasionally lead to meaningless words. For example, while "ran" and "runs" would be stemmed to "run", for running would end up as "runn". For this reason, we will stick with lemmatization and skip stemming in our data analysis. However, depending on your computing capability to process large volumes of textual data, you might consider using it, giving that stemming, since it is considered a more efficient approach.
 
@@ -30,14 +28,14 @@ After applying lemmatization, the sentence should look like:
 :::
 :::
 
-Alright, back to our pipeline, we will now convert words to their dictionary form, do some 
+Alright, back to our pipeline, we will now convert words to their dictionary form, do some
 
-```r
+``` r
 # Lemmatize
 tokens_nostop <- tokens_nostop %>%
   mutate(word_lemmatized = lemmatize_words(word))
 
-# Remove single-character words (NOT SURE IF NEEDED)
+# Remove single-character words
 tokens_nostop <- tokens_nostop %>%
   filter(str_length(word_lemmatized) > 1)
 
@@ -56,3 +54,7 @@ preprocessed <- data %>%
 # Save to CSV
 write_csv(preprocessed, "preprocessed.csv")
 ```
+
+Did you notice the new column added to the `tokens_nostop` data frame? If not, take a quick look; it shows how some words have been converted to their dictionary (base) forms.
+
+![](images/lemma-results.png)

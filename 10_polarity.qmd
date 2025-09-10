@@ -28,7 +28,7 @@ Words like “but,” “however,” and “although” also influence the senti
 
 With this approach, we can explore more confidently whether the show’s viewers felt positive, neutral, or negative about it.
 
-```r
+``` r
 # Read data
 
 preprocessed <- read_csv("preprocessed.csv")
@@ -37,6 +37,15 @@ head(preprocessed$text_ready)
 
 # Compute sentiment per row/case
 sentiment_scores <- sentiment_by(preprocessed$text_ready)
+```
+
+Let's now take a look at the `sentiment_scores` dataframe:
+
+![](images/sentiment-scores.png)
+
+It’s expected that the standard deviation is missing, because each row/case is treated as a single sentence when computing the score. Now, let's make sure to add these scores and the labels our dataset:
+
+``` r
 
 # Add scores and labels to original dataset
 polarity <- preprocessed %>%
@@ -48,8 +57,12 @@ polarity <- preprocessed %>%
          ))
 
 head(polarity)
+```
 
-# Visualize
+Next, let's plot some results and histograms to check the distribution:
+
+``` r
+# Histogram both seasons
 
 ggplot(polarity, aes(x = score)) +
   geom_histogram(binwidth = 0.1, fill = "skyblue", color = "white") +
@@ -57,10 +70,6 @@ ggplot(polarity, aes(x = score)) +
   labs(title = "Sentiment Score Distribution", x = "Average Sentiment", y = "Count")
 
 table(polarity$sentiment_label)
-
-# Check for extreme cases
-head(polarity[order(polarity$score), ], 10)   # Most negative
-head(polarity[order(-polarity$score), ], 10)  # Most positive
 
 # Extract season info (s1, s2) into a new column
 polarity_seasons <- polarity %>%
@@ -75,3 +84,6 @@ ggplot(polarity_seasons, aes(x = score, fill = season)) +
   scale_fill_brewer(palette = "Set1")
 ```
 
+We could have spent more time refining these plots, but this is sufficient for our initial exploration. In pairs, review the plots and discuss what they reveal about viewers’ perceptions of the *Severance* show.
+
+That’s only part of the story. Now we move on to emotion detection to discover what else we can learn from the data,

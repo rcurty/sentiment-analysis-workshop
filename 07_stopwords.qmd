@@ -13,7 +13,7 @@ By ignoring stop words, search engines, databases, chatbots and virtual assistan
 For this workshop, we will be using the package `stopwords` ([more info](https://cran.r-project.org/web/packages/stopwords/readme/README.html)) which is considered a "on-stop stopping" for R users. For English language, the package relies on the [Snowball](http://snowball.tartarus.org/algorithms/english/stop.txt) list. But, before we turn to our worksheet to see how that process looks like and how it will apply to our data, let's have a little challenge!
 
 ::: {.callout-note icon="false"}
-# 🧠 Knowledge Check 
+# 🧠 Knowledge Check
 
 How many stop words can you spot in each of the following sentences:
 
@@ -51,6 +51,8 @@ Now, let’s return to the worksheet and see how we can put that into practice.
 tokens_nostop <- tokens %>%
   filter(!word %in% stopwords("en"))
 ```
+
+Awesome! This step should greatly reduce our tokens to 72,309 by removing filler and unbecessary words to compute sentiment analysis.
 
 ::: {.callout-note icon="false"}
 # 📑 **Suggested Reading**
