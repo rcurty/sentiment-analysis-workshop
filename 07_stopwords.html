@@ -324,7 +324,7 @@ Solution
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove stopwords</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>tokens_nostop <span class="ot">&lt;-</span> tokens <span class="sc">%&gt;%</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word <span class="sc">%in%</span> <span class="fu">stopwords</span>(<span class="st">"en"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Awesome! This step should greatly reduce our tokens to 72,309 by removing filler and unbecessary words to compute sentiment analysis.</p>
+<p>Awesome! This step should bring our token count down to 72,309 by removing filler and unnecessary words, getting our dataset almost ready for sentiment analysis. Next up is lemmatization.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -861,7 +861,7 @@ Solution
 <span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>word <span class="sc">%in%</span> <span class="fu">stopwords</span>(<span class="st">"en"</span>))</span>
 <span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>Awesome! This step should greatly reduce our tokens to 72,309 by removing filler and unbecessary words to compute sentiment analysis.</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>Awesome! This step should bring our token count down to 72,309 by removing filler and unnecessary words, getting our dataset almost ready for sentiment analysis. Next up is lemmatization.</span>
 <span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>::: {.callout-note icon="false"}</span>
 <span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="fu"># 📑 **Suggested Reading**</span></span>
