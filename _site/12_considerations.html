@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
   </div>
         <div class="quarto-navbar-tools tools-end">
-    <a href="./00_about.html" title="About RDS" class="quarto-navigation-tool px-1" aria-label="About RDS"><i class="bi bi-"></i></a>
+    <a href="./about.html" title="About RDS" class="quarto-navigation-tool px-1" aria-label="About RDS"><i class="bi bi-"></i></a>
     <div class="dropdown">
       <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label=""><i class="bi bi-github"></i></a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -155,8 +155,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01_index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -283,6 +283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Temporal dynamics also play a role, as <em>slang and cultural references</em> evolve rapidly, e.g., “bad” meaning “good” in some communities. Ambiguity adds another layer of difficulty: polysemous words like “sick” can mean either “ill” or “awesome”.</p>
 <p>Another complication is to deal with <em>sarcasm</em> and irony which can completely invert the intended sentiment as in: “Oh great, another awesome Monday morning traffic jam!”.</p>
 <p><em>Implicit sentiment</em> may be present even when emotional words are absent, as in “The waiter ignored us for 30 minutes before taking our order.” These factors collectively make sentiment analysis a useful but inherently imperfect tool for understanding human language and emotion.</p>
+<p><strong>FIXME: In fact, if we inspect scores and emotions attributed to some user posts, we might disagree with some of the results for these very limitations. add examples!</strong></p>
 <p>However, it is important to emphasize that as described before, we have only explored sentiment analysis through a lexicon-based approach, and that, as illustrated in Figure ? below, there are other methods, including machine learning, deep learning and their combination (hybrid), that can be employed to extract emotions from text, including user generated content, all with their own limitations and challenges.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -797,19 +798,21 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>*Implicit sentiment* may be present even when emotional words are absent, as in “The waiter ignored us for 30 minutes before taking our order.” These factors collectively make sentiment analysis a useful but inherently imperfect tool for understanding human language and emotion.</span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>However, it is important to emphasize that as described before, we have only explored sentiment analysis through a lexicon-based approach, and that, as illustrated in Figure ? below, there are other methods, including machine learning, deep learning and their combination (hybrid), that can be employed to extract emotions from text, including user generated content, all with their own limitations and challenges.</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>**FIXME: In fact, if we inspect scores and emotions attributed to some user posts, we might disagree with some of the results for these very limitations. add examples!**</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="al">![Figure ?. Overview of sentiment analysis methods, applications, and challenges from (Mao, Liu, &amp; Zhang, 2024).](images/wheel_NLP.jpg)</span>{fig-align="center" width="500"}</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>However, it is important to emphasize that as described before, we have only explored sentiment analysis through a lexicon-based approach, and that, as illustrated in Figure ? below, there are other methods, including machine learning, deep learning and their combination (hybrid), that can be employed to extract emotions from text, including user generated content, all with their own limitations and challenges.</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>For example, Amazon relies on deep learning algorithms to determine the sentiment of customer reviews by identifying positive, negative, or neutral tones in the text. The models are trained on a vast dataset of Amazon’s product descriptions and reviews and are regularly updated with new information. This robust approach enables Amazon to efficiently analyze and interpret customer feedback on a large scale.</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="al">![Figure ?. Overview of sentiment analysis methods, applications, and challenges from (Mao, Liu, &amp; Zhang, 2024).](images/wheel_NLP.jpg)</span>{fig-align="center" width="500"}</span>
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>While there are more advanced approaches to sentiment analysis, including AI-assisted methods, these are discussion topics for future workshops!</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>For example, Amazon relies on deep learning algorithms to determine the sentiment of customer reviews by identifying positive, negative, or neutral tones in the text. The models are trained on a vast dataset of Amazon’s product descriptions and reviews and are regularly updated with new information. This robust approach enables Amazon to efficiently analyze and interpret customer feedback on a large scale.</span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>While there are more advanced approaches to sentiment analysis, including AI-assisted methods, these are discussion topics for future workshops!</span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>Mao, Y., Liu, Q., &amp; Zhang, Y. (2024). Sentiment analysis methods, applications, and challenges: A systematic literature review. *Journal of King Saud University - Computer and Information Sciences, 36*(4), 102048. <span class="ot">&lt;https://doi.org/10.1016/j.jksuci.2024.102048&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## References</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>Mao, Y., Liu, Q., &amp; Zhang, Y. (2024). Sentiment analysis methods, applications, and challenges: A systematic literature review. *Journal of King Saud University - Computer and Information Sciences, 36*(4), 102048. <span class="ot">&lt;https://doi.org/10.1016/j.jksuci.2024.102048&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
