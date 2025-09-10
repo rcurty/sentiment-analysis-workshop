@@ -26,7 +26,7 @@ website:
     collapse-level: 1
     contents:
       - href: index.qmd
-        text: "Introduction to Sentiment Analysis in R"
+        text: "Introduction"
       - href: 02_setup.qmd
         text: "Setup & Dataset"
       - href: 03_inspecting.qmd
