@@ -215,11 +215,88 @@
     ]
   },
   {
+    "objectID": "05_normalization.html#dealing-with-contractions",
+    "href": "05_normalization.html#dealing-with-contractions",
+    "title": "Normalization & Noise Reduction",
+    "section": "Dealing with Contractions",
+    "text": "Dealing with Contractions\nAnother important step is to properly handle contractions. In everyday language, we often shorten words: can’t, don’t, it’s. These make speech and writing flow more easily, but they can cause confusion for Natural Language Processing (NLP) models. Expanding contractions, such as changing can’t to cannot or it’s to it is, helps bring clarity and consistency to the text because NLP models treat don’t and do not as completely different words, even though they mean the same thing. Also, words like cant, doesnt, and whats lose their meaning. Expanding contractions reduces this inconsistency and ensures that both forms are recognized as the same concept. Expanding it to is not happy makes the negative sentiment explicit, which is especially important in tasks like sentiment analysis.\nSo, while it may seem like a small step, it often leads to cleaner data, leaner models, and more accurate results. First, however, we need to ensure that apostrophes are handled correctly. It’s not uncommon to encounter messy text where nonstandard characters are used in place of the straight apostrophe (’). Such inconsistencies are very common and can disrupt contraction expansion.\n\n\n\n\n\n\n\n\nCharacter\nUnicode\nNotes\n\n\n\n\n'\nU+0027\nStandard straight apostrophe, used in most dictionaries\n\n\n’\nU+2019\nRight single quotation mark (curly apostrophe)\n\n\n‘\nU+2018\nLeft single quotation mark\n\n\nʼ\nU+02BC\nModifier letter apostrophe\n\n\n`\nU+0060\nGrave accent (sometimes typed by mistake)\n\n\n\nAlright, let’s go back to our worksheet to get our hands “dirty” with some cleaning and normalization, helping us make it more normalized, consistent, and ready for analysis.\n\n\n\n\n\n\nThe order matters\n\n\n\nIn text preprocessing, the order of steps matters because each transformation changes the text in a way that can affect subsequent steps. Doing things in a different order can lead to different results, and sometimes even incorrect or unexpected outcomes. For example, if we remove punctuation before expanding contractions, \"can't\" might turn into \"cant\" instead of \"cannot\", losing the correct meaning.",
+    "crumbs": [
+      "Text Preprocessing",
+      "Normalization & Noise Reduction"
+    ]
+  },
+  {
+    "objectID": "05_normalization.html#handling-apostrophes",
+    "href": "05_normalization.html#handling-apostrophes",
+    "title": "Normalization & Noise Reduction",
+    "section": "1. Handling apostrophes",
+    "text": "1. Handling apostrophes\nThe gsub() function is part of base R and stands for global substitute and is used to search for patterns in text and replace them with something else. Its basic form is gsub(pattern, replacement, x), where pattern is the regular expression you want to match, replacement is the text you want to insert, and x is the character vector you’re applying it to. In this case, the pattern “[’‘ʼ]” looks for several different kinds of apostrophes and backticks—like the left and right single quotes, the modifier apostrophe, and the backtick. Each of those gets replaced with a simple, standard apostrophe (’`).\nThis step helps clean up text by making sure all apostrophes are consistent, rather than a mix of fancy Unicode versions. Apllying it to the text column in our comments dataset should look like.\ncomments$text &lt;- gsub(\"[’‘ʼ`]\", \"'\", comments$text)",
+    "crumbs": [
+      "Text Preprocessing",
+      "Normalization & Noise Reduction"
+    ]
+  },
+  {
     "objectID": "05_normalization.html#expanding-contractions",
     "href": "05_normalization.html#expanding-contractions",
     "title": "Normalization & Noise Reduction",
-    "section": "Expanding Contractions",
-    "text": "Expanding Contractions\nAnother important step is to properly handle contractions. In everyday language, we often shorten words: can’t, don’t, it’s. These make speech and writing flow more easily, but they can cause confusion for Natural Language Processing (NLP) models. Expanding contractions, such as changing can’t to cannot or it’s to it is, helps bring clarity and consistency to the text because NLP models treat don’t and do not as completely different words, even though they mean the same thing. Also, words like cant, doesnt, and whats lose their meaning. Expanding contractions reduces this inconsistency and ensures that both forms are recognized as the same concept. Expanding it to is not happy makes the negative sentiment explicit, which is especially important in tasks like sentiment analysis.\nSo, while it may seem like a small step, it often leads to cleaner data, leaner models, and more accurate results. First, however, we need to ensure that apostrophes are handled correctly. It’s not uncommon to encounter messy text where nonstandard characters are used in place of the straight apostrophe (’). Such inconsistencies are very common and can disrupt contraction expansion.\n\n\n\n\n\n\n\n\nCharacter\nUnicode\nNotes\n\n\n\n\n'\nU+0027\nStandard straight apostrophe, used in most dictionaries\n\n\n’\nU+2019\nRight single quotation mark (curly apostrophe)\n\n\n‘\nU+2018\nLeft single quotation mark\n\n\nʼ\nU+02BC\nModifier letter apostrophe\n\n\n`\nU+0060\nGrave accent (sometimes typed by mistake)\n\n\n\nAlright, let’s go back to our worksheet to get our hands “dirty” with some cleaning and normalization, helping us make it more normalized, consistent, and ready for analysis.\n# Normalization\n\n# Normalize apostrophes\ncomments$text &lt;- gsub(\"[’‘ʼ`]\", \"'\", comments$text)\n\n# Expand contractions\ncomments &lt;- comments %&gt;%\n  mutate(text_expand = replace_contraction(text))\n\n# Convert to lowercase\ncomments &lt;- comments %&gt;%\n  mutate(text_lower = tolower(text_expand))\n\n# Remove URLs\ncomments &lt;- comments %&gt;%\n  mutate(text_nourl = str_replace_all(text_lower, \"http[s]?://[^\\\\s,]+|www\\\\.[^\\\\s,]+\", \"\"))\n\n# Remove mentions (@username)\ncomments &lt;- comments %&gt;%\n  mutate(text_nomention = str_replace_all(text_nourl, \"@[A-Za-z0-9_]+\", \"\"),\n         text_nomention = str_squish(text_nomention))\n\n# Remove punctuation & numbers\ncomments &lt;- comments %&gt;%\n  mutate(text_cleaned = text_nomention %&gt;%\n           str_replace_all(\"[[:punct:]“”‘’–—…|]\", \"\") %&gt;%\n           #str_replace_all(\"[^\\\\w\\\\s.!?]\", \"\") %&gt;% #preserves sentence boundaries \n           str_replace_all(\"[[:digit:]]\", \"\") %&gt;%\n           str_replace_all(\"(.)\\\\1{2,}\", \"\\\\1\") %&gt;%  # collapse rep. letters eg. \"Amaaazing\"\n           str_squish()\n  )\n\n# Convert emojis to text\nemoji_dict &lt;- emo::jis[, c(\"emoji\", \"name\")]\nemoji_dict$name &lt;- paste0(\"[\", emoji_dict$name, \"]\")\n\nreplace_emojis &lt;- function(text, emoji_dict) {\n  stri_replace_all_fixed(\n    str = text, \n    pattern = emoji_dict$emoji, \n    replacement = emoji_dict$name, \n    vectorize_all = FALSE\n  )\n}\n\ncomments &lt;- comments %&gt;%\n  mutate(text_noemoji = replace_emojis(text_cleaned, emoji_dict),\n         text = str_replace_all(text_noemoji, \"[^[:alpha:][:space:]]\", \"\"),\n         text = str_squish(text))\n\n# Save normalized data\nwrite_csv(comments %&gt;% select(id, text), \"normalized.csv\")\n\n\n\n\n\n\n📑 Suggested Readings\n\n\n\nBai, Q., Dan, Q., Mu, Z., & Yang, M. (2019). A systematic review of emoji: Current research and future perspectives. Frontiers in psychology, 10, https://doi.org/10.3389/fpsyg.2019.02221\nGraham, P. V. (2024). Emojis: An Approach to Interpretation. UC L. SF Commc’n and Ent. J., 46, 123. https://repository.uclawsf.edu/cgi/viewcontent.cgi?article=1850&context=hastings_comm_ent_law_journal",
+    "section": "2. Expanding contractions",
+    "text": "2. Expanding contractions\nLet’s first make sure that words like “don’t” become “do not”. We will also create a new column inside the comments dataset called text_expand using the package textclean.\ncomments &lt;- comments %&gt;%\n  mutate(text_expand = replace_contraction(text))\nFor steps 3-6 we will be using use the packages dplyr and stringr from tidyverse.",
+    "crumbs": [
+      "Text Preprocessing",
+      "Normalization & Noise Reduction"
+    ]
+  },
+  {
+    "objectID": "05_normalization.html#convert-to-lowercase",
+    "href": "05_normalization.html#convert-to-lowercase",
+    "title": "Normalization & Noise Reduction",
+    "section": "3. Convert to lowercase",
+    "text": "3. Convert to lowercase\nHaving all text converted to lowercase will be our next step, using the mutate function we will add the following code which will create a new text_lower column:\ncomments &lt;- comments %&gt;%\n  mutate(text_lower = tolower(text_expand))",
+    "crumbs": [
+      "Text Preprocessing",
+      "Normalization & Noise Reduction"
+    ]
+  },
+  {
+    "objectID": "05_normalization.html#remove-urls",
+    "href": "05_normalization.html#remove-urls",
+    "title": "Normalization & Noise Reduction",
+    "section": "4. Remove URLs",
+    "text": "4. Remove URLs\nWe have a few URLs in our dataset and because they vary in format (e.g., http://, https://, or www.), we need to provide a regular expression that can take care of these variations and save it as text_nourl.\ncomments &lt;- comments %&gt;%\n  mutate(text_nourl = str_replace_all(text_lower, \"http[s]?://[^\\\\s,]+|www\\\\.[^\\\\s,]+\", \"\"))\nBreaking it down:\n\nhttp[s]?:// : Matches http:// or https://, where [s]?: means optional “s” (so it matches both http and https).\n[^\\\\s,]+: where [^…] is a negated character class, meaning “match anything not in here”, \\\\s refers to whitespace (space, tab, newline), and , to match one or more characters that are not spaces or commas, that in combination with the above, matches the entire URL up to a space or comma.\n| : Means OR in regex. So it matches either the first pattern or the second.\nwww\\\\.[^\\\\s,]+ : Matches URLs that start with www. and continue until a space or comma.",
+    "crumbs": [
+      "Text Preprocessing",
+      "Normalization & Noise Reduction"
+    ]
+  },
+  {
+    "objectID": "05_normalization.html#remove-mentions-handling-extra-space",
+    "href": "05_normalization.html#remove-mentions-handling-extra-space",
+    "title": "Normalization & Noise Reduction",
+    "section": "5. Remove mentions & Handling Extra Space",
+    "text": "5. Remove mentions & Handling Extra Space\nContinuing with our workflow, we will now handle direct mentions and usernames in our dataset, as they do not contribute relevant information to our analysis. We will use a function to replace all occurrences of usernames preceded by an @ symbol.\ncomments &lt;- comments %&gt;% \n  mutate(\n    text_nomention = str_replace_all(text_nourl, \"@[A-Za-z0-9_]+\", \"\"),",
+    "crumbs": [
+      "Text Preprocessing",
+      "Normalization & Noise Reduction"
+    ]
+  },
+  {
+    "objectID": "05_normalization.html#remove-punctuation-numbers-repeated-letters-and-extra-spaces",
+    "href": "05_normalization.html#remove-punctuation-numbers-repeated-letters-and-extra-spaces",
+    "title": "Normalization & Noise Reduction",
+    "section": "6. Remove punctuation, numbers, repeated letters and extra spaces",
+    "text": "6. Remove punctuation, numbers, repeated letters and extra spaces\nAlright, time to remove punctuations, numbers and repeated letters used for emphasis, that might affect our analysis (e.g. “Amaaaazing”, “Loooove”) and take care of some extra spaces.\ncomments &lt;- comments %&gt;%\n  mutate(\n    text_cleaned = text_nomention %&gt;%\n      str_replace_all(\"[[:punct:]“”‘’–—…|[:digit:]]\", \"\") %&gt;%  # remove punctuation & digits\n      str_replace_all(\"(.)\\\\1{2,}\", \"\\\\1\") %&gt;%                # collapse repeated letters\n      str_squish()                                             # trim & remove extra spaces\n  )\nThe punctuation regular expression:\n\n[:punct:]: matches all standard punctuation characters (e.g., ! ” # $ % & ’ ( ) * + , - . / : ; &lt; = &gt; ? @ [  ] ^ _ { | } ~).\n“”‘’–—… : matches special Unicode punctuation, like curly quotes, en-dash, em-dash, ellipsis.\n|: matches the literal pipe symbol.\n[:digit:]: matches any digit (0–9).\nFor the collapsing part, (.): captures any single character and stores it in a capture group.\n\\\\1: refers back to the first captured character.\n{2,}: matches 2 or more consecutive occurrences of that character.\n\nTogether, (.)\\\\1{2,} matches any character repeated three or more times in a row and str_replace_all replaces the repeated sequence with just one occurrence of the character.\nWe have created multiple intermediated columns to facilitate the inspection of each step, but we could have streamlined the pipeline with a more slim approach, like the one below:\ncomments &lt;- comments %&gt;%\n  mutate(\n    text_cleaned = text %&gt;%\n      # Normalize apostrophes\n      str_replace_all(\"[’‘ʼ`]\", \"'\") %&gt;%\n      # Expand contractions\n      replace_contraction() %&gt;%\n      # Convert to lowercase\n      tolower() %&gt;%\n      # Remove URLs\n      str_replace_all(\"http[s]?://[^\\\\s,]+|www\\\\.[^\\\\s,]+\", \"\") %&gt;%\n      # Remove mentions\n      str_replace_all(\"@[A-Za-z0-9_]+\", \"\") %&gt;%\n      # Remove punctuation & numbers, collapse repeated letters, trim spaces\n      str_replace_all(\"[[:punct:]“”‘’–—…|]\", \"\") %&gt;%\n      str_replace_all(\"[[:digit:]]\", \"\") %&gt;%\n      str_replace_all(\"(.)\\\\1{2,}\", \"\\\\1\") %&gt;%\n      str_squish()\n  )",
+    "crumbs": [
+      "Text Preprocessing",
+      "Normalization & Noise Reduction"
+    ]
+  },
+  {
+    "objectID": "05_normalization.html#convert-emojis-to-text",
+    "href": "05_normalization.html#convert-emojis-to-text",
+    "title": "Normalization & Noise Reduction",
+    "section": "7. Convert emojis to text",
+    "text": "7. Convert emojis to text\nAlright, so we need to call the emoji package to assist us with this process.\n\n\nCode\n# Load the emoji dictionary where 'jis' contains a table with 'emoji' and 'name' columns.\nemoji_dict &lt;- emo::jis[, c(\"emoji\", \"name\")]\n\n# Optional(e.g., 😀 becomes [grinning face])\nemoji_dict$name &lt;- paste0(\"[\", emoji_dict$name, \"]\")\n\n# Define a function to replace emojis in text with their corresponding names.\nreplace_emojis &lt;- function(text, emoji_dict) {\n  stri_replace_all_fixed(\n    str = text,                  # The text to process\n    pattern = emoji_dict$emoji,  # The emojis to find\n    replacement = emoji_dict$name, # Their corresponding names\n    vectorize_all = FALSE        # element-wise replacement in a same string\n  )\n}\n\ncomments &lt;- comments %&gt;%\n  mutate(text_noemoji = replace_emojis(text_cleaned, emoji_dict),\n         # Remove any remaining non-alphabetic characters (like numbers, punctuation, etc.)\n         text = str_replace_all(text_noemoji, \"[^[:alpha:][:space:]]\", \"\"),\n         # Remove extra whitespace between words\n         text = str_squish(text))\n\n# Save the normalized text to a CSV file with only 'id' and 'text' columns\nwrite_csv(comments %&gt;% select(id, text), \"normalized.csv\")\n\n\nNow we are finally ready to move to the preprocessing phase, let’s see what that steps that entails.\n\n\n\n\n\n\n📑 Suggested Readings\n\n\n\nBai, Q., Dan, Q., Mu, Z., & Yang, M. (2019). A systematic review of emoji: Current research and future perspectives. Frontiers in psychology, 10, https://doi.org/10.3389/fpsyg.2019.02221\nGraham, P. V. (2024). Emojis: An Approach to Interpretation. UC L. SF Commc’n and Ent. J., 46, 123. https://repository.uclawsf.edu/cgi/viewcontent.cgi?article=1850&context=hastings_comm_ent_law_journal",
     "crumbs": [
       "Text Preprocessing",
       "Normalization & Noise Reduction"
