@@ -33,6 +33,14 @@ Open the `emotion_score` data frame. Notice that we have counts, per emotion, it
 
 ![](images/emotion-scores-01.png)
 
+We can generate a summary output for each emotion by running:
+
+``` r
+summary(emotion_score)
+```
+
+![](images/summary_emotionscores.png)
+
 Let's now bind the two dataframes column-wise, so each row in preprocessed now has the corresponding emotion metrics appended as new columns and linked to the corresponding id:
 
 ``` r
