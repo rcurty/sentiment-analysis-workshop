@@ -231,9 +231,9 @@ just one occurrence of the character.
 
 We have created multiple intermediate columns to facilitate the
 inspection of each step, but we could have streamlined the pipeline with
-a more slim approach, like the one below (click the carrot to expand it):
+a more slim approach, like the one below:
 
-```{r}
+```r
 comments <- comments %>%
   mutate(
     text_cleaned = text %>%
