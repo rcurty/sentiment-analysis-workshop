@@ -119,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
   </div>
         <div class="quarto-navbar-tools tools-end">
-    <a href="./00_about.qmd" title="About RDS" class="quarto-navigation-tool px-1" aria-label="About RDS"><i class="bi bi-"></i></a>
+    <a href="./about.html" title="About RDS" class="quarto-navigation-tool px-1" aria-label="About RDS"><i class="bi bi-"></i></a>
     <div class="dropdown">
       <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label=""><i class="bi bi-github"></i></a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
@@ -158,7 +158,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01_index.html" class="sidebar-item-text sidebar-link">
+  <a href="./index.qmd" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Home</span></a>
   </div>
 </li>
@@ -480,8 +480,8 @@ The order matters
 <li><p><code>\\1</code>: refers back to the first captured character.</p></li>
 <li><p><code>{2,}</code>: matches 2 or more consecutive occurrences of that character.</p></li>
 </ul>
-<p>Together, <code>(.)\\1{2,}</code> matches any character repeated three or more times in a row and str_replace_all replaces the repeated sequence with just one occurrence of the character.</p>
-<p>We have created multiple intermediated columns to facilitate the inspection of each step, but we could have streamlined the pipeline with a more slim approach, like the one below:</p>
+<p>Together, <code>(.)\\1{2,}</code> matches any character repeated three or more times in a row and <code>str_replace_all</code> replaces the repeated sequence with just one occurrence of the character.</p>
+<p>We have created multiple intermediate columns to facilitate the inspection of each step, but we could have streamlined the pipeline with a more slim approach, like the one below:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> comments <span class="sc">%&gt;%</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_cleaned =</span> text <span class="sc">%&gt;%</span></span>
@@ -1247,10 +1247,10 @@ The order matters
 <span id="cb9-226"><a href="#cb9-226" aria-hidden="true" tabindex="-1"></a><span class="at">-   </span><span class="st">`</span>{<span class="dv">2</span>,}<span class="st">`</span><span class="at">: matches 2 or more consecutive occurrences of that character.</span></span>
 <span id="cb9-227"><a href="#cb9-227" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-228"><a href="#cb9-228" aria-hidden="true" tabindex="-1"></a><span class="at">Together, </span><span class="st">`</span>(.)\\<span class="dv">1</span>{<span class="dv">2</span>,}<span class="st">`</span><span class="at"> matches any character repeated three or more</span></span>
-<span id="cb9-229"><a href="#cb9-229" aria-hidden="true" tabindex="-1"></a><span class="at">times in a row and str_replace_all replaces the repeated sequence with</span></span>
+<span id="cb9-229"><a href="#cb9-229" aria-hidden="true" tabindex="-1"></a><span class="at">times in a row and </span><span class="st">`</span>str_replace_all<span class="st">`</span><span class="at"> replaces the repeated sequence with</span></span>
 <span id="cb9-230"><a href="#cb9-230" aria-hidden="true" tabindex="-1"></a><span class="at">just one occurrence of the character.</span></span>
 <span id="cb9-231"><a href="#cb9-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-232"><a href="#cb9-232" aria-hidden="true" tabindex="-1"></a><span class="at">We have created multiple intermediated columns to facilitate the</span></span>
+<span id="cb9-232"><a href="#cb9-232" aria-hidden="true" tabindex="-1"></a><span class="at">We have created multiple intermediate columns to facilitate the</span></span>
 <span id="cb9-233"><a href="#cb9-233" aria-hidden="true" tabindex="-1"></a><span class="at">inspection of each step, but we could have streamlined the pipeline with</span></span>
 <span id="cb9-234"><a href="#cb9-234" aria-hidden="true" tabindex="-1"></a><span class="at">a more slim approach, like the one below:</span></span>
 <span id="cb9-235"><a href="#cb9-235" aria-hidden="true" tabindex="-1"></a></span>
