@@ -2,7 +2,7 @@
 title: "Setup & Dataset"
 ---
 
-## Requirements
+## System Requirements
 
 ### Environment
 
@@ -56,16 +56,14 @@ Our inclusion criteria included "severance" (in any capitalization), and at leas
 
 We compiled two datasets: one from April 8–10, 2022, capturing impressions from Season 1 finale, and another from March 20–22, 2025, following the Season 2 finale. In total, the dataset contains 1,786 posts for 2022 and 4,091 for 2025.
 
-To ensure compliance with [GDPR regulations](https://gdpr-info.eu), and to avoid the inadvertent release of sensitive information, we consolidated the raw data to include only two columns: a unique post ID and the content of the message. The final dataset is publicly available
-
 Whether you're a longtime fan of the show or encountering it for the first time, this example offers a valuable case study in analyzing sentiment in unstructured public opinion data. Because data was pulled from social media it also serves as a guideline for examining more challenging text corpora, due to informal language, use of slang, emojis, hashtags, and abbreviations, as well as their variable length, inconsistent formatting, and inclusion of multimedia elements like images, videos, and links. Yeah, all the challenges you will face in the "real world" of sentiment analysis of user-generated content.
 
-This lesson is supplemented by a folder, containing: 1) a data file containing the posts we will analyze `comments.csv`, and 2) the `worksheet.qmd` where we will be coding, computing, and visualizing the output of our tasks.
+This lesson is supplemented by a folder, containing two files: 1) `comments.csv` containing the posts we will analyze and their respective ids, and 2) the `worksheet.qmd` where we will be coding, computing, and visualizing the outputs of our tasks.
 
 ::: {.callout-important icon="false"}
 # ⤵️ Download & Save Project File
 
 Access this folder <add Link>, ensure to download it, and save in an easy to locate place (e.g., Desktop).
 
-**\<FIXME: replace it with zenodo doi\>**
+**\<FIXME: add zenodo doi after run-through\>**
 :::

@@ -15,7 +15,7 @@ noise. Below are some key actions we’ll be performing during this
 workshop:
 
 | Action                       | Why it matters?                                                                                                                                                                                                                                                                                                                                                         |
-|------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|-------------|-----------------------------------------------------------|
 | Remove URLs                  | URLs often contain irrelevant noise and don't contribute meaningful content for analysis.                                                                                                                                                                                                                                                                               |
 | Remove Punctuation & Symbols | Punctuation marks and other symbols including those extensively used in social media for mentioning (\@) or tagging (#) rarely adds value in most NLP tasks and can interfere with tokenization (as we will cover in a bit) or word matching.                                                                                                                           |
 | Remove Numbers               | Numbers can be noise in most contexts unless specifically relevant (e.g., in financial or medical texts) don't contribute much to the analysis. However, in NLP tasks they are considered important, there might be considerations to replace them with dummy tokens (e.g. \<NUMBER\>), or even converting them into their written form (e.g, 100 becomes one hundred). |
@@ -81,7 +81,7 @@ the straight apostrophe ('). Such inconsistencies are very common and
 can disrupt contraction expansion.
 
 | Character | Unicode | Notes                                                   |
-|-----------|---------|---------------------------------------------------------|
+|-------------|-------------|----------------------------------------------|
 | `'`       | U+0027  | Standard straight apostrophe, used in most dictionaries |
 | `’`       | U+2019  | Right single quotation mark (curly apostrophe)          |
 | `‘`       | U+2018  | Left single quotation mark                              |
@@ -93,7 +93,7 @@ some cleaning and normalization, helping us make it more normalized,
 consistent, and ready for analysis.
 
 ::: callout-caution
-## The order matters
+## The order matters!
 
 In text preprocessing, **the order of steps matters** because each
 transformation changes the text in a way that can affect subsequent
@@ -129,7 +129,7 @@ Let's first make sure that words like "don't" become "do not". We will
 also create a new column inside the comments dataset called
 `text_expand` using the package `textclean`.
 
-``` r
+```r
 comments <- comments %>%
   mutate(text_expand = replace_contraction(text))
 ```
@@ -143,7 +143,7 @@ Having all text converted to lowercase will be our next step, using the
 mutate function we will add the following code which will create a new
 `text_lower` column:
 
-``` r
+```r
 comments <- comments %>%
   mutate(text_lower = tolower(text_expand))
 ```
@@ -154,7 +154,7 @@ We have a few URLs in our dataset and because they vary in format (e.g.,
 http://, https://, or www.), we need to provide a regular expression
 that can take care of these variations and save it as `text_nourl`.
 
-``` r
+```r
 comments <- comments %>%
   mutate(text_nourl = str_replace_all(text_lower, "http[s]?://[^\\s,]+|www\\.[^\\s,]+", ""))
 ```
@@ -183,7 +183,7 @@ usernames in our dataset, as they do not contribute relevant information
 to our analysis. We will use a function to replace all occurrences of
 usernames preceded by an \@ symbol.
 
-``` r
+```r
 comments <- comments %>% 
   mutate(
     text_nomention = str_replace_all(text_nourl, "@[A-Za-z0-9_]+", ""), 
@@ -191,11 +191,11 @@ comments <- comments %>%
 
 ## 6. Remove punctuation, numbers, repeated letters and extra spaces
 
-Alright, time to remove punctuations, numbers and repeated letters used
+Alright, time to remove punctuation, numbers and repeated letters used
 for emphasis, that might affect our analysis (e.g. "Amaaaazing",
 "Loooove") and take care of some extra spaces.
 
-``` r
+```r
 comments <- comments %>%
   mutate(
     text_cleaned = text_nomention %>%
@@ -231,9 +231,9 @@ just one occurrence of the character.
 
 We have created multiple intermediate columns to facilitate the
 inspection of each step, but we could have streamlined the pipeline with
-a more slim approach, like the one below:
+a more slim approach, like the one below (click the carrot to expand it):
 
-``` r
+```{r}
 comments <- comments %>%
   mutate(
     text_cleaned = text %>%
@@ -257,10 +257,10 @@ comments <- comments %>%
 
 ## 7. Convert emojis to text
 
-Alright, so we need to call the `emoji` package to assist us with this
-process.
+Okay, now we’ll convert emojis into their text descriptions to make them
+machine-readable, using the emoji package to help with this step:
 
-```{r}
+```r
 # Load the emoji dictionary where 'jis' contains a table with 'emoji' and 'name' columns.
 emoji_dict <- emo::jis[, c("emoji", "name")]
 
@@ -288,12 +288,12 @@ comments <- comments %>%
 write_csv(comments %>% select(id, text), "normalized.csv")
 ```
 
-Have you checked out the emoji dictionary we loaded into our RStudio
-environment? You might be surprised by how many emojis are included—and
-the meaning of some of them!
+Have you had a chance to look at the emoji dictionary we loaded into our
+RStudio environment? It’s packed with more emojis and some surprising
+meanings than you might expect.
 
-Now that we’ve handled emojis, we’re ready to move on to the next
-preprocessing step: tokenization.
+With emojis taken care of, we can now move on to the next preprocessing
+step: tokenization.
 
 ::: {.callout-note icon="false"}
 ## 📑 Suggested Readings

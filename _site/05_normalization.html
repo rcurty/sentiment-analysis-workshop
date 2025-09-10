@@ -157,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
+ <span class="menu-text">Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -289,8 +289,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>As we’ve seen, the main goal of normalization is to remove irrelevant punctuation and content, and to standardize the data in order to reduce noise. Below are some key actions we’ll be performing during this workshop:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 7%">
-<col style="width: 92%">
+<col style="width: 18%">
+<col style="width: 81%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -365,9 +365,9 @@ Solution
 <p>So, while it may seem like a small step, it often leads to cleaner data, leaner models, and more accurate results. First, however, we need to ensure that apostrophes are handled correctly. It’s not uncommon to encounter messy text where nonstandard characters are used in place of the straight apostrophe (’). Such inconsistencies are very common and can disrupt contraction expansion.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 14%">
-<col style="width: 11%">
-<col style="width: 74%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 63%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -411,7 +411,7 @@ Solution
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-The order matters
+The order matters!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -460,7 +460,7 @@ The order matters
 </section>
 <section id="remove-punctuation-numbers-repeated-letters-and-extra-spaces" class="level2">
 <h2 class="anchored" data-anchor-id="remove-punctuation-numbers-repeated-letters-and-extra-spaces">6. Remove punctuation, numbers, repeated letters and extra spaces</h2>
-<p>Alright, time to remove punctuations, numbers and repeated letters used for emphasis, that might affect our analysis (e.g.&nbsp;“Amaaaazing”, “Loooove”) and take care of some extra spaces.</p>
+<p>Alright, time to remove punctuation, numbers and repeated letters used for emphasis, that might affect our analysis (e.g.&nbsp;“Amaaaazing”, “Loooove”) and take care of some extra spaces.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> comments <span class="sc">%&gt;%</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_cleaned =</span> text_nomention <span class="sc">%&gt;%</span></span>
@@ -479,8 +479,11 @@ The order matters
 <li><p><code>{2,}</code>: matches 2 or more consecutive occurrences of that character.</p></li>
 </ul>
 <p>Together, <code>(.)\\1{2,}</code> matches any character repeated three or more times in a row and <code>str_replace_all</code> replaces the repeated sequence with just one occurrence of the character.</p>
-<p>We have created multiple intermediate columns to facilitate the inspection of each step, but we could have streamlined the pipeline with a more slim approach, like the one below:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> comments <span class="sc">%&gt;%</span></span>
+<p>We have created multiple intermediate columns to facilitate the inspection of each step, but we could have streamlined the pipeline with a more slim approach, like the one below (click the carrot to expand it):</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> comments <span class="sc">%&gt;%</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_cleaned =</span> text <span class="sc">%&gt;%</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Normalize apostrophes</span></span>
@@ -499,14 +502,13 @@ The order matters
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_replace_all</span>(<span class="st">"(.)</span><span class="sc">\\</span><span class="st">1{2,}"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_squish</span>()</span>
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 </section>
 <section id="convert-emojis-to-text" class="level2">
 <h2 class="anchored" data-anchor-id="convert-emojis-to-text">7. Convert emojis to text</h2>
-<p>Alright, so we need to call the <code>emoji</code> package to assist us with this process.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the emoji dictionary where 'jis' contains a table with 'emoji' and 'name' columns.</span></span>
+<p>Okay, now we’ll convert emojis into their text descriptions to make them machine-readable, using the emoji package to help with this step:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the emoji dictionary where 'jis' contains a table with 'emoji' and 'name' columns.</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>emoji_dict <span class="ot">&lt;-</span> emo<span class="sc">::</span>jis[, <span class="fu">c</span>(<span class="st">"emoji"</span>, <span class="st">"name"</span>)]</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional(e.g., 😀 becomes [grinning face])</span></span>
@@ -531,10 +533,8 @@ The order matters
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the normalized text to a CSV file with only 'id' and 'text' columns</span></span>
 <span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(comments <span class="sc">%&gt;%</span> <span class="fu">select</span>(id, text), <span class="st">"normalized.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Have you checked out the emoji dictionary we loaded into our RStudio environment? You might be surprised by how many emojis are included—and the meaning of some of them!</p>
-<p>Now that we’ve handled emojis, we’re ready to move on to the next preprocessing step: tokenization.</p>
+<p>Have you had a chance to look at the emoji dictionary we loaded into our RStudio environment? It’s packed with more emojis and some surprising meanings than you might expect.</p>
+<p>With emojis taken care of, we can now move on to the next preprocessing step: tokenization.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1053,7 +1053,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>workshop:</span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>| Action                       | Why it matters?                                                                                                                                                                                                                                                                                                                                                         |</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>|------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>|-------------|-----------------------------------------------------------|</span>
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>| Remove URLs                  | URLs often contain irrelevant noise and don't contribute meaningful content for analysis.                                                                                                                                                                                                                                                                               |</span>
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>| Remove Punctuation &amp; Symbols | Punctuation marks and other symbols including those extensively used in social media for mentioning (\@) or tagging (#) rarely adds value in most NLP tasks and can interfere with tokenization (as we will cover in a bit) or word matching.                                                                                                                           |</span>
 <span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>| Remove Numbers               | Numbers can be noise in most contexts unless specifically relevant (e.g., in financial or medical texts) don't contribute much to the analysis. However, in NLP tasks they are considered important, there might be considerations to replace them with dummy tokens (e.g. <span class="sc">\&lt;</span>NUMBER<span class="sc">\&gt;</span>), or even converting them into their written form (e.g, 100 becomes one hundred). |</span>
@@ -1119,7 +1119,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>can disrupt contraction expansion.</span>
 <span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>| Character | Unicode | Notes                                                   |</span>
-<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>|-----------|---------|---------------------------------------------------------|</span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>|-------------|-------------|----------------------------------------------|</span>
 <span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>| <span class="in">`'`</span>       | U+0027  | Standard straight apostrophe, used in most dictionaries |</span>
 <span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>| <span class="in">`’`</span>       | U+2019  | Right single quotation mark (curly apostrophe)          |</span>
 <span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>| <span class="in">`‘`</span>       | U+2018  | Left single quotation mark                              |</span>
@@ -1131,7 +1131,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>consistent, and ready for analysis.</span>
 <span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a>::: callout-caution</span>
-<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a><span class="fu">## The order matters</span></span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a><span class="fu">## The order matters!</span></span>
 <span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>In text preprocessing, **the order of steps matters** because each</span>
 <span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>transformation changes the text in a way that can affect subsequent</span>
@@ -1167,7 +1167,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-129"><a href="#cb9-129" aria-hidden="true" tabindex="-1"></a>also create a new column inside the comments dataset called</span>
 <span id="cb9-130"><a href="#cb9-130" aria-hidden="true" tabindex="-1"></a><span class="in">`text_expand`</span> using the package <span class="in">`textclean`</span>.</span>
 <span id="cb9-131"><a href="#cb9-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb9-132"><a href="#cb9-132" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
 <span id="cb9-133"><a href="#cb9-133" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> comments <span class="sc">%&gt;%</span></span>
 <span id="cb9-134"><a href="#cb9-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">text_expand =</span> <span class="fu">replace_contraction</span>(text))</span>
 <span id="cb9-135"><a href="#cb9-135" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
@@ -1181,7 +1181,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-143"><a href="#cb9-143" aria-hidden="true" tabindex="-1"></a>mutate function we will add the following code which will create a new</span>
 <span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a><span class="in">`text_lower`</span> column:</span>
 <span id="cb9-145"><a href="#cb9-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-146"><a href="#cb9-146" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb9-146"><a href="#cb9-146" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
 <span id="cb9-147"><a href="#cb9-147" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> comments <span class="sc">%&gt;%</span></span>
 <span id="cb9-148"><a href="#cb9-148" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">text_lower =</span> <span class="fu">tolower</span>(text_expand))</span>
 <span id="cb9-149"><a href="#cb9-149" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
@@ -1192,7 +1192,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-154"><a href="#cb9-154" aria-hidden="true" tabindex="-1"></a>http://, https://, or www.), we need to provide a regular expression</span>
 <span id="cb9-155"><a href="#cb9-155" aria-hidden="true" tabindex="-1"></a>that can take care of these variations and save it as <span class="in">`text_nourl`</span>.</span>
 <span id="cb9-156"><a href="#cb9-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-157"><a href="#cb9-157" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb9-157"><a href="#cb9-157" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
 <span id="cb9-158"><a href="#cb9-158" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> comments <span class="sc">%&gt;%</span></span>
 <span id="cb9-159"><a href="#cb9-159" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">text_nourl =</span> <span class="fu">str_replace_all</span>(text_lower, <span class="st">"http[s]?://[^</span><span class="sc">\\</span><span class="st">s,]+|www</span><span class="sc">\\</span><span class="st">.[^</span><span class="sc">\\</span><span class="st">s,]+"</span>, <span class="st">""</span>))</span>
 <span id="cb9-160"><a href="#cb9-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
@@ -1221,7 +1221,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-183"><a href="#cb9-183" aria-hidden="true" tabindex="-1"></a>to our analysis. We will use a function to replace all occurrences of</span>
 <span id="cb9-184"><a href="#cb9-184" aria-hidden="true" tabindex="-1"></a>usernames preceded by an \@ symbol.</span>
 <span id="cb9-185"><a href="#cb9-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-186"><a href="#cb9-186" aria-hidden="true" tabindex="-1"></a><span class="in">``` r</span></span>
+<span id="cb9-186"><a href="#cb9-186" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
 <span id="cb9-187"><a href="#cb9-187" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> comments <span class="sc">%&gt;%</span> </span>
 <span id="cb9-188"><a href="#cb9-188" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb9-189"><a href="#cb9-189" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_nomention =</span> <span class="fu">str_replace_all</span>(text_nourl, <span class="st">"@[A-Za-z0-9_]+"</span>, <span class="st">""</span>), </span>
@@ -1229,11 +1229,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-191"><a href="#cb9-191" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-192"><a href="#cb9-192" aria-hidden="true" tabindex="-1"></a><span class="at">## 6. Remove punctuation, numbers, repeated letters and extra spaces</span></span>
 <span id="cb9-193"><a href="#cb9-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-194"><a href="#cb9-194" aria-hidden="true" tabindex="-1"></a><span class="at">Alright, time to remove punctuations, numbers and repeated letters used</span></span>
+<span id="cb9-194"><a href="#cb9-194" aria-hidden="true" tabindex="-1"></a><span class="at">Alright, time to remove punctuation, numbers and repeated letters used</span></span>
 <span id="cb9-195"><a href="#cb9-195" aria-hidden="true" tabindex="-1"></a><span class="at">for emphasis, that might affect our analysis (e.g. "Amaaaazing",</span></span>
 <span id="cb9-196"><a href="#cb9-196" aria-hidden="true" tabindex="-1"></a><span class="at">"Loooove") and take care of some extra spaces.</span></span>
 <span id="cb9-197"><a href="#cb9-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-198"><a href="#cb9-198" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> r</span>
+<span id="cb9-198"><a href="#cb9-198" aria-hidden="true" tabindex="-1"></a><span class="st">```</span>r</span>
 <span id="cb9-199"><a href="#cb9-199" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> comments <span class="sc">%&gt;%</span></span>
 <span id="cb9-200"><a href="#cb9-200" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb9-201"><a href="#cb9-201" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_cleaned =</span> text_nomention <span class="sc">%&gt;%</span></span>
@@ -1269,36 +1269,36 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-231"><a href="#cb9-231" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-232"><a href="#cb9-232" aria-hidden="true" tabindex="-1"></a><span class="at">We have created multiple intermediate columns to facilitate the</span></span>
 <span id="cb9-233"><a href="#cb9-233" aria-hidden="true" tabindex="-1"></a><span class="at">inspection of each step, but we could have streamlined the pipeline with</span></span>
-<span id="cb9-234"><a href="#cb9-234" aria-hidden="true" tabindex="-1"></a><span class="at">a more slim approach, like the one below:</span></span>
+<span id="cb9-234"><a href="#cb9-234" aria-hidden="true" tabindex="-1"></a><span class="at">a more slim approach, like the one below (click the carrot to expand it):</span></span>
 <span id="cb9-235"><a href="#cb9-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-236"><a href="#cb9-236" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> r</span>
-<span id="cb9-237"><a href="#cb9-237" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> comments <span class="sc">%&gt;%</span></span>
-<span id="cb9-238"><a href="#cb9-238" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb9-239"><a href="#cb9-239" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_cleaned =</span> text <span class="sc">%&gt;%</span></span>
-<span id="cb9-240"><a href="#cb9-240" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Normalize apostrophes</span></span>
-<span id="cb9-241"><a href="#cb9-241" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_replace_all</span>(<span class="st">"[’‘ʼ`]"</span>, <span class="st">"'"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb9-242"><a href="#cb9-242" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Expand contractions</span></span>
-<span id="cb9-243"><a href="#cb9-243" aria-hidden="true" tabindex="-1"></a>      <span class="fu">replace_contraction</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb9-244"><a href="#cb9-244" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Convert to lowercase</span></span>
-<span id="cb9-245"><a href="#cb9-245" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tolower</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb9-246"><a href="#cb9-246" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Remove URLs</span></span>
-<span id="cb9-247"><a href="#cb9-247" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_replace_all</span>(<span class="st">"http[s]?://[^</span><span class="sc">\\</span><span class="st">s,]+|www</span><span class="sc">\\</span><span class="st">.[^</span><span class="sc">\\</span><span class="st">s,]+"</span>, <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb9-248"><a href="#cb9-248" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Remove mentions</span></span>
-<span id="cb9-249"><a href="#cb9-249" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_replace_all</span>(<span class="st">"@[A-Za-z0-9_]+"</span>, <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb9-250"><a href="#cb9-250" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Remove punctuation &amp; numbers, collapse repeated letters, trim spaces</span></span>
-<span id="cb9-251"><a href="#cb9-251" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_replace_all</span>(<span class="st">"[[:punct:]“”‘’–—…|]"</span>, <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb9-252"><a href="#cb9-252" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_replace_all</span>(<span class="st">"[[:digit:]]"</span>, <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb9-253"><a href="#cb9-253" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_replace_all</span>(<span class="st">"(.)</span><span class="sc">\\</span><span class="st">1{2,}"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb9-254"><a href="#cb9-254" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_squish</span>()</span>
-<span id="cb9-255"><a href="#cb9-255" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb9-256"><a href="#cb9-256" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb9-257"><a href="#cb9-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-258"><a href="#cb9-258" aria-hidden="true" tabindex="-1"></a><span class="at">## 7. Convert emojis to text</span></span>
+<span id="cb9-238"><a href="#cb9-238" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-239"><a href="#cb9-239" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> comments <span class="sc">%&gt;%</span></span>
+<span id="cb9-240"><a href="#cb9-240" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-241"><a href="#cb9-241" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_cleaned =</span> text <span class="sc">%&gt;%</span></span>
+<span id="cb9-242"><a href="#cb9-242" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Normalize apostrophes</span></span>
+<span id="cb9-243"><a href="#cb9-243" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_replace_all</span>(<span class="st">"[’‘ʼ`]"</span>, <span class="st">"'"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-244"><a href="#cb9-244" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Expand contractions</span></span>
+<span id="cb9-245"><a href="#cb9-245" aria-hidden="true" tabindex="-1"></a>      <span class="fu">replace_contraction</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-246"><a href="#cb9-246" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Convert to lowercase</span></span>
+<span id="cb9-247"><a href="#cb9-247" aria-hidden="true" tabindex="-1"></a>      <span class="fu">tolower</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-248"><a href="#cb9-248" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Remove URLs</span></span>
+<span id="cb9-249"><a href="#cb9-249" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_replace_all</span>(<span class="st">"http[s]?://[^</span><span class="sc">\\</span><span class="st">s,]+|www</span><span class="sc">\\</span><span class="st">.[^</span><span class="sc">\\</span><span class="st">s,]+"</span>, <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-250"><a href="#cb9-250" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Remove mentions</span></span>
+<span id="cb9-251"><a href="#cb9-251" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_replace_all</span>(<span class="st">"@[A-Za-z0-9_]+"</span>, <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-252"><a href="#cb9-252" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Remove punctuation &amp; numbers, collapse repeated letters, trim spaces</span></span>
+<span id="cb9-253"><a href="#cb9-253" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_replace_all</span>(<span class="st">"[[:punct:]“”‘’–—…|]"</span>, <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-254"><a href="#cb9-254" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_replace_all</span>(<span class="st">"[[:digit:]]"</span>, <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-255"><a href="#cb9-255" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_replace_all</span>(<span class="st">"(.)</span><span class="sc">\\</span><span class="st">1{2,}"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-256"><a href="#cb9-256" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_squish</span>()</span>
+<span id="cb9-257"><a href="#cb9-257" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-258"><a href="#cb9-258" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
 <span id="cb9-259"><a href="#cb9-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-260"><a href="#cb9-260" aria-hidden="true" tabindex="-1"></a><span class="at">Alright, so we need to call the </span><span class="st">`</span>emoji<span class="st">`</span><span class="at"> package to assist us with this</span></span>
-<span id="cb9-261"><a href="#cb9-261" aria-hidden="true" tabindex="-1"></a><span class="at">process.</span></span>
-<span id="cb9-262"><a href="#cb9-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-265"><a href="#cb9-265" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-260"><a href="#cb9-260" aria-hidden="true" tabindex="-1"></a><span class="at">## 7. Convert emojis to text</span></span>
+<span id="cb9-261"><a href="#cb9-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-262"><a href="#cb9-262" aria-hidden="true" tabindex="-1"></a><span class="at">Okay, now we’ll convert emojis into their text descriptions to make them</span></span>
+<span id="cb9-263"><a href="#cb9-263" aria-hidden="true" tabindex="-1"></a><span class="at">machine-readable, using the emoji package to help with this step:</span></span>
+<span id="cb9-264"><a href="#cb9-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-265"><a href="#cb9-265" aria-hidden="true" tabindex="-1"></a><span class="st">```</span>r</span>
 <span id="cb9-266"><a href="#cb9-266" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the emoji dictionary where 'jis' contains a table with 'emoji' and 'name' columns.</span></span>
 <span id="cb9-267"><a href="#cb9-267" aria-hidden="true" tabindex="-1"></a>emoji_dict <span class="ot">&lt;-</span> emo<span class="sc">::</span>jis[, <span class="fu">c</span>(<span class="st">"emoji"</span>, <span class="st">"name"</span>)]</span>
 <span id="cb9-268"><a href="#cb9-268" aria-hidden="true" tabindex="-1"></a></span>
@@ -1326,12 +1326,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-290"><a href="#cb9-290" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(comments <span class="sc">%&gt;%</span> <span class="fu">select</span>(id, text), <span class="st">"normalized.csv"</span>)</span>
 <span id="cb9-291"><a href="#cb9-291" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
 <span id="cb9-292"><a href="#cb9-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-293"><a href="#cb9-293" aria-hidden="true" tabindex="-1"></a><span class="at">Have you checked out the emoji dictionary we loaded into our RStudio</span></span>
-<span id="cb9-294"><a href="#cb9-294" aria-hidden="true" tabindex="-1"></a><span class="at">environment? You might be surprised by how many emojis are included—and</span></span>
-<span id="cb9-295"><a href="#cb9-295" aria-hidden="true" tabindex="-1"></a><span class="at">the meaning of some of them!</span></span>
+<span id="cb9-293"><a href="#cb9-293" aria-hidden="true" tabindex="-1"></a><span class="at">Have you had a chance to look at the emoji dictionary we loaded into our</span></span>
+<span id="cb9-294"><a href="#cb9-294" aria-hidden="true" tabindex="-1"></a><span class="at">RStudio environment? It’s packed with more emojis and some surprising</span></span>
+<span id="cb9-295"><a href="#cb9-295" aria-hidden="true" tabindex="-1"></a><span class="at">meanings than you might expect.</span></span>
 <span id="cb9-296"><a href="#cb9-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-297"><a href="#cb9-297" aria-hidden="true" tabindex="-1"></a><span class="at">Now that we’ve handled emojis, we’re ready to move on to the next</span></span>
-<span id="cb9-298"><a href="#cb9-298" aria-hidden="true" tabindex="-1"></a><span class="at">preprocessing step: tokenization.</span></span>
+<span id="cb9-297"><a href="#cb9-297" aria-hidden="true" tabindex="-1"></a><span class="at">With emojis taken care of, we can now move on to the next preprocessing</span></span>
+<span id="cb9-298"><a href="#cb9-298" aria-hidden="true" tabindex="-1"></a><span class="at">step: tokenization.</span></span>
 <span id="cb9-299"><a href="#cb9-299" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-300"><a href="#cb9-300" aria-hidden="true" tabindex="-1"></a><span class="at">::: {.callout-note icon="false"}</span></span>
 <span id="cb9-301"><a href="#cb9-301" aria-hidden="true" tabindex="-1"></a><span class="at">## 📑 Suggested Readings</span></span>

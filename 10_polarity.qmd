@@ -4,7 +4,7 @@ title: "Polarity Analysis"
 
 Now that we have completed all the key preprocessing steps and our example dataset is in much better shape, we can finally proceed with sentiment analysis.
 
-This will be a two-step approach, where we will start with the basic polarity and then, advance to a more fine-grained analysis, exploring different emotional expressions within text.
+This will be a two-step approach, where we will start with the basic polarity and then, advance to a more fine-grained emotion detection, exploring different emotional expressions within text.
 
 ## Polarity Classification
 
@@ -39,7 +39,7 @@ head(preprocessed$text_ready)
 sentiment_scores <- sentiment_by(preprocessed$text_ready)
 ```
 
-Let's now take a look at the `sentiment_scores` dataframe:
+Let's now take a look at the `sentiment_scores` data frame:
 
 ![](images/sentiment-scores.png)
 
@@ -86,4 +86,4 @@ ggplot(polarity_seasons, aes(x = score, fill = season)) +
 
 We could have spent more time refining these plots, but this is sufficient for our initial exploration. In pairs, review the plots and discuss what they reveal about viewers’ perceptions of the *Severance* show.
 
-That’s only part of the story. Now we move on to emotion detection to discover what else we can learn from the data,
+Well, that’s only part of the story. Now we move on to emotion detection to discover what else we can learn from the data.
