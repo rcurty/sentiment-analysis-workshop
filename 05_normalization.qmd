@@ -260,10 +260,12 @@ machine-readable, using the emoji package to help with this step:
 ```r
 # Load the emoji dictionary where 'jis' contains a table with 'emoji' and 'name' columns.
 emoji_dict <- emo::jis[, c("emoji", "name")]
+```
+Have you had a chance to look at the emoji dictionary we loaded into our
+RStudio environment? It’s packed with more emojis and some surprising
+meanings than you might expect.
 
-# Optional(e.g., 😀 becomes [grinning face])
-emoji_dict$name <- paste0("[", emoji_dict$name, "]")
-
+```r
 # Define a function to replace emojis in text with their corresponding names.
 replace_emojis <- function(text, emoji_dict) {
   stri_replace_all_fixed(
@@ -275,22 +277,16 @@ replace_emojis <- function(text, emoji_dict) {
 }
 
 comments <- comments %>%
-  mutate(text_noemoji = replace_emojis(text_cleaned, emoji_dict),
-         # Remove any remaining non-alphabetic characters (like numbers, punctuation, etc.)
-         text = str_replace_all(text_noemoji, "[^[:alpha:][:space:]]", ""),
-         # Remove extra whitespace between words
-         text = str_squish(text))
+  mutate(text_noemoji = replace_emojis(text_cleaned, emoji_dict)
+```
 
+With emojis taken care of, we can now move on to the next preprocessing
+step: tokenization. But wait, let's first save our progress:
+
+```r
 # Save the normalized text to a CSV file with only 'id' and 'text' columns
 write_csv(comments %>% select(id, text), "normalized.csv")
 ```
-
-Have you had a chance to look at the emoji dictionary we loaded into our
-RStudio environment? It’s packed with more emojis and some surprising
-meanings than you might expect.
-
-With emojis taken care of, we can now move on to the next preprocessing
-step: tokenization.
 
 ::: {.callout-note icon="false"}
 ## 📑 Suggested Readings
