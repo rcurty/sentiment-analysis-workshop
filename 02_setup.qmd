@@ -36,10 +36,10 @@ This workshop requires several packages (listed in alphabetical order) to assist
 
 -   [`tidyverse`](https://cran.r-project.org/package=tidyverse): A collection of R packages (including dplyr, tidyr, ggplot2, readr, etc.) designed for data science workflows.
 
-::: {.callout-important appearance="minimal" icon="false"}
+::: {.callout-note appearance="minimal" icon="false"}
 ## 📦 Installing & Loading Packages
 
-The code to install and load the required packages is included in the `sentiment-analysis.qmd` worksheet. However, we will be installing them via the console for one-time setup.
+The code to install and load the required packages is included in the `worksheet.qmd`. However, we will be installing them via the console for one-time setup.
 :::
 
 ## Project File & Sample Data
