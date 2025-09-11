@@ -44,7 +44,7 @@ The code to install and load the required packages is included in the `worksheet
 
 ## Project File & Sample Data
 
-The running example draws on publicly available data from profiles on X (formerly Twitter). Specifically, we collected all posts from the first and second days following the season finales of both Season 1 and Season 2 of the Apple TV series \[*Severance*](<https://en.wikipedia.org/wiki/Severance_(TV_series)>).
+The running example draws on publicly available data from profiles on X (formerly Twitter). Specifically, we collected all posts from the first and second days following the season finales of both Season 1 and Season 2 of the Apple TV series [*Severance*](https://en.wikipedia.org/wiki/Severance_(TV_series)).
 
 The data was obtained using Brandwatch, a social media analytics platform subscribed by the UCSB Library [(learn more)](https://www.library.ucsb.edu/dreamlab/brandwatch).
 
