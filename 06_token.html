@@ -286,10 +286,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Text can be tokenized into sentences, word, subwords or even characters, depending on project goals and analysis plan. Here is a summary of these approaches:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 32%">
-<col style="width: 20%">
-<col style="width: 26%">
+<col style="width: 23%">
+<col style="width: 30%">
+<col style="width: 23%">
+<col style="width: 23%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -391,9 +391,8 @@ Solution
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                   <span class="at">text =</span> <span class="fu">col_character</span>()</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                 ))</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Tokenize text</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>tokens <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Tokenize text (transform text data from “wide” or sentence-level form into “long” word-level form)</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>tokens <span class="ot">&lt;-</span> <span class="fu">unnest_tokens</span>(data, word, text_noemoji)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We’ve just tokenized each comment (or row of text) in our dataset into individual tokens, giving us a total of 124,864 tokens!</p>
 <p>If you’ve looked at the token output, you may have noticed that some of these tokens are common but less meaningful words, like <em>the</em>, <em>a</em>, or <em>of</em>. Don’t worry; we’ll take care of those in the next step.</p>
 
@@ -880,7 +879,7 @@ Solution
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>Text can be tokenized into sentences, word, subwords or even characters, depending on project goals and analysis plan. Here is a summary of these approaches:</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Type**                   | **Description**                                                                                                                 | **Example**                                                                | **Common Use Cases**                                                                                  <span class="pp">|</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="pp">|---------------|------------------------|---------------|-------------------|</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="pp">|-----------------|----------------------|-----------------|-----------------|</span></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Sentence Tokenization**  <span class="pp">|</span> Splits text into individual sentences                                                                                           <span class="pp">|</span> <span class="in">`"I love NLP. It's fascinating!"`</span> → <span class="in">`["I love NLP.", "It's fascinating!"]`</span> <span class="pp">|</span> Ideal for tasks like summarization, machine translation, and sentiment analysis at the sentence level <span class="pp">|</span></span>
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Word Tokenization**      <span class="pp">|</span> Divides text into individual words                                                                                              <span class="pp">|</span> <span class="in">`"I love NLP"`</span> → <span class="in">`["I", "love", "NLP"]`</span>                                    <span class="pp">|</span> Works well for languages with clear word boundaries, such as English                                  <span class="pp">|</span></span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Character Tokenization** <span class="pp">|</span> Breaks text down into individual characters                                                                                     <span class="pp">|</span> <span class="in">`"NLP"`</span> → <span class="in">`["N", "L", "P"]`</span>                                                <span class="pp">|</span> Useful for languages without explicit word boundaries or for very fine-grained text analysis          <span class="pp">|</span></span>
@@ -947,14 +946,13 @@ Solution
 <span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>                   <span class="at">text =</span> <span class="fu">col_character</span>()</span>
 <span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>                 ))</span>
 <span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a><span class="co"># Tokenize text</span></span>
-<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>tokens <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
-<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_tokens</span>(word, text)</span>
-<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>We’ve just tokenized each comment (or row of text) in our dataset into individual tokens, giving us a total of 124,864 tokens!</span>
-<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>If you’ve looked at the token output, you may have noticed that some of these tokens are common but less meaningful words, like *the*, *a*, or *of*. Don’t worry; we’ll take care of those in the next step.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a><span class="co"># Tokenize text (transform text data from “wide” or sentence-level form into “long” word-level form)</span></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>tokens <span class="ot">&lt;-</span> <span class="fu">unnest_tokens</span>(data, word, text_noemoji)</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>We’ve just tokenized each comment (or row of text) in our dataset into individual tokens, giving us a total of 124,864 tokens!</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>If you’ve looked at the token output, you may have noticed that some of these tokens are common but less meaningful words, like *the*, *a*, or *of*. Don’t worry; we’ll take care of those in the next step.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">

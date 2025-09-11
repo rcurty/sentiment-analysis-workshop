@@ -255,13 +255,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#dealing-with-contractions" id="toc-dealing-with-contractions" class="nav-link active" data-scroll-target="#dealing-with-contractions">Dealing with Contractions</a></li>
-  <li><a href="#handling-apostrophes" id="toc-handling-apostrophes" class="nav-link" data-scroll-target="#handling-apostrophes">1. Handling apostrophes</a></li>
-  <li><a href="#expanding-contractions" id="toc-expanding-contractions" class="nav-link" data-scroll-target="#expanding-contractions">2. Expanding contractions</a></li>
-  <li><a href="#convert-to-lowercase" id="toc-convert-to-lowercase" class="nav-link" data-scroll-target="#convert-to-lowercase">3. Convert to lowercase</a></li>
+  <li><a href="#handling-apostrophes" id="toc-handling-apostrophes" class="nav-link" data-scroll-target="#handling-apostrophes">1. Handling Apostrophes</a></li>
+  <li><a href="#expanding-contractions" id="toc-expanding-contractions" class="nav-link" data-scroll-target="#expanding-contractions">2. Expanding Contractions</a></li>
+  <li><a href="#convert-to-lowercase" id="toc-convert-to-lowercase" class="nav-link" data-scroll-target="#convert-to-lowercase">3. Convert to Lowercase</a></li>
   <li><a href="#remove-urls" id="toc-remove-urls" class="nav-link" data-scroll-target="#remove-urls">4. Remove URLs</a></li>
-  <li><a href="#remove-mentions-handling-extra-space" id="toc-remove-mentions-handling-extra-space" class="nav-link" data-scroll-target="#remove-mentions-handling-extra-space">5. Remove mentions &amp; Handling Extra Space</a></li>
-  <li><a href="#remove-punctuation-numbers-repeated-letters-and-extra-spaces" id="toc-remove-punctuation-numbers-repeated-letters-and-extra-spaces" class="nav-link" data-scroll-target="#remove-punctuation-numbers-repeated-letters-and-extra-spaces">6. Remove punctuation, numbers, repeated letters and extra spaces</a></li>
-  <li><a href="#convert-emojis-to-text" id="toc-convert-emojis-to-text" class="nav-link" data-scroll-target="#convert-emojis-to-text">7. Convert emojis to text</a></li>
+  <li><a href="#remove-mentions-handling-extra-space" id="toc-remove-mentions-handling-extra-space" class="nav-link" data-scroll-target="#remove-mentions-handling-extra-space">5. Remove Mentions &amp; Handling Extra Space</a></li>
+  <li><a href="#remove-punctuation-numbers-repeated-letters-and-extra-spaces" id="toc-remove-punctuation-numbers-repeated-letters-and-extra-spaces" class="nav-link" data-scroll-target="#remove-punctuation-numbers-repeated-letters-and-extra-spaces">6. Remove Punctuation, Numbers, Repeated Letters and Extra Spaces</a></li>
+  <li><a href="#convert-emojis-to-text" id="toc-convert-emojis-to-text" class="nav-link" data-scroll-target="#convert-emojis-to-text">7. Convert Emojis to Text</a></li>
   </ul>
 </nav>
     </div>
@@ -413,7 +413,7 @@ Solution
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-The order matters!
+The Order Matters!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -422,19 +422,19 @@ The order matters!
 </div>
 </section>
 <section id="handling-apostrophes" class="level2">
-<h2 class="anchored" data-anchor-id="handling-apostrophes">1. Handling apostrophes</h2>
+<h2 class="anchored" data-anchor-id="handling-apostrophes">1. Handling Apostrophes</h2>
 <p>The gsub() function is part of base R and stands for global substitute and is used to search for patterns in text and replace them with something else. Its basic form is gsub(pattern, replacement, x), where pattern is the regular expression you want to match, replacement is the text you want to insert, and x is the character vector you’re applying it to. In this case, the pattern “[’‘ʼ]” looks for several different kinds of apostrophes and backticks—like the left and right single quotes, the modifier apostrophe, and the backtick. Each of those gets replaced with a simple, standard apostrophe (’`).</p>
 <p>This step helps clean up text by making sure all apostrophes are consistent, rather than a mix of fancy Unicode versions. Apllying it to the <code>text</code> column in our <code>comments</code> dataset should look like.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>comments<span class="sc">$</span>text <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"[’‘ʼ`]"</span>, <span class="st">"'"</span>, comments<span class="sc">$</span>text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="expanding-contractions" class="level2">
-<h2 class="anchored" data-anchor-id="expanding-contractions">2. Expanding contractions</h2>
+<h2 class="anchored" data-anchor-id="expanding-contractions">2. Expanding Contractions</h2>
 <p>Let’s first make sure that words like “don’t” become “do not”. We will also create a new column inside the comments dataset called <code>text_expand</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> comments <span class="sc">%&gt;%</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">text_expand =</span> <span class="fu">replace_contraction</span>(text))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="convert-to-lowercase" class="level2">
-<h2 class="anchored" data-anchor-id="convert-to-lowercase">3. Convert to lowercase</h2>
+<h2 class="anchored" data-anchor-id="convert-to-lowercase">3. Convert to Lowercase</h2>
 <p>Having all text converted to lowercase will be our next step, using the mutate function we will add the following code which will create a new <code>text_lower</code> column:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> comments <span class="sc">%&gt;%</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">text_lower =</span> <span class="fu">tolower</span>(text_expand))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -453,14 +453,14 @@ The order matters!
 </ul>
 </section>
 <section id="remove-mentions-handling-extra-space" class="level2">
-<h2 class="anchored" data-anchor-id="remove-mentions-handling-extra-space">5. Remove mentions &amp; Handling Extra Space</h2>
+<h2 class="anchored" data-anchor-id="remove-mentions-handling-extra-space">5. Remove Mentions &amp; Handling Extra Space</h2>
 <p>Continuing with our workflow, we will now handle direct mentions and usernames in our dataset, as they do not contribute relevant information to our analysis. We will use a function to replace all occurrences of usernames preceded by an @ symbol.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> comments <span class="sc">%&gt;%</span> </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_nomention =</span> <span class="fu">str_replace_all</span>(text_nourl, <span class="st">"@[A-Za-z0-9_]+"</span>, <span class="st">""</span>), </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="remove-punctuation-numbers-repeated-letters-and-extra-spaces" class="level2">
-<h2 class="anchored" data-anchor-id="remove-punctuation-numbers-repeated-letters-and-extra-spaces">6. Remove punctuation, numbers, repeated letters and extra spaces</h2>
+<h2 class="anchored" data-anchor-id="remove-punctuation-numbers-repeated-letters-and-extra-spaces">6. Remove Punctuation, Numbers, Repeated Letters and Extra Spaces</h2>
 <p>Alright, time to remove punctuation, numbers and repeated letters used for emphasis, that might affect our analysis (e.g.&nbsp;“Amaaaazing”, “Loooove”) and take care of some extra spaces.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> comments <span class="sc">%&gt;%</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -502,7 +502,7 @@ The order matters!
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="convert-emojis-to-text" class="level2">
-<h2 class="anchored" data-anchor-id="convert-emojis-to-text">7. Convert emojis to text</h2>
+<h2 class="anchored" data-anchor-id="convert-emojis-to-text">7. Convert Emojis to Text</h2>
 <p>Okay, now we’ll convert emojis into their text descriptions to make them machine-readable, using the emoji package to help with this step:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the emoji dictionary where 'jis' contains a table with 'emoji' and 'name' columns.</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>emoji_dict <span class="ot">&lt;-</span> emo<span class="sc">::</span>jis[, <span class="fu">c</span>(<span class="st">"emoji"</span>, <span class="st">"name"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -518,10 +518,10 @@ The order matters!
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> comments <span class="sc">%&gt;%</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">text_noemoji =</span> <span class="fu">replace_emojis</span>(text_cleaned, emoji_dict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">text_noemoji =</span> <span class="fu">replace_emojis</span>(text_cleaned, emoji_dict))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>With emojis taken care of, we can now move on to the next preprocessing step: tokenization. But wait, let’s first save our progress:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the normalized text to a CSV file with only 'id' and 'text' columns</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(comments <span class="sc">%&gt;%</span> <span class="fu">select</span>(id, text), <span class="st">"normalized.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(<span class="fu">select</span>(comments, id, text_noemoji), <span class="st">"normalized.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1100,7 +1100,7 @@ The order matters!
 <span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>consistent, and ready for analysis.</span>
 <span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>::: callout-caution</span>
-<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a><span class="fu">## The order matters!</span></span>
+<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Order Matters!</span></span>
 <span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a>In text preprocessing, **the order of steps matters** because each</span>
 <span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a>transformation changes the text in a way that can affect subsequent</span>
@@ -1110,7 +1110,7 @@ The order matters!
 <span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a>turn into <span class="in">`"cant"`</span> instead of <span class="in">`"cannot"`</span>, losing the correct meaning.</span>
 <span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Handling apostrophes</span></span>
+<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Handling Apostrophes</span></span>
 <span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a>The gsub() function is part of base R and stands for global substitute</span>
 <span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a>and is used to search for patterns in text and replace them with</span>
@@ -1130,7 +1130,7 @@ The order matters!
 <span id="cb11-123"><a href="#cb11-123" aria-hidden="true" tabindex="-1"></a>comments<span class="sc">$</span>text <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"[’‘ʼ`]"</span>, <span class="st">"'"</span>, comments<span class="sc">$</span>text)</span>
 <span id="cb11-124"><a href="#cb11-124" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb11-125"><a href="#cb11-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Expanding contractions</span></span>
+<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Expanding Contractions</span></span>
 <span id="cb11-127"><a href="#cb11-127" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-128"><a href="#cb11-128" aria-hidden="true" tabindex="-1"></a>Let's first make sure that words like "don't" become "do not". We will</span>
 <span id="cb11-129"><a href="#cb11-129" aria-hidden="true" tabindex="-1"></a>also create a new column inside the comments dataset called</span>
@@ -1141,7 +1141,7 @@ The order matters!
 <span id="cb11-134"><a href="#cb11-134" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">text_expand =</span> <span class="fu">replace_contraction</span>(text))</span>
 <span id="cb11-135"><a href="#cb11-135" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb11-136"><a href="#cb11-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-137"><a href="#cb11-137" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Convert to lowercase</span></span>
+<span id="cb11-137"><a href="#cb11-137" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Convert to Lowercase</span></span>
 <span id="cb11-138"><a href="#cb11-138" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-139"><a href="#cb11-139" aria-hidden="true" tabindex="-1"></a>Having all text converted to lowercase will be our next step, using the</span>
 <span id="cb11-140"><a href="#cb11-140" aria-hidden="true" tabindex="-1"></a>mutate function we will add the following code which will create a new</span>
@@ -1180,7 +1180,7 @@ The order matters!
 <span id="cb11-173"><a href="#cb11-173" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="in">`www\\.[^\\s,]+`</span> : Matches URLs that start with www. and continue</span>
 <span id="cb11-174"><a href="#cb11-174" aria-hidden="true" tabindex="-1"></a>    until a space or comma.</span>
 <span id="cb11-175"><a href="#cb11-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-176"><a href="#cb11-176" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5. Remove mentions &amp; Handling Extra Space</span></span>
+<span id="cb11-176"><a href="#cb11-176" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5. Remove Mentions &amp; Handling Extra Space</span></span>
 <span id="cb11-177"><a href="#cb11-177" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-178"><a href="#cb11-178" aria-hidden="true" tabindex="-1"></a>Continuing with our workflow, we will now handle direct mentions and</span>
 <span id="cb11-179"><a href="#cb11-179" aria-hidden="true" tabindex="-1"></a>usernames in our dataset, as they do not contribute relevant information</span>
@@ -1193,7 +1193,7 @@ The order matters!
 <span id="cb11-186"><a href="#cb11-186" aria-hidden="true" tabindex="-1"></a>    <span class="at">text_nomention =</span> <span class="fu">str_replace_all</span>(text_nourl, <span class="st">"@[A-Za-z0-9_]+"</span>, <span class="st">""</span>), </span>
 <span id="cb11-187"><a href="#cb11-187" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
 <span id="cb11-188"><a href="#cb11-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-189"><a href="#cb11-189" aria-hidden="true" tabindex="-1"></a><span class="at">## 6. Remove punctuation, numbers, repeated letters and extra spaces</span></span>
+<span id="cb11-189"><a href="#cb11-189" aria-hidden="true" tabindex="-1"></a><span class="at">## 6. Remove Punctuation, Numbers, Repeated Letters and Extra Spaces</span></span>
 <span id="cb11-190"><a href="#cb11-190" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-191"><a href="#cb11-191" aria-hidden="true" tabindex="-1"></a><span class="at">Alright, time to remove punctuation, numbers and repeated letters used</span></span>
 <span id="cb11-192"><a href="#cb11-192" aria-hidden="true" tabindex="-1"></a><span class="at">for emphasis, that might affect our analysis (e.g. "Amaaaazing",</span></span>
@@ -1259,7 +1259,7 @@ The order matters!
 <span id="cb11-252"><a href="#cb11-252" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb11-253"><a href="#cb11-253" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
 <span id="cb11-254"><a href="#cb11-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-255"><a href="#cb11-255" aria-hidden="true" tabindex="-1"></a><span class="at">## 7. Convert emojis to text</span></span>
+<span id="cb11-255"><a href="#cb11-255" aria-hidden="true" tabindex="-1"></a><span class="at">## 7. Convert Emojis to Text</span></span>
 <span id="cb11-256"><a href="#cb11-256" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-257"><a href="#cb11-257" aria-hidden="true" tabindex="-1"></a><span class="at">Okay, now we’ll convert emojis into their text descriptions to make them</span></span>
 <span id="cb11-258"><a href="#cb11-258" aria-hidden="true" tabindex="-1"></a><span class="at">machine-readable, using the emoji package to help with this step:</span></span>
@@ -1284,7 +1284,7 @@ The order matters!
 <span id="cb11-277"><a href="#cb11-277" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb11-278"><a href="#cb11-278" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-279"><a href="#cb11-279" aria-hidden="true" tabindex="-1"></a>comments <span class="ot">&lt;-</span> comments <span class="sc">%&gt;%</span></span>
-<span id="cb11-280"><a href="#cb11-280" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">text_noemoji =</span> <span class="fu">replace_emojis</span>(text_cleaned, emoji_dict)</span>
+<span id="cb11-280"><a href="#cb11-280" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">text_noemoji =</span> <span class="fu">replace_emojis</span>(text_cleaned, emoji_dict))</span>
 <span id="cb11-281"><a href="#cb11-281" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
 <span id="cb11-282"><a href="#cb11-282" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-283"><a href="#cb11-283" aria-hidden="true" tabindex="-1"></a><span class="at">With emojis taken care of, we can now move on to the next preprocessing</span></span>
@@ -1292,7 +1292,7 @@ The order matters!
 <span id="cb11-285"><a href="#cb11-285" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-286"><a href="#cb11-286" aria-hidden="true" tabindex="-1"></a><span class="st">```</span>r</span>
 <span id="cb11-287"><a href="#cb11-287" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the normalized text to a CSV file with only 'id' and 'text' columns</span></span>
-<span id="cb11-288"><a href="#cb11-288" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(comments <span class="sc">%&gt;%</span> <span class="fu">select</span>(id, text), <span class="st">"normalized.csv"</span>)</span>
+<span id="cb11-288"><a href="#cb11-288" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(<span class="fu">select</span>(comments, id, text_noemoji), <span class="st">"normalized.csv"</span>)</span>
 <span id="cb11-289"><a href="#cb11-289" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
 <span id="cb11-290"><a href="#cb11-290" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-291"><a href="#cb11-291" aria-hidden="true" tabindex="-1"></a><span class="at">::: {.callout-note icon="false"}</span></span>
