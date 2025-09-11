@@ -50,7 +50,7 @@ website:
             href: 10_polarity.qmd
           - text: "Emotion Detection"
             href: 11_emotion-detection.qmd
-          - text: "Some Considerations & Caveats"
+          - text: "Considerations & Caveats"
             href: 12_considerations.qmd
 
   page-footer:
