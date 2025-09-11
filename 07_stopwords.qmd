@@ -2,7 +2,7 @@
 title: "Removing Stop words"
 ---
 
-![](images/stopwords-01.png){width="750"}
+![Image from Canva](images/stopwords-01.png){width="750"}
 
 Stop words are commonly occurring words that are usually filtered out during natural language processing, as they carry minimal semantic weight and are not as useful for feature [extraction](https://www.byteplus.com/en/what-is/feature-extraction?utm_source=website_topic&utm_medium=website&utm_campaign=BytePlus+ModelArk&utm_content=Stop+Words&utm_term=The+origins+of+stop+words&product=BytePlus+ModelArk).
 

@@ -2,7 +2,7 @@
 title: "Lemmatization"
 ---
 
-![Source: Created by the author in Canvas](images/lemmatization.png){width="750"}
+![Source: Created by the author in Canva](images/lemmatization.png){width="750"}
 
 Also known as word reduction, lemmatization is the process of transforming words into their base or dictionary form (*lemma*) to identify similarities in meaning and usage across different contexts. Take the word "run" as an example. It can appear in various forms like "ran", "runs", "running", and "runner". But the variations don’t stop there, as it includes complex forms like "outrun", "overrun", or "underrun". These variations make it challenging for computers to process natural language effectively unless they can recognize that these words are related. That’s where lemmatization comes in; it helps machines group related words together by reducing them to a common root present in the dictionary, enabling better understanding and analysis of text.
 

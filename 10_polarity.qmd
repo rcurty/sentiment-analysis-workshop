@@ -46,7 +46,6 @@ Let's now take a look at the `sentiment_scores` data frame:
 It’s expected that the standard deviation is missing, because each row/case is treated as a single sentence when computing the score. Now, let's make sure to add these scores and the labels our dataset:
 
 ``` r
-
 # Add scores and labels to original dataset
 polarity <- preprocessed %>%
   mutate(score = sentiment_scores$ave_sentiment,
@@ -56,6 +55,7 @@ polarity <- preprocessed %>%
            TRUE         ~ "neutral"
          ))
 
+# Check first rows with results
 head(polarity)
 ```
 
@@ -69,6 +69,7 @@ ggplot(polarity, aes(x = score)) +
   theme_minimal() +
   labs(title = "Sentiment Score Distribution", x = "Average Sentiment", y = "Count")
 
+# Scores per label
 table(polarity$sentiment_label)
 
 # Extract season info (s1, s2) into a new column

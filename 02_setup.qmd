@@ -63,7 +63,7 @@ This lesson is supplemented by a folder, containing two files: 1) `comments.csv`
 ::: {.callout-important icon="false"}
 # ⤵️ Download & Save Project File
 
-Access this folder <add Link>, ensure to download it, and save in an easy to locate place (e.g., Desktop).
+Download [this folder](https://ucsb.box.com/s/z6buv80wmgqm1wb389o1j6vl9k3ldapv) and save in an easy to locate place (e.g., Desktop).
 
 **\<FIXME: add zenodo doi after run-through\>**
 :::

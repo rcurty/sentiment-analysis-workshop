@@ -93,7 +93,7 @@ some cleaning and normalization, helping us make it more normalized,
 consistent, and ready for analysis.
 
 ::: callout-caution
-## The order matters!
+## The Order Matters!
 
 In text preprocessing, **the order of steps matters** because each
 transformation changes the text in a way that can affect subsequent
@@ -103,7 +103,7 @@ and sometimes even incorrect or unexpected outcomes. For example, if we
 turn into `"cant"` instead of `"cannot"`, losing the correct meaning.
 :::
 
-## 1. Handling apostrophes
+## 1. Handling Apostrophes
 
 The gsub() function is part of base R and stands for global substitute
 and is used to search for patterns in text and replace them with
@@ -123,7 +123,7 @@ the `text` column in our `comments` dataset should look like.
 comments$text <- gsub("[’‘ʼ`]", "'", comments$text)
 ```
 
-## 2. Expanding contractions
+## 2. Expanding Contractions
 
 Let's first make sure that words like "don't" become "do not". We will
 also create a new column inside the comments dataset called
@@ -134,7 +134,7 @@ comments <- comments %>%
   mutate(text_expand = replace_contraction(text))
 ```
 
-## 3. Convert to lowercase
+## 3. Convert to Lowercase
 
 Having all text converted to lowercase will be our next step, using the
 mutate function we will add the following code which will create a new
@@ -173,7 +173,7 @@ Breaking it down:
 -   `www\\.[^\\s,]+` : Matches URLs that start with www. and continue
     until a space or comma.
 
-## 5. Remove mentions & Handling Extra Space
+## 5. Remove Mentions & Handling Extra Space
 
 Continuing with our workflow, we will now handle direct mentions and
 usernames in our dataset, as they do not contribute relevant information
@@ -186,7 +186,7 @@ comments <- comments %>%
     text_nomention = str_replace_all(text_nourl, "@[A-Za-z0-9_]+", ""), 
 ```
 
-## 6. Remove punctuation, numbers, repeated letters and extra spaces
+## 6. Remove Punctuation, Numbers, Repeated Letters and Extra Spaces
 
 Alright, time to remove punctuation, numbers and repeated letters used
 for emphasis, that might affect our analysis (e.g. "Amaaaazing",
@@ -252,7 +252,7 @@ comments <- comments %>%
   )
 ```
 
-## 7. Convert emojis to text
+## 7. Convert Emojis to Text
 
 Okay, now we’ll convert emojis into their text descriptions to make them
 machine-readable, using the emoji package to help with this step:
@@ -277,7 +277,7 @@ replace_emojis <- function(text, emoji_dict) {
 }
 
 comments <- comments %>%
-  mutate(text_noemoji = replace_emojis(text_cleaned, emoji_dict)
+  mutate(text_noemoji = replace_emojis(text_cleaned, emoji_dict))
 ```
 
 With emojis taken care of, we can now move on to the next preprocessing
@@ -285,7 +285,7 @@ step: tokenization. But wait, let's first save our progress:
 
 ```r
 # Save the normalized text to a CSV file with only 'id' and 'text' columns
-write_csv(comments %>% select(id, text), "normalized.csv")
+write_csv(select(comments, id, text_noemoji), "normalized.csv")
 ```
 
 ::: {.callout-note icon="false"}
