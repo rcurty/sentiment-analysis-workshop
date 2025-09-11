@@ -14,10 +14,10 @@ website:
         href: 
         menu:
           - text: Source Code
-            url: https://github.com/UCSB-Library-Research-Data-Services # replace after pub
+            url: https://github.com/rcurty/sentiment-analysis-workshop # replace after pub rds
             target: _blank
           - text: Report a Bug
-            url: https://github.com/UCSB-Library-Research-Data-Services # replace after pub
+            url: https://github.com/rcurty/sentiment-analysis-workshop # replace after pub rds
             target: _blank
 
   sidebar:
